@@ -1,0 +1,33 @@
+<div class="container">
+  <h1>Exemplos</h1>
+  <form [formGroup]="form">
+    <dss-input
+      type="text"
+      label="name: "
+      [readonly]="true"
+      formControlName="name"
+    ></dss-input>
+    {{ { name: form.value.name } | json }}
+
+    <dss-input type="email" label="email: " formControlName="email"></dss-input>
+    {{ { email: form.value.name } | json }}
+
+    <dss-input
+      type="password"
+      label="password: "
+      formControlName="password"
+    ></dss-input>
+    {{ { password: form.value.password } | json }}
+
+    <dss-select
+      label="State: "
+      formControlName="state"
+      [options]="[
+        { label: 'Rio grande do sul', value: 'RS' },
+        { label: 'Rio de janeiro', value: 'RJ' },
+        { label: 'Rio grande do norte', value: 'RN' }
+      ]"
+    ></dss-select>
+    {{ { state: form.value.state } | json }}
+  </form>
+</div>

@@ -1,0 +1,37 @@
+<div class="form-group">
+  <label [for]="formControlName"
+    >{{ label }} <span *ngIf="required" class="text-danger">*</span></label
+  >
+  <div class="input-group mb-2">
+    <input
+      [type]="type"
+      class="form-control"
+      [id]="formControlName"
+      [formControl]="control"
+      [class.is-invalid]="control.invalid && control.touched"
+      [readonly]="readonly"
+    />
+
+    <!-- ICON PASSWORD SHOW -->
+    <div
+      class="input-group-text cursor-pointer"
+      *ngIf="isFieldPassword"
+      (click)="togglePassword()"
+    >
+      <i
+        class="fa"
+        [ngClass]="{
+          'fa-eye': type === 'password',
+          'fa-eye-slash': type === 'text'
+        }"
+      ></i>
+    </div>
+
+    <!-- MESSAGE ERRORS -->
+    <ng-container *ngFor="let error of errors">
+      <div *ngIf="getError(error, 'key')" class="invalid-feedback">
+        {{ getError(error, "value") }}
+      </div>
+    </ng-container>
+  </div>
+</div>

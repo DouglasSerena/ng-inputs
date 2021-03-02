@@ -1,0 +1,14 @@
+{
+  "name": "ng-inputs",
+  "version": "0.0.1",
+  "scripts": {
+    "postinstall": "ngcc"
+  },
+  "peerDependencies": {
+    "@angular/common": "^11.2.3",
+    "@angular/core": "^11.2.3"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  }
+}
