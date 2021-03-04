@@ -2,32 +2,53 @@
   <h1>Exemplos</h1>
   <form [formGroup]="form">
     <dss-input
-      type="text"
       label="name: "
-      [readonly]="true"
       formControlName="name"
+      [readonly]="true"
     ></dss-input>
-    {{ { name: form.value.name } | json }}
 
     <dss-input type="email" label="email: " formControlName="email"></dss-input>
-    {{ { email: form.value.name } | json }}
 
     <dss-input
       type="password"
       label="password: "
       formControlName="password"
     ></dss-input>
-    {{ { password: form.value.password } | json }}
 
     <dss-select
       label="State: "
       formControlName="state"
-      [options]="[
-        { label: 'Rio grande do sul', value: 'RS' },
-        { label: 'Rio de janeiro', value: 'RJ' },
-        { label: 'Rio grande do norte', value: 'RN' }
-      ]"
+      [options]="option"
+      [path]="{ 'label.value': 'value.id' }"
     ></dss-select>
-    {{ { state: form.value.state } | json }}
+
+    <dss-select
+      label="city: "
+      formControlName="city"
+      [options]="option"
+      [path]="{ 'label.value': 'value.id' }"
+      [readonly]="true"
+    ></dss-select>
+
+    <div class="mt-3">
+      <dss-checkbox
+        [line]="true"
+        label="accept: "
+        formControlName="accept"
+      ></dss-checkbox>
+
+      <dss-checkbox
+        [line]="true"
+        label="dark: "
+        type="switch"
+        formControlName="dark"
+      ></dss-checkbox>
+    </div>
+
+    <dss-text-area
+      type="description"
+      label="description: "
+      formControlName="description"
+    ></dss-text-area>
   </form>
 </div>
