@@ -1,0 +1,26 @@
+<div
+  class="form-check"
+  [class.form-switch]="type === 'switch'"
+  [class.form-check-inline]="line"
+>
+  <input
+    type="checkbox"
+    class="form-check-input"
+    [id]="formControlName"
+    [formControl]="control"
+    [readonly]="readonly"
+    [class.is-invalid]="!readonly && control.invalid && control.touched"
+    [class.readonly]="readonly"
+  />
+  <label [for]="formControlName" class="form-check-label"
+    >{{ label }}
+    <span *ngIf="!readonly && required" class="text-danger">*</span></label
+  >
+
+  <!-- MESSAGE ERRORS -->
+  <ng-container *ngFor="let error of errors">
+    <div *ngIf="getError(error, 'key')" class="invalid-feedback">
+      {{ getError(error, "value") }}
+    </div>
+  </ng-container>
+</div>
