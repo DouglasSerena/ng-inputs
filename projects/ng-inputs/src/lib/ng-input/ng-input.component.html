@@ -1,37 +1,54 @@
-<div class="form-group">
-  <label [for]="formControlName"
-    >{{ label }} <span *ngIf="required" class="text-danger">*</span></label
-  >
-  <div class="input-group mb-2">
-    <input
-      [type]="type"
-      class="form-control"
-      [id]="formControlName"
-      [formControl]="control"
-      [class.is-invalid]="control.invalid && control.touched"
-      [readonly]="readonly"
-    />
-
-    <!-- ICON PASSWORD SHOW -->
-    <div
-      class="input-group-text cursor-pointer"
-      *ngIf="isFieldPassword"
-      (click)="togglePassword()"
+<div
+  class="mt-2 mb-2"
+  [ngClass]="{
+    'form-group': field === 'group',
+    'form-floating': field === 'floating'
+  }"
+>
+  <!-- LABEL GROUP -->
+  <ng-container *ngIf="field === 'group'">
+    <label [for]="formControlName"
+      >{{ label }}
+      <span *ngIf="!readonly && required" class="text-danger">*</span></label
     >
-      <i
-        class="fa"
-        [ngClass]="{
-          'fa-eye': type === 'password',
-          'fa-eye-slash': type === 'text'
-        }"
-      ></i>
-    </div>
+  </ng-container>
 
-    <!-- MESSAGE ERRORS -->
-    <ng-container *ngFor="let error of errors">
-      <div *ngIf="getError(error, 'key')" class="invalid-feedback">
-        {{ getError(error, "value") }}
-      </div>
-    </ng-container>
-  </div>
+  <input
+    [type]="type"
+    [placeholder]="placeholder"
+    class="form-control"
+    [id]="formControlName"
+    [formControl]="control"
+    [readonly]="readonly"
+    [class.is-invalid]="!readonly && control.invalid && control.touched"
+    [class.readonly]="readonly"
+  />
+  <!-- <div
+    class="cursor-pointer form-control-feedback"
+    *ngIf="isFieldPassword"
+    (click)="togglePassword()"
+  >
+    <i
+      class="fa"
+      [ngClass]="{
+        'fa-eye': type === 'password',
+        'fa-eye-slash': type === 'text'
+      }"
+    ></i>
+  </div> -->
+
+  <!-- LABEL FLOATING -->
+  <ng-container *ngIf="field === 'floating'">
+    <label [for]="formControlName"
+      >{{ label }}
+      <span *ngIf="!readonly && required" class="text-danger">*</span></label
+    >
+  </ng-container>
+
+  <!-- MESSAGE ERRORS -->
+  <ng-container *ngFor="let error of errors">
+    <div *ngIf="getError(error, 'key')" class="invalid-feedback">
+      {{ getError(error, "value") }}
+    </div>
+  </ng-container>
 </div>

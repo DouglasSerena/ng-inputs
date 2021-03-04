@@ -1,3 +1,34 @@
 .cursor-pointer {
   cursor: pointer;
 }
+.readonly {
+  opacity: 0.6;
+  background-color: #3333;
+}
+.has-icon {
+  position: relative;
+}
+
+.has-icon .form-control {
+  padding-right: 2.375rem;
+  &.is-invalid {
+    padding-right: calc(2.375rem * 2);
+  }
+}
+
+.has-icon .form-control-feedback {
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  z-index: 2;
+  display: block;
+  width: 2.375rem;
+  height: 2.375rem;
+  line-height: 2.375rem;
+  text-align: center;
+}
+
+.has-icon .form-control.is-invalid + .form-control-feedback {
+  right: 2.375rem;
+}
