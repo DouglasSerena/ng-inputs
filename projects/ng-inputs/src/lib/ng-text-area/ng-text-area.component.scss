@@ -1,0 +1,36 @@
+.cursor-pointer {
+  cursor: pointer;
+}
+.readonly {
+  opacity: 0.6;
+  background-color: #3333;
+}
+.form-group,
+.form-floating {
+  position: relative;
+  textarea {
+    margin-bottom: 15px;
+  }
+}
+
+.counter {
+  position: absolute;
+
+  text-align: right;
+  font-size: 10px;
+
+  color: var(--bs-gray);
+  background-color: #fff;
+
+  pointer-events: none;
+  right: 0;
+  top: 102%;
+
+  &.floating {
+    right: 0.8rem;
+    top: 0.63rem;
+  }
+}
+.form-floating .form-control.is-invalid + label + .counter {
+  right: 2rem;
+}
