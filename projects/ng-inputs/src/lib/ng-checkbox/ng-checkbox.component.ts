@@ -1,6 +1,7 @@
 import {
   Component,
   ElementRef,
+  forwardRef,
   Input,
   Renderer2,
   ViewChild,
@@ -10,8 +11,9 @@ import {
   ControlContainer,
   FormControl,
   FormControlDirective,
+  NG_VALUE_ACCESSOR,
 } from '@angular/forms';
-import { CHECKBOX_VALUE_ACCESSOR } from 'angular-bootstrap-md';
+
 import { IInputDefaultComponent, IObject } from '../input-default.interface';
 
 @Component({
@@ -22,7 +24,13 @@ import { IInputDefaultComponent, IObject } from '../input-default.interface';
     '(change)': 'onChange($event.target.checked)',
     '(blur)': 'onTouched()',
   },
-  providers: [CHECKBOX_VALUE_ACCESSOR],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      multi: true,
+      useExisting: forwardRef(() => NgCheckboxComponent),
+    },
+  ],
 })
 export class NgCheckboxComponent
   extends CheckboxControlValueAccessor

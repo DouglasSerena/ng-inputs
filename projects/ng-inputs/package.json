@@ -5,8 +5,10 @@
     "postinstall": "ngcc"
   },
   "peerDependencies": {
-    "@angular/common": "^11.2.3",
-    "@angular/core": "^11.2.3"
+    "@angular/common": "^8.2.14",
+    "@angular/core": "^8.2.14",
+    "@angular/forms": "^8.2.14",
+    "bootstrap": "^5.0.0-beta2"
   },
   "dependencies": {
     "tslib": "^2.0.0"

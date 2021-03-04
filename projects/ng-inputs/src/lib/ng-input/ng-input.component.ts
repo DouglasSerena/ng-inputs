@@ -45,9 +45,13 @@ export class NgInputComponent
 
   ngOnInit() {
     this.required = this.control.errors?.required;
+
     if (!this.required)
       this.required =
-        this.errors.find((errors) => errors.type === 'required') != undefined;
+        this.errors.find((errors) => {
+          console.log(errors);
+          return errors.type === 'required';
+        }) != undefined;
 
     this.isFieldPassword = this.type === 'password';
     this.isFieldCurrency = this.type === 'currency';
