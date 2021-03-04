@@ -1,25 +1,42 @@
-<div class="form-group">
-  <label [for]="formControlName"
-    >{{ label }} <span *ngIf="required" class="text-danger">*</span></label
-  >
-  <div class="input-group mb-2">
-    <select
-      class="form-select"
-      [class.readonly]="readonly"
-      [id]="formControlName"
-      [formControl]="control"
-      value=""
+<div
+  class="mt-2 mb-2"
+  [ngClass]="{
+    'form-group': field === 'group',
+    'form-floating': field === 'floating'
+  }"
+>
+  <!-- LABEL GROUP -->
+  <ng-container *ngIf="field === 'group'">
+    <label [for]="formControlName"
+      >{{ label }}
+      <span *ngIf="!readonly && required" class="text-danger">*</span></label
     >
-      <option *ngFor="let option of options" [value]="option.value">
-        {{ option.label }}
-      </option>
-    </select>
+  </ng-container>
 
-    <!-- MESSAGE ERRORS -->
-    <ng-container *ngFor="let error of errors">
-      <div *ngIf="getError(error, 'key')" class="invalid-feedback">
-        {{ getError(error, "value") }}
-      </div>
-    </ng-container>
-  </div>
+  <select
+    class="form-select"
+    [id]="formControlName"
+    [formControl]="control"
+    [class.readonly]="readonly"
+    [class.is-invalid]="!readonly && control.invalid && control.touched"
+    value=""
+  >
+    <option *ngFor="let option of options" [value]="option.value">
+      {{ option.label }}
+    </option>
+  </select>
+  <!-- LABEL FLOATING -->
+  <ng-container *ngIf="field === 'floating'">
+    <label [for]="formControlName"
+      >{{ label }}
+      <span *ngIf="!readonly && required" class="text-danger">*</span></label
+    >
+  </ng-container>
+
+  <!-- MESSAGE ERRORS -->
+  <ng-container *ngFor="let error of errors">
+    <div *ngIf="getError(error, 'key')" class="invalid-feedback">
+      {{ getError(error, "value") }}
+    </div>
+  </ng-container>
 </div>
