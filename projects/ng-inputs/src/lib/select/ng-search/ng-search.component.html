@@ -1,0 +1,70 @@
+<div
+  class="mt-2 mb-2"
+  [ngClass]="{
+    'form-group': !label || field === 'group',
+    'form-floating': !!label && field === 'floating'
+  }"
+>
+  <!-- LABEL GROUP -->
+  <ng-container *ngIf="!!label && field === 'group'">
+    <label [for]="formControlName"
+      >{{ label }}
+      <span *ngIf="!readonly && required" class="text-danger">*</span></label
+    >
+  </ng-container>
+
+  <i
+    class="fa fa-search"
+    [class.show]="!label || field === 'group' || !!control.value"
+  ></i>
+
+  <input
+    #inputSearch
+    type="search"
+    [placeholder]="_placeholder"
+    [id]="formControlName"
+    [formControl]="control"
+    [readonly]="readonly"
+    class="form-control"
+    autocomplete="off"
+    [ngClass]="{
+      readonly: readonly,
+      'is-invalid': !readonly && control.invalid && control.touched,
+      reset: !!control.value
+    }"
+  />
+
+  <i (click)="reset()" class="fas fa-times-circle"></i>
+
+  <!-- LABEL FLOATING -->
+  <ng-container *ngIf="!!label && field === 'floating'">
+    <label [for]="formControlName"
+      >{{ label }}
+      <span *ngIf="!readonly && required" class="text-danger">*</span></label
+    >
+  </ng-container>
+
+  <ng-container *ngIf="!!control.value">
+    <div class="list-group">
+      <button
+        type="button"
+        *ngIf="options.length === 0; else templateOptions"
+        class="list-group-item list-group-item-action text-center text-muted"
+        disabled
+      >
+        {{ notFound }}
+      </button>
+
+      <ng-template #templateOptions>
+        <button
+          *ngFor="let option of options"
+          type="button"
+          class="list-group-item list-group-item-action"
+          (click)="selected(option)"
+        >
+          {{ option.label }}
+        </button>
+      </ng-template>
+    </div>
+  </ng-container>
+</div>

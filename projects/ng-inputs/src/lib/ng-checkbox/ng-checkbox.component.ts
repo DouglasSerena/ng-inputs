@@ -14,7 +14,9 @@ import {
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
 
-import { IInputDefaultComponent, IObject } from '../input-default.interface';
+interface IObject {
+  [key: string]: string;
+}
 
 @Component({
   selector: 'dss-checkbox',
@@ -32,9 +34,7 @@ import { IInputDefaultComponent, IObject } from '../input-default.interface';
     },
   ],
 })
-export class NgCheckboxComponent
-  extends CheckboxControlValueAccessor
-  implements IInputDefaultComponent {
+export class NgCheckboxComponent extends CheckboxControlValueAccessor {
   @Input() label: string = 'Sem label: ';
   @Input() type: 'checkbox' | 'switch' = 'checkbox';
   @Input() line: boolean = false;

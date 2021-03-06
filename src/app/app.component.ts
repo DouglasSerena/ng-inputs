@@ -21,11 +21,13 @@ export class AppComponent implements OnInit {
       name: ['', [Validators.required]],
       email: ['dwadwa', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
+      date: ['', [Validators.required]],
       state: ['', [Validators.required]],
       city: ['', [Validators.required]],
       accept: ['', [Validators.required]],
       dark: ['', [Validators.required]],
       description: ['', [Validators.required]],
+      client: [''],
     });
 
     await debounce(2000);

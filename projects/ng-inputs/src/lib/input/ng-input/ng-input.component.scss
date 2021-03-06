@@ -1,0 +1,60 @@
+.cursor-pointer {
+  cursor: pointer;
+}
+.readonly {
+  opacity: 0.6;
+  background-color: #3333;
+}
+
+.form-group,
+.form-floating {
+  position: relative;
+  input {
+    &[type="date"],
+    &[type="month"],
+    &[type="datetime-local"],
+    &.password {
+      background-image: none;
+    }
+
+    &[type="date"],
+    &[type="month"],
+    &[type="datetime-local"] {
+      &.is-invalid,
+      &.is-valid {
+        padding-right: 0.75rem !important;
+      }
+    }
+    &.password {
+      padding-right: 18px + 16px + 16px;
+    }
+    &.is-valid + i,
+    &.is-valid + label + i {
+      color: var(--bs-success);
+    }
+    &.is-invalid + i,
+    &.is-invalid + label + i {
+      color: var(--bs-danger);
+    }
+  }
+}
+
+.fa.form-control-feedback {
+  position: absolute;
+
+  padding: 10px;
+  border-radius: 50%;
+
+  top: 0;
+  right: 5px;
+
+  transform: translateY(5%);
+}
+
+.form-group label + input + .fa.form-control-feedback {
+  top: 24px;
+}
+
+.form-floating .fa.form-control-feedback {
+  transform: translateY(50%);
+}

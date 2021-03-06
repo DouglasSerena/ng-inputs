@@ -1,38 +1,55 @@
-import { Component, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  HostBinding,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import {
   ControlContainer,
   ControlValueAccessor,
   FormControl,
   FormControlDirective,
-  NG_VALUE_ACCESSOR,
 } from '@angular/forms';
-import { IInputDefaultComponent, IObject } from '../input-default.interface';
 
-@Component({
-  selector: 'dss-text-area',
-  templateUrl: './ng-text-area.component.html',
-  styleUrls: ['./ng-text-area.component.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      multi: true,
-      useExisting: forwardRef(() => NgTextAreaComponent),
-    },
-  ],
-})
-export class NgTextAreaComponent
-  implements OnInit, ControlValueAccessor, IInputDefaultComponent {
-  @Input() label: string = 'Sem label: ';
-  @Input() placeholder?: string;
+interface IObject {
+  [key: string]: string;
+}
+
+@Component({ selector: '', template: '' })
+export class InputCustomControlValueAccessor
+  implements ControlValueAccessor, OnInit {
+  @ViewChild(FormControlDirective, { static: true })
+  formControlDirective: FormControlDirective;
+  @Input() formControl: FormControl;
+  @Input() formControlName: string;
+
+  get _placeholder() {
+    return this.field === 'floating' && this.placeholder.length === 0
+      ? false
+      : this.placeholder;
+  }
+  @Input() placeholder: string = '';
+  @Input() label: string = '';
+  _cols: { default: number; lg: number; md: number; sm: number } = {
+    default: 12,
+    lg: 12,
+    md: 12,
+    sm: 12,
+  };
+  @Input() set cols(cols: {
+    default?: number;
+    lg?: number;
+    md?: number;
+    sm?: number;
+  }) {
+    this._cols = { ...this._cols, ...cols };
+  }
 
   @Input() field: 'group' | 'floating' = 'floating';
 
   @Input() readonly: boolean;
   @Input() required: boolean = false;
-
-  @Input() length: number | string = 300;
-  @Input() cols: number | string = 0;
-  @Input() rows: number = 1;
 
   @Input() errors: IObject[] = [
     { required: `Preencha o campo a cima.` },
@@ -40,17 +57,31 @@ export class NgTextAreaComponent
     { maxlength: 'Limite máximo de 100 caracteres' },
   ];
 
-  constructor(private controlContainer: ControlContainer) {
+  get control() {
+    return (
+      this.formControl ||
+      this._controlContainer?.control?.get(this.formControlName)
+    );
+  }
+
+  @HostBinding('class') get classCols() {
+    return `col-${this._cols.default} col-lg-${this._cols.lg} col-md-${this._cols.md} col-sm-${this._cols.sm}`;
+  }
+
+  constructor(private _controlContainer: ControlContainer) {
     this.readonly = false;
   }
 
   ngOnInit() {
+    this.ngOnInitSuper();
+  }
+
+  protected ngOnInitSuper() {
     this.required = this.control.errors?.required;
     if (!this.required)
       this.required =
         this.errors.find((errors) => {
           errors.type === 'required';
-          console.log(errors);
         }) != undefined;
   }
 
@@ -60,24 +91,6 @@ export class NgTextAreaComponent
     return value === 'key'
       ? this.control.errors && this.control.errors[key]
       : error[key];
-  }
-
-  // #############################
-
-  // ATTRIBUTE AND METHODS CONTROL
-
-  // #############################
-
-  @ViewChild(FormControlDirective, { static: true })
-  formControlDirective: FormControlDirective;
-  @Input() formControl: FormControl;
-  @Input() formControlName: string;
-
-  get control() {
-    return (
-      this.formControl ||
-      this.controlContainer?.control?.get(this.formControlName)
-    );
   }
 
   registerOnTouched(fn: any): void {
