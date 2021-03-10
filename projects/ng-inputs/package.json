@@ -1,6 +1,12 @@
 {
   "name": "ng-inputs",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "author": "DouglasSerena <douglas222serena@rede.ulbra.br>",
+  "description": "angular entry library",
+  "repository": {
+    "url": "https://github.com/DouglasSerena/ng-inputs"
+  },
+  "license": "MIT",
   "scripts": {
     "postinstall": "ngcc"
   },
@@ -14,5 +20,12 @@
   },
   "dependencies": {
     "tslib": "^2.0.0"
-  }
+  },
+  "keywords": [
+    "angular",
+    "input",
+    "inputs",
+    "mask",
+    "input-search"
+  ]
 }

@@ -1,6 +1,8 @@
 {
-  "name": "tmp",
-  "version": "0.0.0",
+  "name": "ng-inputs",
+  "version": "1.0.0",
+  "author": "DouglasSerena <douglas222serena@rede.ulbra.br>",
+  "license": "MIT",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
