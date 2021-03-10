@@ -14,6 +14,9 @@
   </ng-container>
 
   <select
+    (change)="change.emit($event)"
+    (blur)="blur.emit($event)"
+    (focus)="focus.emit($event)"
     class="form-select"
     [id]="formControlName"
     [formControl]="control"

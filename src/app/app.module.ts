@@ -11,7 +11,7 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgInputsModule,
+    NgInputsModule.forRoot({ currency: { prefix: 'R$ ' } }),
     ReactiveFormsModule,
   ],
   providers: [],

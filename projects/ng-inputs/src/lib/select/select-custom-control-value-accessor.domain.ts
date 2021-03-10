@@ -1,10 +1,12 @@
 import {
   Component,
   ElementRef,
+  EventEmitter,
   HostBinding,
   Input,
   OnChanges,
   OnInit,
+  Output,
   Renderer2,
   SimpleChange,
   ViewChild,
@@ -23,11 +25,15 @@ interface IObject {
 @Component({ selector: '', template: '' })
 export class SelectCustomControlValueAccessor
   extends SelectControlValueAccessor
-  implements OnChanges, OnInit {
+  implements OnInit {
   @ViewChild(FormControlDirective, { static: true })
   formControlDirective: FormControlDirective;
   @Input() formControl: FormControl;
   @Input() formControlName: string;
+
+  @Output() public change = new EventEmitter();
+  @Output() public blur = new EventEmitter();
+  @Output() public focus = new EventEmitter();
 
   get _placeholder() {
     return this.field === 'floating' &&
@@ -58,10 +64,6 @@ export class SelectCustomControlValueAccessor
   @Input() readonly: boolean;
   @Input() required: boolean = false;
 
-  @Input() labelDefault: string = 'Selecione uma opção';
-  @Input() options?: any | { label: string; value: string }[] = [];
-  @Input() path?: { [key: string]: string };
-
   @Input() errors: IObject[] = [
     { required: `Preencha o campo a cima.` },
     { email: 'Email esta errado.' },
@@ -85,6 +87,7 @@ export class SelectCustomControlValueAccessor
     protected renderer: Renderer2
   ) {
     super(renderer, elementRef);
+    this.readonly = false;
   }
 
   ngOnInit() {
@@ -92,47 +95,15 @@ export class SelectCustomControlValueAccessor
     if (!this.required)
       this.required =
         this.errors.find((errors) => errors.type === 'required') != undefined;
-
-    this.formatOptions();
   }
 
-  ngOnChanges(params: { options: SimpleChange }) {
-    if (!!params.options && !!params.options.currentValue) {
-      this.formatOptions();
-    }
-  }
+  getMultiLabels(labels: any, label: string[]): any {
+    const lastLabel = label.concat([]);
+    const rest = label.splice(1, label.length - 1);
 
-  formatOptions() {
-    const option: any[] = [];
-    option.push({ label: this.labelDefault, value: '' });
-
-    const isValid =
-      this.options.length > 0 &&
-      (typeof this.options[0].label !== 'string' ||
-        typeof this.options[0].value !== 'string');
-
-    if (!!this.path && this.options.length > 0 && isValid) {
-      const getMultiLabels = (labels: any, label: string[]): string => {
-        const lastLabel = label.concat([]);
-        const rest = label.splice(1, label.length - 1);
-
-        return lastLabel.length === 1
-          ? labels[lastLabel[0]]
-          : getMultiLabels(labels[lastLabel[0]], rest);
-      };
-
-      const key = Object.keys(this.path)[0];
-      const value = this.path[key];
-
-      this.options?.forEach((opt: any) =>
-        option?.push({
-          label: getMultiLabels(opt, key.split('.')),
-          value: getMultiLabels(opt, value.split('.')),
-        })
-      );
-    }
-
-    this.options = option;
+    return lastLabel.length === 1
+      ? labels[lastLabel[0]]
+      : this.getMultiLabels(labels[lastLabel[0]], rest);
   }
 
   getError(error: IObject, value: 'key' | 'value') {
@@ -148,7 +119,7 @@ export class SelectCustomControlValueAccessor
   }
 
   registerOnChange(fn: any): void {
-    this.formControlDirective.valueAccessor?.registerOnChange(fn);
+    this.onChange = fn;
   }
 
   writeValue(obj: any): void {

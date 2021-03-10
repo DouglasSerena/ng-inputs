@@ -16,6 +16,10 @@ interface IObject {
   [key: string]: string;
 }
 
+interface IOnWrite {
+  (value: string): void;
+}
+
 @Component({ selector: '', template: '' })
 export class InputCustomControlValueAccessor
   implements ControlValueAccessor, OnInit {
@@ -97,8 +101,9 @@ export class InputCustomControlValueAccessor
     this.formControlDirective.valueAccessor?.registerOnTouched(fn);
   }
 
-  registerOnChange(fn: any): void {
-    this.formControlDirective.valueAccessor?.registerOnChange(fn);
+  onWrite: IOnWrite;
+  registerOnChange(fn: IOnWrite): void {
+    this.onWrite = fn;
   }
 
   writeValue(obj: any): void {

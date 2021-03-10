@@ -8,7 +8,9 @@
     "@angular/common": "^8.2.14",
     "@angular/core": "^8.2.14",
     "@angular/forms": "^8.2.14",
-    "bootstrap": "^5.0.0-beta2"
+    "bootstrap": "^5.0.0-beta2",
+    "imask": "^6.0.7",
+    "simple-mask-money": "^3.0.1"
   },
   "dependencies": {
     "tslib": "^2.0.0"

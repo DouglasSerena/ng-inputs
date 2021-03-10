@@ -14,7 +14,7 @@
   </ng-container>
 
   <i
-    class="fa fa-search"
+    class="fa fa-search icon-left"
     [class.show]="!label || field === 'group' || !!control.value"
   ></i>
 
@@ -27,6 +27,8 @@
     [readonly]="readonly"
     class="form-control"
     autocomplete="off"
+    (blur)="onBlur($event)"
+    (focus)="onFocus($event)"
     [ngClass]="{
       readonly: readonly,
       'is-invalid': !readonly && control.invalid && control.touched,
@@ -34,7 +36,12 @@
     }"
   />
 
-  <i (click)="reset()" class="fas fa-times-circle"></i>
+  <i
+    *ngIf="!loading"
+    (click)="inputChange('')"
+    class="fas fa-times-circle icon-right"
+  ></i>
+  <i *ngIf="loading" class="fas fa-spinner icon-right"></i>
 
   <!-- LABEL FLOATING -->
   <ng-container *ngIf="!!label && field === 'floating'">
@@ -44,27 +51,32 @@
     >
   </ng-container>
 
-  <ng-container *ngIf="!!control.value">
-    <div class="list-group">
-      <button
-        type="button"
-        *ngIf="options.length === 0; else templateOptions"
-        class="list-group-item list-group-item-action text-center text-muted"
-        disabled
-      >
-        {{ notFound }}
-      </button>
+  <div
+    class="list-group"
+    #elementList
+    [class.hide]="!!control.value && focused"
+  >
+    <button
+      type="button"
+      *ngIf="options.length === 0 && !loading; else templateOptions"
+      class="list-group-item list-group-item-action text-center text-muted"
+      disabled
+    >
+      {{ notFound }}
+    </button>
 
-      <ng-template #templateOptions>
+    <ng-template #templateOptions>
+      <ng-container *ngFor="let option of options">
         <button
-          *ngFor="let option of options"
+          *ngIf="!loading"
           type="button"
           class="list-group-item list-group-item-action"
-          (click)="selected(option)"
+          [class.select]="option.dssSelect"
+          (click)="inputChange(option)"
         >
-          {{ option.label }}
-        </button>
-      </ng-template>
-    </div>
-  </ng-container>
+          {{ option.dssLabel }}
+        </button></ng-container
+      >
+    </ng-template>
+  </div>
 </div>

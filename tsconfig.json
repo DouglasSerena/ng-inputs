@@ -13,7 +13,7 @@
     "downlevelIteration": true,
     "allowJs": true,
     "checkJs": false,
-    "strictPropertyInitialization": false,
+    "strictPropertyInitialization": false,"noImplicitAny": false,
     "paths": {
       "ng-inputs": [
         "dist/ng-inputs/ng-inputs",

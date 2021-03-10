@@ -1,14 +1,25 @@
+import { HttpClient } from '@angular/common/http';
 import {
   Component,
   ElementRef,
+  EventEmitter,
   forwardRef,
+  HostListener,
   Input,
   OnInit,
+  Output,
   Renderer2,
+  SimpleChange,
+  ViewChild,
 } from '@angular/core';
 import { ControlContainer, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { InputCustomControlValueAccessor } from '../../input/input-custom-control-value-accessor.domain';
+import { environment } from 'src/environments/environment';
+import { Debounce } from '../../decorators/debounce.decorator';
 import { SelectCustomControlValueAccessor } from '../select-custom-control-value-accessor.domain';
+
+interface IOnWrite {
+  (value: string): void;
+}
 
 @Component({
   selector: 'dss-search',
@@ -25,24 +36,157 @@ import { SelectCustomControlValueAccessor } from '../select-custom-control-value
 export class NgSearchComponent
   extends SelectCustomControlValueAccessor
   implements OnInit {
+  @ViewChild('elementList', { static: true })
+  elementList: ElementRef<HTMLDivElement>;
+  get list() {
+    return this.elementList.nativeElement;
+  }
+
   @Input() notFound: string = 'Sem resultado.';
-  @Input() options: any[] = [
-    { label: 'Douglas Serena', id: 1, age: 3 },
-    { label: 'Ana Carlos', id: 2, age: 65 },
-    { label: 'carlos', id: 3, age: 543 },
-    { label: 'lucas', id: 4, age: 21 },
-    { label: 'amanda', id: 5, age: 52 },
-    { label: 'rafaela', id: 6, age: 12 },
-    { label: 'jieli', id: 7, age: 66 },
-  ];
+  @Input() pathLabel = 'label';
+  @Input() options: any[] = [];
+  @Input() uri: string | null = null;
+  @Input() responseData: string | null = null;
+
+  loading = false;
+  focused = false;
+  token =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE4IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVXN1YXJpbyIsImVtYWlsIjoiZG91Z2xhc0BiaXR0aS5zaXRlIiwibmFtZSI6IkRvdWdsYXMifQ.7UcFfuGvgnJtCjzsqxlhcZHBLMgh0OH2bJpWLYfFL-Y';
 
   constructor(
     protected controlContainer: ControlContainer,
     protected elementRef: ElementRef,
-    protected renderer: Renderer2
+    protected renderer: Renderer2,
+    private httpClient: HttpClient
   ) {
     super(controlContainer, elementRef, renderer);
-    this.readonly = false;
+  }
+
+  @Debounce(300)
+  @HostListener('input', ['$event'])
+  async onInput({ target }: KeyboardEvent) {
+    const { value } = target as HTMLInputElement;
+
+    if (value.length === 0) return;
+    if (!this.focused) this.focused = true;
+
+    if (this.uri) {
+      let uri = this.createUrl(this.uri);
+      uri = uri?.replace('{value}', value) as string;
+
+      this.loading = true;
+      try {
+        const response = await this.httpClient
+          .get(uri, { headers: { Authorization: `Bearer ${this.token}` } })
+          .toPromise();
+        this.options = this.responseData
+          ? this.getMultiLabels(response, this.responseData.split('.'))
+          : response;
+        this.format();
+      } catch (error) {
+        if (!environment.production) {
+          console.log(error);
+        }
+      }
+      this.loading = false;
+    }
+  }
+
+  createUrl(uri: string) {
+    const variables = uri.match(/(\{[\w\_]+\})+/g);
+    variables?.forEach((variable) => {
+      const key = variable.replace(/([\{\}])+/g, '');
+      const env = environment[key];
+      if (env) uri = uri?.replace(variable, env) as string;
+    });
+    return uri;
+  }
+
+  @HostListener('keydown', ['$event'])
+  handleKeyDown(event: KeyboardEvent) {
+    const { key } = event;
+
+    const keys = {
+      ArrowUp: () => {
+        event.preventDefault();
+
+        if (!this.focused) {
+          this.focused = true;
+          return;
+        }
+
+        const index = this.options.findIndex((option) => option.dssSelect);
+
+        const calcScroll = 41 * (this.options.length - 4);
+
+        if (index === -1) {
+          this.options[this.options.length - 1].dssSelect = true;
+          this.list.scroll(0, calcScroll);
+          return;
+        }
+
+        this.options[index].dssSelect = false;
+
+        if (index === 0) {
+          this.options[this.options.length - 1].dssSelect = true;
+          this.list.scroll(0, calcScroll);
+          return;
+        }
+
+        this.options[index - 1].dssSelect = true;
+
+        const button = this.list.querySelector(
+          `button:nth-child(${index})`
+        ) as HTMLButtonElement;
+
+        const offset = button.offsetTop - this.list.scrollTop;
+
+        if (offset < 0) this.list.scroll(0, this.list.scrollTop - 41);
+      },
+      ArrowDown: () => {
+        event.preventDefault();
+
+        if (!this.focused) {
+          this.focused = true;
+          return;
+        }
+
+        const index = this.options.findIndex((option) => option.dssSelect);
+
+        if (index === -1) {
+          this.options[0].dssSelect = true;
+        }
+
+        this.options[index].dssSelect = false;
+
+        if (index === this.options.length - 1) {
+          this.list.scroll(0, 0);
+          this.options[0].dssSelect = true;
+          return;
+        }
+
+        this.options[index + 1].dssSelect = true;
+
+        const bottom = this.list.getClientRects().item(0)?.bottom as number;
+        const button = this.list.querySelector(
+          `button:nth-child(${index})`
+        ) as HTMLButtonElement;
+
+        const offset = bottom - (button.offsetTop - this.list.scrollTop);
+
+        if (offset < 322) this.list.scroll(0, this.list.scrollTop + 41);
+      },
+      Enter: () => {
+        const index = this.options.findIndex((option) => option.dssSelect);
+        if (index !== -1) {
+          this.focused = false;
+          this.inputChange(this.options[index]);
+        }
+      },
+    };
+    try {
+      keys[key as 'ArrowUp']();
+    } catch {}
   }
 
   ngOnInit() {
@@ -53,13 +197,55 @@ export class NgSearchComponent
         this.errors.find((errors) => {
           return errors.type === 'required';
         }) != undefined;
+    this.format();
   }
 
-  selected(option: any) {
-    console.log(option);
+  @Output() blur = new EventEmitter();
+  @Debounce(250)
+  onBlur(event: Event) {
+    this.focused = false;
+    this.blur.emit(event);
   }
 
-  reset() {
-    this.control.setValue('');
+  @Output() focus = new EventEmitter();
+  @Debounce(250)
+  onFocus(event: Event) {
+    this.focused = true;
+    this.focus.emit(event);
+  }
+
+  ngOnChanges(params: { options: SimpleChange }) {
+    if (!!params.options && !!params.options.currentValue) {
+      this.format();
+    }
+  }
+
+  inputChange(value: any) {
+    this.control.setValue(
+      value instanceof Object
+        ? this.getMultiLabels(value, this.pathLabel.split('.'))
+        : value
+    );
+
+    if (typeof value === 'string') {
+      this.onChange(value);
+      this.change.emit(value);
+    } else {
+      const newValue = { ...value };
+      delete newValue.dssLabel;
+      delete newValue.dssSelect;
+
+      setTimeout(() => {
+        this.onChange(newValue);
+        this.change.emit(value);
+      }, 250);
+    }
+  }
+
+  format() {
+    this.options.map((option) => {
+      option.dssLabel = this.getMultiLabels(option, this.pathLabel.split('.'));
+      option.dssSelect = false;
+    });
   }
 }

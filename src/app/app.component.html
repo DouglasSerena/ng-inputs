@@ -1,42 +1,55 @@
 <div class="container">
   <h1>Exemplos</h1>
   <form [formGroup]="form" class="row">
-    <dss-input
-      label="name: "
-      formControlName="name"
-      [readonly]="true"
-      placeholder="douglas"
-      [cols]="{ default: 3, md: 3 }"
-    ></dss-input>
+    <dss-input label="name: " formControlName="name"></dss-input>
+    {{ { value: form.controls.name.value } | json }}
 
-    <dss-input
-      type="email"
-      label="email: "
-      formControlName="email"
-      [cols]="{ default: 3, md: 6, sm: 8 }"
-    ></dss-input>
+    <dss-search
+      formControlName="client"
+      pathLabel="pessoa.razaoSocial"
+      uri="{url}/Fornecedor/filtro/{value}"
+      responseData="data"
+    ></dss-search>
+    {{ { value: form.controls.client.value } | json }}
+
+    <dss-input type="email" label="email: " formControlName="email"></dss-input>
+    {{ { value: form.controls.email.value } | json }}
 
     <dss-input
       type="password"
       label="password: "
       formControlName="password"
-      [cols]="{ default: 3, md: 3, sm: 8 }"
     ></dss-input>
+    {{ { value: form.controls.password.value } | json }}
 
     <dss-input
       type="date"
       label="Current date: "
       formControlName="date"
-      [cols]="{ default: 3, md: 3, sm: 8 }"
     ></dss-input>
+    {{ { value: form.controls.date.value } | json }}
+
+    <dss-input
+      type="currency"
+      label="Value: "
+      formControlName="currency"
+    ></dss-input>
+    {{ { value: form.controls.currency.value } | json }}
+
+    <dss-input
+      type="cpf_cnpj"
+      label="cpf cnpj: "
+      formControlName="cpf_cnpj"
+    ></dss-input>
+    {{ { value: form.controls.cpf_cnpj.value } | json }}
 
     <dss-select
       label="State: "
       formControlName="state"
       [options]="option"
       [path]="{ 'label.value': 'value.id' }"
-      [cols]="{ default: 3, md: 3, sm: 8 }"
     ></dss-select>
+    {{ { value: form.controls.state.value } | json }}
 
     <dss-select
       label="city: "
@@ -44,8 +57,8 @@
       [options]="option"
       [path]="{ 'label.value': 'value.id' }"
       [readonly]="true"
-      [cols]="{ default: 3, md: 6, sm: 8 }"
     ></dss-select>
+    {{ { value: form.controls.city.value } | json }}
 
     <div class="mt-3">
       <dss-checkbox
@@ -61,13 +74,15 @@
         formControlName="dark"
       ></dss-checkbox>
     </div>
+    {{
+      { dark: form.controls.dark.value, accept: form.controls.accept.value }
+        | json
+    }}
 
     <dss-text-area
-      type="description"
       label="description: "
       formControlName="description"
     ></dss-text-area>
-
-    <dss-search formControlName="client"></dss-search>
+    {{ { value: form.controls.description.value } | json }}
   </form>
 </div>
