@@ -1,0 +1,26 @@
+.counter {
+  display: inline-block;
+
+  position: absolute;
+  right: 0;
+  top: 100%;
+
+  text-align: right;
+  font-size: 10px;
+
+  color: var(--bs-gray);
+
+  pointer-events: none;
+
+  &.floating {
+    right: 0.8rem;
+    top: 0.63rem;
+  }
+  &.invalid.errors {
+    top: calc(100% - 22px);
+  }
+}
+
+.form-control.floating.is-invalid + label + .counter {
+  right: 2rem;
+}

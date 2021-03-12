@@ -42,10 +42,7 @@ export class NgCheckboxComponent extends CheckboxControlValueAccessor {
   @Input() readonly: boolean;
   @Input() required: boolean = false;
 
-  @Input() errors: IObject[] = [
-    { required: `Preencha o campo a cima.` },
-    { email: 'Email esta errado.' },
-  ];
+  @Input() errors: IObject[] = [];
 
   constructor(
     private controlContainer: ControlContainer,

@@ -1,0 +1,27 @@
+.cursor-pointer {
+  cursor: pointer;
+}
+.readonly {
+  opacity: 0.6;
+  background-color: #3333;
+}
+
+.form-group,
+.form-floating,
+.input-field {
+  position: relative;
+  textarea {
+    margin-bottom: 15px;
+  }
+  div.helper-text,
+  div.invalid-feedback {
+    display: inline-block;
+    width: 80%;
+  }
+}
+
+.input-field {
+  .helper-text {
+    color: #f44336;
+  }
+}

@@ -1,0 +1,62 @@
+.fa.form-control-feedback {
+  position: absolute;
+
+  padding: 10px;
+  border-radius: 50%;
+
+  top: 0;
+  right: 5px;
+
+  transform: translateY(5%);
+}
+
+input {
+  &[type="date"],
+  &[type="month"],
+  &[type="datetime-local"],
+  &.password {
+    background-image: none;
+  }
+
+  &[type="date"],
+  &[type="month"],
+  &[type="datetime-local"] {
+    &.is-invalid,
+    &.is-valid {
+      padding-right: 0.75rem !important;
+    }
+  }
+  &.password {
+    padding-right: 18px + 16px + 16px;
+  }
+  &.is-valid + i,
+  &.is-valid + label + i {
+    color: var(--bs-success);
+  }
+  &.is-invalid + i,
+  &.is-invalid + label + i {
+    color: var(--bs-danger);
+  }
+
+  &.floating {
+    & + .fa.form-control-feedback {
+      transform: translateY(50%);
+    }
+  }
+  &:not(.floating) {
+    & + .fa.form-control-feedback {
+      transform: translateY(25px);
+    }
+  }
+  &:not(.form-control) {
+    &.password {
+      width: calc(100% - (18px + 16px + 16px));
+    }
+    & + .fa.form-control-feedback {
+      right: 0;
+    }
+  }
+}
+.align-right {
+  text-align: right;
+}

@@ -1,0 +1,28 @@
+<dss-ng-base
+  [field]="field"
+  [readonly]="readonly"
+  [required]="required"
+  [htmlFor]="formControlName"
+  [label]="label"
+  [control]="control"
+  [errors]="errors"
+>
+  <input
+    #input
+    [type]="type"
+    [id]="formControlName"
+    [formControl]="control"
+    [readonly]="readonly"
+    [ngClass]="className"
+    [ngStyle]="{ 'text-align': alignText }"
+  />
+  <i
+    (click)="togglePassword()"
+    *ngIf="isFieldPassword"
+    class="fa cursor-pointer form-control-feedback"
+    [ngClass]="{
+      'fa-eye': type === 'password',
+      'fa-eye-slash': type === 'text'
+    }"
+  ></i>
+</dss-ng-base>

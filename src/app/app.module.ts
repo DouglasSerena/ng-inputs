@@ -11,7 +11,13 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgInputsModule.forRoot({ currency: { prefix: 'R$ ' } }),
+    NgInputsModule.forRoot({
+      field: 'group',
+      environments: {
+        url: 'http://api-sandbox2.construtoramontebello.net.br/api/compras',
+      },
+      currency: { prefix: 'R$' },
+    }),
     ReactiveFormsModule,
   ],
   providers: [],

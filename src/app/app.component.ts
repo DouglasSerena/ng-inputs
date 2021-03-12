@@ -22,6 +22,7 @@ export class AppComponent implements OnInit {
       email: ['dwadwa', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
       currency: [23212, [Validators.required]],
+      percent: [23212, [Validators.required]],
       date: ['', [Validators.required]],
       cpf_cnpj: ['00000000000'],
       state: ['', [Validators.required]],

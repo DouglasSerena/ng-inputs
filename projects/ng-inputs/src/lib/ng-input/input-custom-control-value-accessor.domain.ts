@@ -11,6 +11,7 @@ import {
   FormControl,
   FormControlDirective,
 } from '@angular/forms';
+import { NgInputConfigService } from '../core/ng-input-config.service';
 
 interface IObject {
   [key: string]: string;
@@ -27,19 +28,21 @@ export class InputCustomControlValueAccessor
   formControlDirective: FormControlDirective;
   @Input() formControl: FormControl;
   @Input() formControlName: string;
-
-  get _placeholder() {
-    return this.field === 'floating' && this.placeholder.length === 0
-      ? false
-      : this.placeholder;
+  get theme() {
+    return this._configService.theme;
   }
-  @Input() placeholder: string = '';
+
+  private _placeholder: string = '';
+  get placeholder(): string {
+    return this._placeholder;
+  }
+  @Input() set placeholder(value: string) {
+    this._placeholder = value;
+  }
+
   @Input() label: string = '';
-  _cols: { default: number; lg: number; md: number; sm: number } = {
+  _cols: { default: number; lg?: number; md?: number; sm?: number } = {
     default: 12,
-    lg: 12,
-    md: 12,
-    sm: 12,
   };
   @Input() set cols(cols: {
     default?: number;
@@ -50,16 +53,18 @@ export class InputCustomControlValueAccessor
     this._cols = { ...this._cols, ...cols };
   }
 
-  @Input() field: 'group' | 'floating' = 'floating';
+  _field: null | 'group' | 'floating' = null;
+  @Input() set field(value: 'group' | 'floating') {
+    this._field = value;
+  }
+  get field() {
+    return this._field ? this._field : this._configService.field;
+  }
 
-  @Input() readonly: boolean;
+  @Input() readonly: boolean = false;
   @Input() required: boolean = false;
 
-  @Input() errors: IObject[] = [
-    { required: `Preencha o campo a cima.` },
-    { email: 'Email esta errado.' },
-    { maxlength: 'Limite máximo de 100 caracteres' },
-  ];
+  @Input() errors: IObject[] = [];
 
   get control() {
     return (
@@ -69,12 +74,17 @@ export class InputCustomControlValueAccessor
   }
 
   @HostBinding('class') get classCols() {
-    return `col-${this._cols.default} col-lg-${this._cols.lg} col-md-${this._cols.md} col-sm-${this._cols.sm}`;
+    let className = `col-${this._cols.default}`;
+    if (this._cols.lg) className = `col-lg-${this._cols.lg}`;
+    if (this._cols.md) className = `col-md-${this._cols.md}`;
+    if (this._cols.sm) className = `col-sm-${this._cols.sm}`;
+    return className;
   }
 
-  constructor(private _controlContainer: ControlContainer) {
-    this.readonly = false;
-  }
+  constructor(
+    private _controlContainer: ControlContainer,
+    private _configService: NgInputConfigService
+  ) {}
 
   ngOnInit() {
     this.ngOnInitSuper();
@@ -84,9 +94,7 @@ export class InputCustomControlValueAccessor
     this.required = this.control.errors?.required;
     if (!this.required)
       this.required =
-        this.errors.find((errors) => {
-          errors.type === 'required';
-        }) != undefined;
+        this.errors.find((error) => !!error['required']) != undefined;
   }
 
   getError(error: IObject, value: 'key' | 'value') {

@@ -4,22 +4,17 @@
 
 import { NgInputsModule } from './lib/ng-inputs.module';
 
-// INPUTS
-import { NgInputComponent } from './lib/input/ng-input/ng-input.component';
-import { NgTextAreaComponent } from './lib/input/ng-text-area/ng-text-area.component';
+// SERVICES
+import { NgInputMasksService } from './lib/core/ng-input-masks.service';
 
-// BUTTONS
-import { NgCheckboxComponent } from './lib/ng-checkbox/ng-checkbox.component';
-
-// SELECTS
-import { NgSelectComponent } from './lib/select/ng-select/ng-select.component';
-import { NgSearchComponent } from './lib/select/ng-search/ng-search.component';
+import { NgCheckboxModule } from './lib/ng-checkbox/ng-checkbox.module';
+import { NgInputModule } from './lib/ng-input/ng-input.module';
+import { NgSelectModule } from './lib/ng-select/ng-select.module';
 
 export {
   NgInputsModule,
-  NgInputComponent,
-  NgSelectComponent,
-  NgCheckboxComponent,
-  NgTextAreaComponent,
-  NgSearchComponent,
+  NgInputModule,
+  NgCheckboxModule,
+  NgSelectModule,
+  NgInputMasksService,
 };

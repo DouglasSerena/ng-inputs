@@ -1,0 +1,25 @@
+<dss-ng-base
+  [field]="field"
+  [readonly]="readonly"
+  [required]="required"
+  [htmlFor]="formControlName"
+  [label]="label"
+  [control]="control"
+  [errors]="errors"
+>
+  <select
+    #select
+    (change)="change.emit($event)"
+    (blur)="blur.emit($event)"
+    (focus)="focus.emit($event)"
+    class="form-select"
+    [id]="formControlName"
+    [formControl]="control"
+    value=""
+    [ngClass]="className"
+  >
+    <option *ngFor="let option of options" [value]="option.value">
+      {{ option.label }}
+    </option>
+  </select>
+</dss-ng-base>

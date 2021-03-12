@@ -13,8 +13,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ControlContainer, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { environment } from 'src/environments/environment';
 import { Debounce } from '../../decorators/debounce.decorator';
+import { NgInputConfigService } from '../../core/ng-input-config.service';
 import { SelectCustomControlValueAccessor } from '../select-custom-control-value-accessor.domain';
 
 interface IOnWrite {
@@ -47,6 +47,7 @@ export class NgSearchComponent
   @Input() options: any[] = [];
   @Input() uri: string | null = null;
   @Input() responseData: string | null = null;
+  @Input() return: string | null = null;
 
   loading = false;
   focused = false;
@@ -57,9 +58,10 @@ export class NgSearchComponent
     protected controlContainer: ControlContainer,
     protected elementRef: ElementRef,
     protected renderer: Renderer2,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private configService: NgInputConfigService
   ) {
-    super(controlContainer, elementRef, renderer);
+    super(controlContainer, elementRef, renderer, configService);
   }
 
   @Debounce(300)
@@ -84,7 +86,7 @@ export class NgSearchComponent
           : response;
         this.format();
       } catch (error) {
-        if (!environment.production) {
+        if (!this.configService.environments.debug) {
           console.log(error);
         }
       }
@@ -96,7 +98,7 @@ export class NgSearchComponent
     const variables = uri.match(/(\{[\w\_]+\})+/g);
     variables?.forEach((variable) => {
       const key = variable.replace(/([\{\}])+/g, '');
-      const env = environment[key];
+      const env = this.configService.environments[key];
       if (env) uri = uri?.replace(variable, env) as string;
     });
     return uri;
@@ -229,15 +231,17 @@ export class NgSearchComponent
 
     if (typeof value === 'string') {
       this.onChange(value);
-      this.change.emit(value);
     } else {
       const newValue = { ...value };
       delete newValue.dssLabel;
       delete newValue.dssSelect;
 
       setTimeout(() => {
-        this.onChange(newValue);
-        this.change.emit(value);
+        this.onChange(
+          this.return
+            ? this.getMultiLabels(newValue, this.return.split('.'))
+            : newValue
+        );
       }, 250);
     }
   }

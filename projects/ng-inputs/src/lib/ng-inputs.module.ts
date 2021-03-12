@@ -1,51 +1,27 @@
-import { CommonModule } from '@angular/common';
 import { InjectionToken, ModuleWithProviders, NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { InputCustomControlValueAccessor } from './input/input-custom-control-value-accessor.domain';
+import { InputCustomControlValueAccessor } from './ng-input/input-custom-control-value-accessor.domain';
 
-// INPUT
-import { NgInputComponent } from './input/ng-input/ng-input.component';
-import { NgTextAreaComponent } from './input/ng-text-area/ng-text-area.component';
-
-// BUTTON
-import { NgCheckboxComponent } from './ng-checkbox/ng-checkbox.component';
-
-// SELECTS
-import { NgSearchComponent } from './select/ng-search/ng-search.component';
-import { NgSelectComponent } from './select/ng-select/ng-select.component';
-import { NgInputMasksService } from './ng-input-masks.service';
 import {
   NgInputConfigService,
   INgInputConfig,
-} from './ng-input-config.service';
+} from './core/ng-input-config.service';
+import { NgInputMasksService } from './core/ng-input-masks.service';
 
-// DOMAIN
-
+import { NgSelectModule } from './ng-select/ng-select.module';
+import { NgInputModule } from './ng-input/ng-input.module';
+import { NgCheckboxModule } from './ng-checkbox/ng-checkbox.module';
+import { NgCoreModule } from './core/ng-core.module';
 @NgModule({
-  declarations: [
-    NgInputComponent,
-    NgSelectComponent,
-    NgCheckboxComponent,
-    NgTextAreaComponent,
-    NgSearchComponent,
-    InputCustomControlValueAccessor,
-  ],
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, HttpClientModule],
+  imports: [NgSelectModule, NgInputModule, NgCheckboxModule, NgCoreModule],
   providers: [NgInputConfigService, NgInputMasksService],
-  exports: [
-    NgInputComponent,
-    NgSelectComponent,
-    NgCheckboxComponent,
-    NgTextAreaComponent,
-    NgSearchComponent,
-  ],
+  exports: [NgSelectModule, NgInputModule, NgCheckboxModule, NgCoreModule],
 })
 export class NgInputsModule {
   static forRoot(options?: INgInputConfig): ModuleWithProviders<any> {
     return {
       ngModule: NgInputsModule,
       providers: [
+        NgInputMasksService,
         {
           provide: FOR_ROOT_OPTIONS_TOKEN,
           useValue: options,
@@ -69,8 +45,11 @@ export function provideMyServiceOptions(
 ): NgInputConfigService {
   const service = new NgInputConfigService();
 
+  if (options?.field) service.field = options.field;
   if (options?.theme) service.theme = options.theme;
   if (options?.currency) service.currency = options.currency;
+  if (options?.percent) service.percent = options.percent;
+  if (options?.environments) service.environments = options.environments;
 
   return service;
 }

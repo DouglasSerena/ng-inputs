@@ -1,25 +1,28 @@
 {
-  "name": "ng-inputs",
-  "version": "1.0.0",
+  "name": "@douglas-serena/ng-inputs",
+  "version": "1.0.7",
   "author": "DouglasSerena <douglas222serena@rede.ulbra.br>",
   "description": "angular entry library",
   "repository": {
-    "url": "https://github.com/DouglasSerena/ng-inputs"
+    "url": "git+https://github.com/DouglasSerena/ng-inputs.git"
   },
   "license": "MIT",
   "scripts": {
     "postinstall": "ngcc"
   },
+  "allowedNonPeerDependencies": [
+    "imask",
+    "simple-mask-money",
+    "materialize-css"
+  ],
   "peerDependencies": {
     "@angular/common": "^8.2.14",
     "@angular/core": "^8.2.14",
     "@angular/forms": "^8.2.14",
     "bootstrap": "^5.0.0-beta2",
     "imask": "^6.0.7",
-    "simple-mask-money": "^3.0.1"
-  },
-  "dependencies": {
-    "tslib": "^2.0.0"
+    "simple-mask-money": "^3.0.1",
+    "materialize-css": "1.0.0"
   },
   "keywords": [
     "angular",
@@ -27,5 +30,10 @@
     "inputs",
     "mask",
     "input-search"
-  ]
+  ],
+  "bugs": {
+    "url": "https://github.com/DouglasSerena/ng-inputs/issues"
+  },
+  "homepage": "https://github.com/DouglasSerena/ng-inputs#readme",
+  "main": "src/public-api.ts"
 }

@@ -1,7 +1,13 @@
 <div class="container">
   <h1>Exemplos</h1>
   <form [formGroup]="form" class="row">
-    <dss-input label="name: " formControlName="name"></dss-input>
+    <dss-input
+      label="name: "
+      formControlName="name"
+      placeholder="Full name"
+      alignText="right"
+      [errors]="[{ required: 'Campo obrigatório.' }]"
+    ></dss-input>
     {{ { value: form.controls.name.value } | json }}
 
     <dss-search
@@ -9,6 +15,7 @@
       pathLabel="pessoa.razaoSocial"
       uri="{url}/Fornecedor/filtro/{value}"
       responseData="data"
+      return="pessoa.id"
     ></dss-search>
     {{ { value: form.controls.client.value } | json }}
 
@@ -35,6 +42,13 @@
       formControlName="currency"
     ></dss-input>
     {{ { value: form.controls.currency.value } | json }}
+
+    <dss-input
+      type="percent"
+      label="Percent: "
+      formControlName="percent"
+    ></dss-input>
+    {{ { value: form.controls.percent.value } | json }}
 
     <dss-input
       type="cpf_cnpj"

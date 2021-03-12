@@ -8,7 +8,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ControlContainer, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { NgInputMasksService } from '../../ng-input-masks.service';
+import { NgInputConfigService } from '../../core/ng-input-config.service';
+import { NgInputMasksService } from '../../core/ng-input-masks.service';
 import { InputCustomControlValueAccessor } from '../input-custom-control-value-accessor.domain';
 
 @Component({
@@ -27,6 +28,8 @@ export class NgInputComponent
   extends InputCustomControlValueAccessor
   implements OnInit, AfterViewInit {
   @ViewChild('input', { static: true }) input: ElementRef<HTMLInputElement>;
+  @Input() alignText: 'right' | 'left' | null = null;
+  @Input() allowNegative?: boolean;
   @Input() type:
     | 'text'
     | 'password'
@@ -40,6 +43,7 @@ export class NgInputComponent
     | 'cpf_cnpj'
     | 'rg'
     | 'rg_estadual'
+    | 'percent'
     | 'currency' = 'text';
   typesMask = [
     'tel',
@@ -48,30 +52,42 @@ export class NgInputComponent
     'cpf_cnpj',
     'rg',
     'rg_estadual',
+    'percent',
     'currency',
   ];
 
   isFieldPassword: boolean = false;
   isFieldCurrency: boolean = false;
+  isFieldPercent: boolean = false;
   instance: null | { unmaskedValue?: string; formatToNumber(): void } = null;
 
   constructor(
     private controlContainer: ControlContainer,
-    private masksService: NgInputMasksService
+    private masksService: NgInputMasksService,
+    public configService: NgInputConfigService
   ) {
-    super(controlContainer);
+    super(controlContainer, configService);
   }
 
   ngOnInit() {
     this.ngOnInitSuper();
 
+    if (this.placeholder.length > 0) {
+      this.input.nativeElement.setAttribute('placeholder', this.placeholder);
+    } else {
+      this.input.nativeElement.setAttribute('placeholder', '  ');
+    }
+
     this.isFieldPassword = this.type === 'password';
     if (this.typesMask.includes(this.type)) {
       this.instance = this.masksService.set(
         this.input.nativeElement,
-        this.type as 'currency'
+        this.type as 'currency',
+        this.allowNegative
       );
+
       if (this.type === 'currency') this.isFieldCurrency = true;
+      if (this.type === 'percent') this.isFieldPercent = true;
 
       this.type = 'text';
     }
@@ -80,7 +96,7 @@ export class NgInputComponent
       let { value } = target as HTMLInputElement;
 
       if (this.instance) {
-        value = (this.isFieldCurrency
+        value = (this.isFieldCurrency || this.isFieldPercent
           ? this.instance?.formatToNumber()
           : this.instance?.unmaskedValue) as string;
       }
@@ -95,13 +111,38 @@ export class NgInputComponent
     const instance = this.instance as any;
 
     if (instance)
-      instance.value = this.isFieldCurrency
-        ? this.masksService.format(`${value}`, 'currency')
-        : `${value}`;
+      instance.value =
+        this.isFieldCurrency || this.isFieldPercent
+          ? this.masksService.format(
+              `${value}`,
+              this.isFieldCurrency ? 'currency' : 'percent',
+              this.allowNegative
+            )
+          : `${value}`;
   }
 
   togglePassword() {
     if (this.isFieldPassword)
       this.type = this.type === 'password' ? 'text' : 'password';
+  }
+
+  get className() {
+    const bootstrap = this.theme === 'bootstrap';
+    const validField = this.control.valid && this.control.touched;
+    const invalidField = this.control.invalid && this.control.touched;
+    const align =
+      (this.isFieldCurrency && this.configService.currency.align === 'right') ||
+      (this.isFieldPercent && this.configService.percent.align === 'right');
+    return {
+      'form-control': bootstrap,
+      floating: this.field === 'floating',
+      readonly: this.readonly,
+      'is-invalid': bootstrap && !this.readonly && invalidField,
+      'is-valid': bootstrap && validField,
+      invalid: !bootstrap && !this.readonly && invalidField,
+      valid: !bootstrap && validField,
+      password: this.isFieldPassword,
+      'align-right': align,
+    };
   }
 }

@@ -8,9 +8,7 @@ import { NgInputConfigService } from './ng-input-config.service';
   providedIn: 'root',
 })
 export class NgInputMasksService {
-  constructor(private configService: NgInputConfigService) {
-    SimpleMaskMoney.args = configService.currency;
-  }
+  constructor(private configService: NgInputConfigService) {}
 
   format(
     value: string | number,
@@ -22,10 +20,21 @@ export class NgInputMasksService {
       | 'rg'
       | 'rg_estadual'
       | 'currency'
+      | 'percent',
+    allowNegative?: boolean
   ) {
-    return masks === 'currency'
-      ? SimpleMaskMoney.formatToCurrency(`${value}`.replace('.', ','))
-      : IMask.pipe(value, this[masks as any]);
+    if (masks === 'currency')
+      return SimpleMaskMoney.formatToCurrency(`${value}`.replace('.', ','), {
+        ...this.configService.currency,
+        allowNegative,
+      });
+    if (masks === 'percent')
+      return SimpleMaskMoney.formatToCurrency(`${value}`.replace('.', ','), {
+        ...this.configService.percent,
+        allowNegative,
+      });
+
+    return IMask.pipe(value, this[masks as any]);
   }
 
   set(
@@ -38,10 +47,16 @@ export class NgInputMasksService {
       | 'rg'
       | 'rg_estadual'
       | 'currency'
+      | 'percent',
+    allowNegative?: boolean
   ) {
-    return masks === 'currency'
-      ? SimpleMaskMoney.setMask(element, this.configService.currency)
-      : IMask(element, this[masks]);
+    if (masks === 'currency' || masks === 'percent') {
+      const options = this.configService[masks];
+      if (allowNegative !== undefined) options.allowNegative = allowNegative;
+      return SimpleMaskMoney.setMask(element, options);
+    }
+
+    return IMask(element, this[masks]);
   }
 
   get tel() {
