@@ -1,26 +1,53 @@
-<div
-  class="form-check"
-  [class.form-switch]="type === 'switch'"
-  [class.form-check-inline]="line"
->
-  <input
-    type="checkbox"
-    class="form-check-input"
-    [id]="formControlName"
-    [formControl]="control"
-    [readonly]="readonly"
-    [class.is-invalid]="!readonly && control.invalid && control.touched"
-    [class.readonly]="readonly"
-  />
-  <label [for]="formControlName" class="form-check-label"
-    >{{ label }}
-    <span *ngIf="!readonly && required" class="text-danger">*</span></label
-  >
+<!-- MATERIALIZE -->
+<ng-container *ngIf="configService.theme === 'materialize'; else bootstrap">
+  <ng-template #checkbox>
+    {{ type === "switch" ? prefix : "" }}
+    <input class="filled-in" type="checkbox" />
+    <span [class.lever]="type === 'switch'">{{
+      type !== "switch" ? label : ""
+    }}</span>
+    {{ type === "switch" ? suffix : "" }}
+  </ng-template>
 
-  <!-- MESSAGE ERRORS -->
-  <ng-container *ngFor="let error of errors">
-    <div *ngIf="getError(error, 'key')" class="invalid-feedback">
-      {{ getError(error, "value") }}
+  <ng-container [ngSwitch]="type">
+    <div *ngSwitchCase="'switch'" [class.line]="line" class="switch">
+      <label>
+        <ng-container *ngTemplateOutlet="checkbox"></ng-container>
+      </label>
     </div>
+
+    <label *ngSwitchCase="'checkbox'" [class.block]="!line">
+      <ng-container *ngTemplateOutlet="checkbox"></ng-container>
+    </label>
   </ng-container>
-</div>
+</ng-container>
+
+<!-- BOOTSTRAP -->
+<ng-template #bootstrap>
+  <div
+    class="form-check"
+    [class.form-switch]="type === 'switch'"
+    [class.form-check-inline]="line"
+  >
+    <input
+      type="checkbox"
+      class="form-check-input"
+      [id]="formControlName"
+      [formControl]="control"
+      [readonly]="readonly"
+      [class.is-invalid]="!readonly && control.invalid && control.touched"
+      [class.readonly]="readonly"
+    />
+    <label [for]="formControlName" class="form-check-label"
+      >{{ label }}
+      <span *ngIf="!readonly && required" class="text-danger">*</span></label
+    >
+
+    <!-- MESSAGE ERRORS -->
+    <ng-container *ngFor="let error of errors">
+      <div *ngIf="getError(error, 'key')" class="invalid-feedback">
+        {{ getError(error, "value") }}
+      </div>
+    </ng-container>
+  </div>
+</ng-template>

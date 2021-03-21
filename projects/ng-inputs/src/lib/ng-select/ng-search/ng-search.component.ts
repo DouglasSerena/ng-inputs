@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {
   Component,
   ElementRef,
@@ -44,6 +44,7 @@ export class NgSearchComponent
 
   @Input() notFound: string = 'Sem resultado.';
   @Input() pathLabel = 'label';
+  @Input() valueStart: any = null;
   @Input() options: any[] = [];
   @Input() uri: string | null = null;
   @Input() responseData: string | null = null;
@@ -51,8 +52,6 @@ export class NgSearchComponent
 
   loading = false;
   focused = false;
-  token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE4IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVXN1YXJpbyIsImVtYWlsIjoiZG91Z2xhc0BiaXR0aS5zaXRlIiwibmFtZSI6IkRvdWdsYXMifQ.7UcFfuGvgnJtCjzsqxlhcZHBLMgh0OH2bJpWLYfFL-Y';
 
   constructor(
     protected controlContainer: ControlContainer,
@@ -78,9 +77,7 @@ export class NgSearchComponent
 
       this.loading = true;
       try {
-        const response = await this.httpClient
-          .get(uri, { headers: { Authorization: `Bearer ${this.token}` } })
-          .toPromise();
+        const response = await this.httpClient.get(uri).toPromise();
         this.options = this.responseData
           ? this.getMultiLabels(response, this.responseData.split('.'))
           : response;
@@ -176,9 +173,16 @@ export class NgSearchComponent
 
         const offset = bottom - (button.offsetTop - this.list.scrollTop);
 
-        if (offset < 322) this.list.scroll(0, this.list.scrollTop + 41);
+        if (offset < 360) this.list.scroll(0, this.list.scrollTop + 41);
       },
       Enter: () => {
+        event.preventDefault();
+
+        if (!this.focused) {
+          this.focused = true;
+          return;
+        }
+
         const index = this.options.findIndex((option) => option.dssSelect);
         if (index !== -1) {
           this.focused = false;
@@ -216,9 +220,18 @@ export class NgSearchComponent
     this.focus.emit(event);
   }
 
-  ngOnChanges(params: { options: SimpleChange }) {
-    if (!!params.options && !!params.options.currentValue) {
+  ngOnChanges({
+    options,
+    valueStart,
+  }: {
+    options: SimpleChange;
+    valueStart: SimpleChange;
+  }) {
+    if (!!options && !!options.currentValue) {
       this.format();
+    }
+    if (!!valueStart && !!valueStart.currentValue) {
+      this.inputChange(this.valueStart);
     }
   }
 

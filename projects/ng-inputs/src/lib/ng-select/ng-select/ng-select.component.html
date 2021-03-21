@@ -12,13 +12,18 @@
     (change)="change.emit($event)"
     (blur)="blur.emit($event)"
     (focus)="focus.emit($event)"
+    [class.readonly]="readonly"
+    [tabIndex]="readonly ? '-1' : ''"
     class="form-select"
-    [id]="formControlName"
+    [id]="name"
     [formControl]="control"
-    value=""
     [ngClass]="className"
   >
-    <option *ngFor="let option of options" [value]="option.value">
+    <option
+      *ngFor="let option of options"
+      [hidden]="option.hide"
+      [value]="option.value"
+    >
       {{ option.label }}
     </option>
   </select>

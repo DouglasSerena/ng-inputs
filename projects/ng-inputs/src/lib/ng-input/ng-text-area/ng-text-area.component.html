@@ -8,21 +8,25 @@
   [htmlFor]="formControlName"
 >
   <textarea
+    #textarea
     class="form-control"
-    [placeholder]="placeholder"
-    [id]="formControlName"
+    [id]="name"
     [readonly]="readonly"
     [formControl]="control"
     [cols]="cols"
+    (blur)="blur.emit($event)"
+    (focus)="focus.emit($event)"
     [maxlength]="length"
-    [ngStyle]="{ height: rows + (theme === 'materialize' ? 10 : 100) + 'px' }"
+    [ngStyle]="{
+      height: rows + (configService.theme === 'materialize' ? 10 : 100) + 'px'
+    }"
     [ngClass]="className"
   ></textarea>
 
   <div
-    class="counter badge badge-info"
+    class="counter badge"
     [ngClass]="{
-      floating: field === 'floating' && theme === 'bootstrap',
+      floating: field === 'floating' && configService.theme === 'bootstrap',
       invalid: control.invalid && control.touched,
       errors: this.errors.length > 0
     }"

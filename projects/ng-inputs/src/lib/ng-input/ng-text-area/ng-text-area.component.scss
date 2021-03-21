@@ -24,3 +24,22 @@
 .form-control.floating.is-invalid + label + .counter {
   right: 2rem;
 }
+
+textarea {
+  &:not(.form-control) {
+    box-shadow: none !important;
+    &.password {
+      width: calc(100% - (18px + 16px + 16px));
+      &.invalid + .fa.form-control-feedback {
+        color: #f44336;
+      }
+      &.valid + .fa.form-control-feedback {
+        color: #4caf50;
+      }
+    }
+    & + .fa.form-control-feedback {
+      right: 0;
+      transform: translateY(10px);
+    }
+  }
+}

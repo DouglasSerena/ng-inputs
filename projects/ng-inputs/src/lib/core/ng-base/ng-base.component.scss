@@ -5,7 +5,6 @@
   opacity: 0.6;
   background-color: #3333;
 }
-
 .form-group,
 .form-floating,
 .input-field {
@@ -21,7 +20,19 @@
 }
 
 .input-field {
-  .helper-text {
-    color: #f44336;
+  margin-bottom: 0 !important;
+}
+
+.active-materialize {
+  transform: translateY(-14px) scale(0.8) !important;
+  transform-origin: 0 0 !important;
+}
+
+.message-error {
+  color: #f44336;
+  font-size: 13px;
+  margin-bottom: 5px;
+  i {
+    margin-right: 5px;
   }
 }

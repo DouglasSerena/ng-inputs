@@ -1,8 +1,10 @@
 import {
   Component,
+  EventEmitter,
   HostBinding,
   Input,
   OnInit,
+  Output,
   ViewChild,
 } from '@angular/core';
 import {
@@ -28,9 +30,11 @@ export class InputCustomControlValueAccessor
   formControlDirective: FormControlDirective;
   @Input() formControl: FormControl;
   @Input() formControlName: string;
-  get theme() {
-    return this._configService.theme;
-  }
+  @Input() name: string;
+  @Input() disabled: boolean = false;
+
+  @Output() blur = new EventEmitter();
+  @Output() focus = new EventEmitter();
 
   private _placeholder: string = '';
   get placeholder(): string {
@@ -43,6 +47,7 @@ export class InputCustomControlValueAccessor
   @Input() label: string = '';
   _cols: { default: number; lg?: number; md?: number; sm?: number } = {
     default: 12,
+    sm: 12,
   };
   @Input() set cols(cols: {
     default?: number;
@@ -58,7 +63,9 @@ export class InputCustomControlValueAccessor
     this._field = value;
   }
   get field() {
-    return this._field ? this._field : this._configService.field;
+    return this._field
+      ? this._field
+      : (this._configService.field.type as 'group' | 'floating');
   }
 
   @Input() readonly: boolean = false;
@@ -74,10 +81,25 @@ export class InputCustomControlValueAccessor
   }
 
   @HostBinding('class') get classCols() {
-    let className = `col-${this._cols.default}`;
-    if (this._cols.lg) className = `col-lg-${this._cols.lg}`;
-    if (this._cols.md) className = `col-md-${this._cols.md}`;
-    if (this._cols.sm) className = `col-sm-${this._cols.sm}`;
+    let className =
+      this._configService.theme === 'bootstrap'
+        ? `col-${this._cols.default}`
+        : `col`;
+    if (this._cols.lg)
+      className +=
+        this._configService.theme === 'bootstrap'
+          ? ` col-lg-${this._cols.lg}`
+          : ` lg${this._cols.lg}`;
+    if (this._cols.md)
+      className +=
+        this._configService.theme === 'bootstrap'
+          ? ` col-md-${this._cols.md}`
+          : ` m${this._cols.md}`;
+    if (this._cols.sm)
+      className +=
+        this._configService.theme === 'bootstrap'
+          ? ` col-sm-${this._cols.sm}`
+          : ` s${this._cols.sm}`;
     return className;
   }
 
@@ -88,13 +110,18 @@ export class InputCustomControlValueAccessor
 
   ngOnInit() {
     this.ngOnInitSuper();
+    if (this.disabled) this.control.disable();
+    else this.control.enable();
   }
 
   protected ngOnInitSuper() {
-    this.required = this.control.errors?.required;
-    if (!this.required)
-      this.required =
-        this.errors.find((error) => !!error['required']) != undefined;
+    if (!this.name) this.name = this.name = this.formControlName;
+    if (!this.required) {
+      this.required = this.control.errors?.required;
+      if (!this.required)
+        this.required =
+          this.errors.find((error) => !!error['required']) != undefined;
+    }
   }
 
   getError(error: IObject, value: 'key' | 'value') {
@@ -119,7 +146,6 @@ export class InputCustomControlValueAccessor
   }
 
   setDisabledState(isDisabled: boolean): void {
-    const disabled = this.formControlDirective.valueAccessor?.setDisabledState;
-    disabled && disabled(isDisabled);
+    this.disabled = isDisabled;
   }
 }

@@ -6,23 +6,40 @@
   [label]="label"
   [control]="control"
   [errors]="errors"
+  [activeLabel]="!!icon || !!iconImage"
 >
   <input
     #input
     [type]="type"
-    [id]="formControlName"
+    [id]="name"
+    [autocomplete]="autocomplete"
     [formControl]="control"
+    (blur)="blur.emit($event)"
+    (focus)="focus.emit($event)"
     [readonly]="readonly"
     [ngClass]="className"
     [ngStyle]="{ 'text-align': alignText }"
   />
   <i
+    (click)="onClickIcon.emit($event)"
     (click)="togglePassword()"
-    *ngIf="isFieldPassword"
-    class="fa cursor-pointer form-control-feedback"
+    *ngIf="isFieldPassword && hideEye === false && !icon && !iconImage"
+    class="cursor-pointer form-control-feedback"
     [ngClass]="{
-      'fa-eye': type === 'password',
-      'fa-eye-slash': type === 'text'
+      'fa fa-eye': type === 'password',
+      'fas fa-eye-slash': type === 'text'
     }"
   ></i>
+
+  <!-- IMAGE BACKGROUND -->
+  <i
+    (click)="onClickIcon.emit($event)"
+    *ngIf="!!iconImage && !icon"
+    class="form-control-feedback background-image"
+    role="img"
+    [ngStyle]="iconImage"
+  ></i>
+
+  <!-- ICON -->
+  <i (click)="onClickIcon.emit($event)" *ngIf="icon" [class]="icon"></i>
 </dss-ng-base>

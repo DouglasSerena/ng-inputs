@@ -13,6 +13,12 @@ import { NgInputConfigService } from '../../core/ng-input-config.service';
 import { SelectCustomControlValueAccessor } from '../select-custom-control-value-accessor.domain';
 import { FormSelect } from 'materialize-css';
 
+interface IOption {
+  label: string;
+  value: string;
+  hide?: boolean;
+}
+
 @Component({
   selector: 'dss-select',
   templateUrl: './ng-select.component.html',
@@ -32,15 +38,19 @@ export class NgSelectComponent
   elementSelect: ElementRef<HTMLSelectElement>;
   selectMaterialize: FormSelect | null;
 
-  @Input() labelDefault: string = 'Selecione uma opção';
-  @Input() options?: any | { label: string; value: string }[] = [];
+  @Input() optionDefault: IOption = {
+    label: 'Selecione uma opção',
+    value: '',
+    hide: true,
+  };
+  @Input() options?: any | IOption[] = [];
   @Input() path?: { [key: string]: string };
 
   constructor(
     protected controlContainer: ControlContainer,
     protected elementRef: ElementRef,
     protected renderer: Renderer2,
-    private configService: NgInputConfigService
+    public configService: NgInputConfigService
   ) {
     super(controlContainer, elementRef, renderer, configService);
     this.formatOptions();
@@ -54,15 +64,15 @@ export class NgSelectComponent
     if (!!params.options && !!params.options.currentValue) {
       this.formatOptions();
 
-      this.updateSelect();
+      if (this.configService.theme === 'materialize') {
+        this.updateSelect();
+      }
     }
   }
 
   updateSelect() {
-    if (this.theme === 'materialize') {
-      if (this.selectMaterialize) this.selectMaterialize.destroy();
-      this.initSelect();
-    }
+    if (this.selectMaterialize) this.selectMaterialize.destroy();
+    this.initSelect();
   }
 
   initSelect() {
@@ -74,31 +84,37 @@ export class NgSelectComponent
   }
 
   formatOptions() {
-    const option: any[] = [];
-    option.push({ label: this.labelDefault, value: '' });
+    if (this.options.length > 0) {
+      const option: IOption[] = [];
+      option.push(this.optionDefault);
 
-    const isValid =
-      this.options.length > 0 &&
-      (typeof this.options[0].label !== 'string' ||
-        typeof this.options[0].value !== 'string');
+      const optionRef = this.options[0];
+      if (
+        typeof optionRef?.label === 'string' &&
+        typeof optionRef?.value === 'string'
+      ) {
+        this.options?.forEach((opt: any) => option?.push(opt));
+      } else {
+        if (this.path) {
+          const key = Object.keys(this.path)[0];
+          const value = this.path[key];
 
-    if (!!this.path && this.options.length > 0 && isValid) {
-      const key = Object.keys(this.path)[0];
-      const value = this.path[key];
+          this.options?.forEach((opt: any) =>
+            option?.push({
+              label: this.getMultiLabels(opt, key.split('.')),
+              value: this.getMultiLabels(opt, value.split('.')),
+              hide: false,
+            })
+          );
+        }
+      }
 
-      this.options?.forEach((opt: any) =>
-        option?.push({
-          label: this.getMultiLabels(opt, key.split('.')),
-          value: this.getMultiLabels(opt, value.split('.')),
-        })
-      );
+      this.options = option;
     }
-
-    this.options = option;
   }
 
   get className() {
-    const bootstrap = this.theme === 'bootstrap';
+    const bootstrap = this.configService.theme === 'bootstrap';
     const validField = this.control.valid && this.control.touched;
     const invalidField = this.control.invalid && this.control.touched;
     return {

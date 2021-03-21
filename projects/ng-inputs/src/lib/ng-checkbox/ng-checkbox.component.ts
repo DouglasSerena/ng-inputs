@@ -2,6 +2,7 @@ import {
   Component,
   ElementRef,
   forwardRef,
+  HostBinding,
   Input,
   Renderer2,
   ViewChild,
@@ -13,6 +14,7 @@ import {
   FormControlDirective,
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
+import { NgInputConfigService } from './../core/ng-input-config.service';
 
 interface IObject {
   [key: string]: string;
@@ -44,10 +46,48 @@ export class NgCheckboxComponent extends CheckboxControlValueAccessor {
 
   @Input() errors: IObject[] = [];
 
+  @Input() suffix: string = '';
+  @Input() prefix: string = '';
+
+  _cols: { default: number; lg?: number; md?: number; sm?: number } = {
+    default: 12,
+  };
+  @Input() set cols(cols: {
+    default?: number;
+    lg?: number;
+    md?: number;
+    sm?: number;
+  }) {
+    this._cols = { ...this._cols, ...cols };
+  }
+  @HostBinding('class') get classCols() {
+    let className =
+      this.configService.theme === 'bootstrap'
+        ? `col-${this._cols.default}`
+        : `col`;
+    if (this._cols.lg)
+      className +=
+        this.configService.theme === 'bootstrap'
+          ? ` col-lg-${this._cols.lg}`
+          : ` lg${this._cols.lg}`;
+    if (this._cols.md)
+      className +=
+        this.configService.theme === 'bootstrap'
+          ? ` col-md-${this._cols.md}`
+          : ` m${this._cols.md}`;
+    if (this._cols.sm)
+      className +=
+        this.configService.theme === 'bootstrap'
+          ? ` col-sm-${this._cols.sm}`
+          : ` s${this._cols.sm}`;
+    return className;
+  }
+
   constructor(
     private controlContainer: ControlContainer,
     private elementRef: ElementRef,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    public configService: NgInputConfigService
   ) {
     super(renderer, elementRef);
     this.readonly = false;

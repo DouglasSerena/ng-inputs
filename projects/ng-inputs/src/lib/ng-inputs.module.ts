@@ -1,5 +1,4 @@
 import { InjectionToken, ModuleWithProviders, NgModule } from '@angular/core';
-import { InputCustomControlValueAccessor } from './ng-input/input-custom-control-value-accessor.domain';
 
 import {
   NgInputConfigService,

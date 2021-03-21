@@ -4,12 +4,24 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class NgInputConfigService {
-  private _field: 'floating' | 'group' = 'floating';
+  private _field: IField = {
+    type: 'group',
+    alignIcons: 'left',
+    icons: {
+      password: {
+        align: 'right',
+      },
+    },
+  };
   get field() {
     return this._field;
   }
-  set field(value: 'floating' | 'group') {
-    this._field = value;
+  set field(value: IField) {
+    this._field = {
+      ...this._field,
+      ...value,
+      icons: { ...this._field.icons, ...value.icons },
+    };
   }
 
   private _theme: 'bootstrap' | 'materialize' = 'bootstrap';
@@ -78,11 +90,22 @@ export class NgInputConfigService {
 }
 
 export interface INgInputConfig {
+  field?: IField;
   theme?: 'bootstrap' | 'materialize';
-  field?: 'floating' | 'group';
   currency?: ISimplesMaskMoney;
   percent?: ISimplesMaskMoney;
   environments?: IEnvironments;
+}
+
+interface IField {
+  type?: 'floating' | 'group';
+  alignIcons?: 'right' | 'left';
+  icons?: {
+    [key: string]: {
+      icon?: string;
+      align?: 'left' | 'right';
+    };
+  };
 }
 
 interface IEnvironments {

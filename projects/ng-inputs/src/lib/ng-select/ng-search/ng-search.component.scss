@@ -113,5 +113,11 @@
     &::-webkit-scrollbar-thumb {
       background-color: darkgrey;
     }
+    .list-group-item {
+      height: 42px !important;
+      margin: 0 !important;
+      padding: 0.5rem 1rem !important;
+      border: 1px solid rgba(0, 0, 0, 0.125) !important;
+    }
   }
 }

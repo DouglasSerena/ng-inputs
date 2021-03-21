@@ -22,11 +22,12 @@
     #inputSearch
     type="search"
     [placeholder]="_placeholder"
-    [id]="formControlName"
+    [id]="name"
     [formControl]="control"
     [readonly]="readonly"
     class="form-control"
     autocomplete="off"
+    autocapitalize="off"
     (blur)="onBlur($event)"
     (focus)="onFocus($event)"
     [ngClass]="{

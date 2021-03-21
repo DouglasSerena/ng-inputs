@@ -10,6 +10,7 @@ export class AppComponent implements OnInit {
   form: FormGroup;
   title = 'tmp';
   option: any = [];
+  valueStart: any = null;
 
   constructor(private formBuilder: FormBuilder) {}
 
@@ -19,14 +20,17 @@ export class AppComponent implements OnInit {
 
     this.form = this.formBuilder.group({
       name: ['', [Validators.required]],
-      email: ['dwadwa', [Validators.required, Validators.email]],
+      email: [
+        { value: '', disabled: false },
+        [Validators.required, Validators.email],
+      ],
       password: ['', [Validators.required]],
-      currency: [23212, [Validators.required]],
-      percent: [23212, [Validators.required]],
+      currency: ['', [Validators.required]],
+      percent: ['', [Validators.required]],
       date: ['', [Validators.required]],
-      cpf_cnpj: ['00000000000'],
+      cpf_cnpj: [''],
       state: ['', [Validators.required]],
-      city: ['', [Validators.required]],
+      city: ['1', [Validators.required]],
       accept: ['', [Validators.required]],
       dark: ['', [Validators.required]],
       description: ['', [Validators.required]],
@@ -35,10 +39,16 @@ export class AppComponent implements OnInit {
 
     await debounce(2000);
 
+    this.form.controls.cpf_cnpj.setValue('00000000000');
+
     this.option = [
       { label: { value: 'Rio grande do sul' }, value: { id: 1 } },
       { label: { value: 'Rio de janeira' }, value: { id: 2 } },
       { label: { value: 'São paulo' }, value: { id: 3 } },
     ];
+  }
+
+  testEvent(event: any) {
+    console.log(event);
   }
 }

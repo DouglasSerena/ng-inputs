@@ -17,8 +17,9 @@ export class NgBaseComponent implements OnInit {
   @Input() required: boolean = false;
   @Input() label: string = '';
   @Input() htmlFor: string = '';
-  @Input() control: null | FormControl = null;
+  @Input() control: FormControl | null = null;
   @Input() errors: IObject[] = [];
+  @Input() activeLabel: boolean = false;
 
   get theme() {
     return this.configService.theme;
