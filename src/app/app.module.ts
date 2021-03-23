@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgInputsModule } from 'projects/ng-inputs/src/public-api';
 
@@ -26,7 +25,6 @@ import { AppComponent } from './app.component';
         url: 'http://api-sandbox2.construtoramontebello.net.br/api/financeiro',
       },
       currency: { prefix: 'R$' },
-      theme: 'materialize',
     }),
   ],
   providers: [],

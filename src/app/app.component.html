@@ -28,6 +28,14 @@
     {{ { value: form.controls.password.value } | json }}
 
     <dss-input
+      type="percent"
+      label="Percent: "
+      formControlName="percent"
+    ></dss-input>
+    {{ { value: form.controls.percent.value } | json }}
+    {{ form.controls.percent.value | dssMask: "percent" }}
+
+    <dss-input
       type="date"
       label="Current date: "
       formControlName="date"
@@ -41,13 +49,7 @@
       formControlName="currency"
     ></dss-input>
     {{ { value: form.controls.currency.value } | json }}
-
-    <dss-input
-      type="percent"
-      label="Percent: "
-      formControlName="percent"
-    ></dss-input>
-    {{ { value: form.controls.percent.value } | json }}
+    {{ form.controls.currency.value | dssMask: "currency" }}
 
     <dss-select
       label="State: "
