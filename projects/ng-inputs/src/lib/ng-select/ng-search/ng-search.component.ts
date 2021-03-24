@@ -44,7 +44,7 @@ export class NgSearchComponent
 
   @Input() notFound: string = 'Sem resultado.';
   @Input() pathLabel = 'label';
-  @Input() valueStart: any = null;
+  @Input() value: any = null;
   @Input() options: any[] = [];
   @Input() uri: string | null = null;
   @Input() responseData: string | null = null;
@@ -222,16 +222,16 @@ export class NgSearchComponent
 
   ngOnChanges({
     options,
-    valueStart,
+    value,
   }: {
     options: SimpleChange;
-    valueStart: SimpleChange;
+    value: SimpleChange;
   }) {
     if (!!options && !!options.currentValue) {
       this.format();
     }
-    if (!!valueStart && !!valueStart.currentValue) {
-      this.inputChange(this.valueStart);
+    if (!!value && !!value.currentValue) {
+      this.inputChange(this.value);
     }
   }
 

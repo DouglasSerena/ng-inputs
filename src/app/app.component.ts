@@ -10,7 +10,7 @@ export class AppComponent implements OnInit {
   form: FormGroup;
   title = 'tmp';
   option: any = [];
-  valueStart: any = null;
+  valueStart: any = { pessoa: null };
 
   constructor(private formBuilder: FormBuilder) {}
 

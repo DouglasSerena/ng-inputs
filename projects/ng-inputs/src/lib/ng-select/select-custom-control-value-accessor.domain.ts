@@ -135,8 +135,8 @@ export class SelectCustomControlValueAccessor
     const rest = label.splice(1, label.length - 1);
 
     return lastLabel.length === 1
-      ? labels[lastLabel[0]]
-      : this.getMultiLabels(labels[lastLabel[0]], rest);
+      ? labels?.[lastLabel[0]]
+      : this.getMultiLabels(labels?.[lastLabel[0]], rest);
   }
 
   getError(error: IObject, value: 'key' | 'value') {
