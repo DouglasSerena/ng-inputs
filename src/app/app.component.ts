@@ -34,12 +34,14 @@ export class AppComponent implements OnInit {
       accept: ['', [Validators.required]],
       dark: ['', [Validators.required]],
       description: ['', [Validators.required]],
+      rg_estadual: [''],
       client: [''],
     });
 
     await debounce(2000);
 
     this.form.controls.cpf_cnpj.setValue('00000000000');
+    this.form.controls.rg_estadual.setValue('00000000000');
     this.form.controls.currency.setValue(12123.123);
 
     this.option = [

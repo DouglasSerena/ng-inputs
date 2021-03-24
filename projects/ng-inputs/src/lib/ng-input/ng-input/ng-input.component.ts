@@ -29,7 +29,7 @@ import { ITypeInputProps, typeInputsProps } from './typesInput';
 })
 export class NgInputComponent
   extends InputCustomControlValueAccessor
-  implements OnInit, AfterViewInit {
+  implements OnInit {
   @ViewChild('input', { static: true }) input: ElementRef<HTMLInputElement>;
   @Input() alignText: 'right' | 'left' | null = null;
   @Input() allowNegative?: boolean;
@@ -56,6 +56,7 @@ export class NgInputComponent
     'currency',
     'cep',
   ];
+  typeInit: string = 'text';
 
   _alignIcon: 'align-icon-right' | 'align-icon-left' = this.configService.field
     .alignIcons
@@ -105,6 +106,7 @@ export class NgInputComponent
 
   ngOnInit() {
     this.ngOnInitSuper();
+    this.typeInit = this.type;
 
     if (this.placeholder.length > 0) {
       this.input.nativeElement.setAttribute('placeholder', this.placeholder);
@@ -156,46 +158,30 @@ export class NgInputComponent
     });
   }
 
-  ngAfterViewInit() {
-    let value = this.control.value;
-
-    const instance = this.instance as any;
-
-    if (instance) {
-      instance.value =
-        this.isFieldCurrency || this.isFieldPercent
-          ? this.masksService.format(
-              `${value}`,
-              this.isFieldCurrency ? 'currency' : 'percent',
-              { allowNegative: this.allowNegative }
-            )
-          : `${value}`;
-      setTimeout(() => {
-        this.input.nativeElement.blur();
-        this.control.markAsUntouched();
-      }, 1);
-    }
-  }
-
   togglePassword() {
     if (this.isFieldPassword)
       this.type = this.type === 'password' ? 'text' : 'password';
   }
 
   writeValue(obj: any): void {
-    this.input.nativeElement.focus();
-
     setTimeout(() => {
-      if (this.isFieldCurrency || this.isFieldPercent) {
-        this.input.nativeElement.value = this.masksService.format(
-          `${obj}`,
-          this.isFieldCurrency ? 'currency' : 'percent',
-          { allowNegative: this.allowNegative }
-        );
+      if (this.typesMask.includes(this.typeInit)) {
+        if (this.isFieldCurrency || this.isFieldPercent) {
+          this.input.nativeElement.value = this.masksService.format(
+            `${obj}`,
+            this.isFieldCurrency ? 'currency' : 'percent',
+            { allowNegative: this.allowNegative, mask: this.mask }
+          );
+        } else {
+          this.input.nativeElement.value = this.masksService.format(
+            `${obj}`,
+            this.typeInit as 'currency',
+            { allowNegative: this.allowNegative, mask: this.mask }
+          );
+        }
+        this.input.nativeElement.blur();
+        this.control.markAsUntouched();
       }
-
-      this.input.nativeElement.blur();
-      this.control.markAsUntouched();
     }, 1);
   }
 

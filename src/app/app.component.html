@@ -72,6 +72,13 @@
     ></dss-input>
     {{ { value: form.controls.cpf_cnpj.value } | json }}
 
+    <dss-input
+      type="rg_estadual"
+      label="Rg Estadual: "
+      formControlName="rg_estadual"
+    ></dss-input>
+    {{ { value: form.controls.rg_estadual.value } | json }}
+
     <dss-search
       formControlName="client"
       pathLabel="pessoa.razaoSocial"
