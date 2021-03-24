@@ -170,15 +170,33 @@ export class NgInputComponent
               { allowNegative: this.allowNegative }
             )
           : `${value}`;
-      if (instance instanceof HTMLInputElement) instance.blur();
+      setTimeout(() => {
+        this.input.nativeElement.blur();
+        this.control.markAsUntouched();
+      }, 1);
     }
-
-    this.control.markAsUntouched();
   }
 
   togglePassword() {
     if (this.isFieldPassword)
       this.type = this.type === 'password' ? 'text' : 'password';
+  }
+
+  writeValue(obj: any): void {
+    this.input.nativeElement.focus();
+
+    setTimeout(() => {
+      if (this.isFieldCurrency || this.isFieldPercent) {
+        this.input.nativeElement.value = this.masksService.format(
+          `${obj}`,
+          this.isFieldCurrency ? 'currency' : 'percent',
+          { allowNegative: this.allowNegative }
+        );
+      }
+
+      this.input.nativeElement.blur();
+      this.control.markAsUntouched();
+    }, 1);
   }
 
   get className() {

@@ -53,7 +53,7 @@ input {
     box-shadow: none !important;
     &.align-icon-right,
     &.align-icon-left {
-      width: calc(100% - (18px + 16px + 26px));
+      width: calc(100% - (18px + 16px + 32px));
       &.invalid + .fa.form-control-feedback {
         color: #f44336;
       }

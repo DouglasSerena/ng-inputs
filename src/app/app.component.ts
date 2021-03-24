@@ -40,6 +40,7 @@ export class AppComponent implements OnInit {
     await debounce(2000);
 
     this.form.controls.cpf_cnpj.setValue('00000000000');
+    this.form.controls.currency.setValue(12123.123);
 
     this.option = [
       { label: { value: 'Rio grande do sul' }, value: { id: 1 } },
