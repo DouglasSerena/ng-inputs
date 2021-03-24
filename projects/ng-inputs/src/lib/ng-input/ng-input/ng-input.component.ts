@@ -163,8 +163,10 @@ export class NgInputComponent
       this.type = this.type === 'password' ? 'text' : 'password';
   }
 
+  time: any = 0;
   writeValue(obj: any): void {
-    setTimeout(() => {
+    clearTimeout(this.time);
+    this.time = setTimeout(() => {
       if (this.typesMask.includes(this.typeInit)) {
         if (this.isFieldCurrency || this.isFieldPercent) {
           this.input.nativeElement.value = this.masksService.format(
@@ -182,7 +184,7 @@ export class NgInputComponent
         this.input.nativeElement.blur();
         this.control.markAsUntouched();
       }
-    }, 1);
+    }, 250);
   }
 
   get className() {
