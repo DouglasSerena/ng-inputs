@@ -42,7 +42,10 @@ export class AppComponent implements OnInit {
 
     this.form.controls.cpf_cnpj.setValue('00000000000');
     this.form.controls.rg_estadual.setValue('00000000000');
-    this.form.controls.currency.setValue(12123.123);
+
+    const value = 15000.01230 + 0.0 + 0.0 - 0.0;
+
+    this.form.controls.currency.setValue(value.toFixed(2));
 
     this.option = [
       { label: { value: 'Rio grande do sul' }, value: { id: 1 } },

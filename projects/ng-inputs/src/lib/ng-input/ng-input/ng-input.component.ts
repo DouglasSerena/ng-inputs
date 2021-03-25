@@ -10,6 +10,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ControlContainer, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { InputMask } from 'imask';
 import { NgInputConfigService } from '../../core/ng-input-config.service';
 import { NgInputMasksService } from '../../core/ng-input-masks.service';
 import { InputCustomControlValueAccessor } from '../input-custom-control-value-accessor.domain';
@@ -169,6 +170,7 @@ export class NgInputComponent
     this.time = setTimeout(() => {
       if (this.typesMask.includes(this.typeInit)) {
         if (this.isFieldCurrency || this.isFieldPercent) {
+          obj = parseFloat(Number(`${obj}`).toFixed(2));
           this.input.nativeElement.value = this.masksService.format(
             `${obj}`,
             this.isFieldCurrency ? 'currency' : 'percent',
@@ -180,6 +182,7 @@ export class NgInputComponent
             this.typeInit as 'currency',
             { allowNegative: this.allowNegative, mask: this.mask }
           );
+          ((this.instance as unknown) as InputMask<any>)?.updateValue();
         }
         this.input.nativeElement.blur();
         this.control.markAsUntouched();

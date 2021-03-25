@@ -24,8 +24,8 @@ import { AppComponent } from './app.component';
       environments: {
         url: 'http://api-sandbox2.construtoramontebello.net.br/api/financeiro',
       },
-      currency: { prefix: 'R$' },
-      theme: 'materialize',
+      currency: { prefix: '' },
+      // theme: 'materialize',
     }),
   ],
   providers: [],
