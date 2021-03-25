@@ -71,7 +71,7 @@ export class SelectCustomControlValueAccessor
   @Input() readonly: boolean = false;
   @Input() required: boolean = false;
 
-  @Input() errors: IObject[] = [];
+  @Input() errors: IObject = {};
 
   get control() {
     return (
@@ -122,8 +122,7 @@ export class SelectCustomControlValueAccessor
     if (!this.required) {
       this.required = this.control.errors?.required;
       if (!this.required)
-        this.required =
-          this.errors.find((error) => !!error['required']) != undefined;
+        this.required = Object.keys(this.errors).includes('required');
     }
 
     if (this.disabled) this.control.disable();
@@ -139,12 +138,11 @@ export class SelectCustomControlValueAccessor
       : this.getMultiLabels(labels?.[lastLabel[0]], rest);
   }
 
-  getError(error: IObject, value: 'key' | 'value') {
-    const key = Object.keys(error)[0];
-
-    return value === 'key'
-      ? this.control.errors && this.control.errors[key]
-      : error[key];
+  getKeys(errors: IObject) {
+    return Object.keys(errors);
+  }
+  getError(key: string) {
+    return this.control?.errors?.[key] && this.control?.touched;
   }
 
   registerOnTouched(fn: any): void {

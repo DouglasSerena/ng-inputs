@@ -18,7 +18,7 @@ export class NgBaseComponent implements OnInit {
   @Input() label: string = '';
   @Input() htmlFor: string = '';
   @Input() control: FormControl | null = null;
-  @Input() errors: IObject[] = [];
+  @Input() errors: IObject = {};
   @Input() activeLabel: boolean = false;
 
   get theme() {
@@ -29,11 +29,10 @@ export class NgBaseComponent implements OnInit {
 
   ngOnInit() {}
 
-  getError(error: IObject, value: 'key' | 'value') {
-    const key = Object.keys(error)[0];
-
-    return value === 'key'
-      ? this.control?.errors && this.control?.errors[key]
-      : error[key];
+  getKeys(errors: IObject) {
+    return Object.keys(errors);
+  }
+  getError(key: string) {
+    return this.control?.errors?.[key] && this.control?.touched;
   }
 }

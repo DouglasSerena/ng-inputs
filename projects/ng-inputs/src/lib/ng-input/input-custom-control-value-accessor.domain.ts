@@ -71,7 +71,7 @@ export class InputCustomControlValueAccessor
   @Input() readonly: boolean = false;
   @Input() required: boolean = false;
 
-  @Input() errors: IObject[] = [];
+  @Input() errors: IObject = {};
 
   get control() {
     return (
@@ -119,17 +119,15 @@ export class InputCustomControlValueAccessor
     if (!this.required) {
       this.required = this.control.errors?.required;
       if (!this.required)
-        this.required =
-          this.errors.find((error) => !!error['required']) != undefined;
+        this.required = Object.keys(this.errors).includes('required');
     }
   }
 
-  getError(error: IObject, value: 'key' | 'value') {
-    const key = Object.keys(error)[0];
-
-    return value === 'key'
-      ? this.control.errors && this.control.errors[key]
-      : error[key];
+  getKeys(errors: IObject) {
+    return Object.keys(errors);
+  }
+  getError(key: string) {
+    return this.control?.errors?.[key] && this.control?.touched;
   }
 
   registerOnTouched(fn: any): void {

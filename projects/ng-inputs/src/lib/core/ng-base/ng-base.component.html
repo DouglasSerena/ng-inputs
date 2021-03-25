@@ -25,8 +25,8 @@
   </ng-container>
 </div>
 <!-- MESSAGE ERRORS -->
-<ng-container *ngFor="let error of errors">
-  <div *ngIf="getError(error, 'key') && control?.touched" class="message-error">
-    <i class="fas fa-exclamation-circle"></i>{{ getError(error, "value") }}
+<ng-container *ngFor="let error of getKeys(errors)">
+  <div *ngIf="getError(error)" class="message-error">
+    <i class="fas fa-exclamation-circle"></i>{{ errors[error] }}
   </div>
 </ng-container>

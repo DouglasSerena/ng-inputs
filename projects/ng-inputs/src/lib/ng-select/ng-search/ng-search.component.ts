@@ -199,10 +199,7 @@ export class NgSearchComponent
     this.required = this.control.errors?.required;
 
     if (!this.required)
-      this.required =
-        this.errors.find((errors) => {
-          return errors.type === 'required';
-        }) != undefined;
+      this.required = Object.keys(this.errors).includes('required');
     this.format();
   }
 

@@ -6,7 +6,7 @@
       (focus)="testEvent($event)"
       formControlName="name"
       placeholder="Full name"
-      [errors]="[{ required: 'Campo obrigatório.' }]"
+      [errors]="{ required: 'Campo obrigatório.' }"
     ></dss-input>
     {{ { value: form.controls.name.value } | json }}
 
@@ -16,6 +16,7 @@
       formControlName="email"
       alignIcon="left"
       iconImage="/assets/brands/visa.png"
+      [errors]="{ required: 'Campo obrigatório.', email: 'Email invalid.' }"
     ></dss-input>
     {{ { value: form.controls.email.value } | json }}
 
@@ -23,7 +24,7 @@
       type="password"
       label="password: "
       formControlName="password"
-      [errors]="[{ required: 'Errro' }]"
+      [errors]="{ required: 'Errro' }"
     ></dss-input>
     {{ { value: form.controls.password.value } | json }}
 
