@@ -9,6 +9,5 @@
   ],
   "lib": {
     "entryFile": "src/public-api.ts"
-  },
-  "assets": ["./assets"]
+  }
 }

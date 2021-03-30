@@ -11,10 +11,17 @@
 .background-image {
   position: absolute;
 
-  padding: 11px;
+  padding: 8px;
   border-radius: 50%;
 
-  bottom: 0;
+  bottom: 3px;
+  &.clickable {
+    transition: 250ms;
+    &:hover {
+      background-color: #3332;
+      cursor: pointer;
+    }
+  }
 }
 input {
   &[type="date"],
@@ -90,21 +97,25 @@ input {
 
     & + .form-control-feedback,
     & + .background-image {
-      width: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 33px;
       bottom: 22px;
     }
     &.align-icon-right {
       padding-right: 50px !important;
       & + .form-control-feedback,
       & + .background-image {
-        right: 0;
+        right: 8px;
       }
     }
     &.align-icon-left {
       padding-left: 50px !important;
       & + .form-control-feedback,
       & + .background-image {
-        left: 0;
+        left: 8px;
       }
     }
   }

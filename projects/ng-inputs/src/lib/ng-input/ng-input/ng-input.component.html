@@ -21,25 +21,32 @@
     [ngStyle]="{ 'text-align': alignText }"
   />
   <i
-    (click)="onClickIcon.emit($event)"
+    (click)="clickIcon($event)"
     (click)="togglePassword()"
-    *ngIf="isFieldPassword && hideEye === false && !icon && !iconImage"
+    *ngIf="iconClickable && isFieldPassword && !hideEye && !icon && !iconImage"
     class="cursor-pointer form-control-feedback"
     [ngClass]="{
       'fa fa-eye': type === 'password',
-      'fas fa-eye-slash': type === 'text'
+      'fas fa-eye-slash': type === 'text',
+      clickable: iconClickable
     }"
   ></i>
 
   <!-- IMAGE BACKGROUND -->
   <i
-    (click)="onClickIcon.emit($event)"
+    (click)="clickIcon($event)"
     *ngIf="!!iconImage && !icon"
     class="form-control-feedback background-image"
     role="img"
     [ngStyle]="iconImage"
+    [class.clickable]="iconClickable"
   ></i>
 
   <!-- ICON -->
-  <i (click)="onClickIcon.emit($event)" *ngIf="icon" [class]="icon"></i>
+  <i
+    (click)="clickIcon($event)"
+    [class.clickable]="iconClickable"
+    *ngIf="icon"
+    [class]="icon"
+  ></i>
 </dss-ng-base>

@@ -66,6 +66,7 @@ export class NgInputComponent
 
   @Output() onClickIcon = new EventEmitter();
 
+  @Input() iconClickable: null | boolean = null;
   private _icon: string | null = null;
   @Input() set icon(icon: string | null) {
     this._icon = `form-control-feedback ${icon}`;
@@ -130,14 +131,25 @@ export class NgInputComponent
 
     if (this.icon === null && this.configService.field.icons) {
       if (this.configService.field.icons[this.type]) {
-        if (this.configService.field.icons[this.type].icon)
+        if (this.configService.field.icons[this.type].icon) {
           this.icon = this.configService.field.icons[this.type].icon as any;
-        if (this.configService.field.icons[this.type].align)
+        }
+        if (this.configService.field.icons[this.type].align) {
           this.alignIcon = this.configService.field.icons[this.type].align as
             | 'left'
             | 'right';
+        }
+        if (
+          this.iconClickable === null &&
+          this.configService.field.icons[this.type].clickable
+        ) {
+          this.iconClickable = this.configService.field.icons[this.type]
+            .clickable as boolean;
+        }
       }
     }
+
+    console.log(this.iconClickable);
 
     if (!typeInputsProps.includes(this.type)) this.type = 'text';
 
@@ -157,6 +169,12 @@ export class NgInputComponent
 
       this.onWrite(value);
     });
+  }
+
+  clickIcon(event: Event) {
+    if (this.iconClickable) {
+      this.onClickIcon.emit(event);
+    }
   }
 
   togglePassword() {

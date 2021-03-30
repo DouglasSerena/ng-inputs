@@ -104,6 +104,8 @@ export class NgSelectComponent
       'is-valid': bootstrap && validField,
       invalid: !bootstrap && !this.readonly && invalidField,
       valid: !bootstrap && validField,
+      'form-select': bootstrap,
+      'browser-default': !bootstrap,
     };
   }
 }

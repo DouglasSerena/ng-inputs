@@ -10,6 +10,7 @@ export class NgInputConfigService {
     icons: {
       password: {
         align: 'right',
+        clickable: true,
       },
     },
   };
@@ -104,6 +105,7 @@ interface IField {
     [key: string]: {
       icon?: string;
       align?: 'left' | 'right';
+      clickable?: boolean;
     };
   };
 }

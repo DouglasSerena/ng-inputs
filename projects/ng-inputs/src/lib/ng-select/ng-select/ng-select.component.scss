@@ -3,20 +3,43 @@
   pointer-events: none;
   touch-action: none;
 }
-select {
-  appearance: none;
-  background: url("/assets/dss-arrow-down.svg") no-repeat;
-  background-position: 100% center;
+dss-ng-base {
+  .browser-default {
+    appearance: none;
+    background: url("data:image/svg+xml;base64,PHN2ZyBjbGFzcz0iY2FyZXQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjI0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik03IDEwbDUgNSA1LTV6Ij48L3BhdGg+PHBhdGggZD0iTTAgMGgyNHYyNEgweiIgZmlsbD0ibm9uZSI+PC9wYXRoPjwvc3ZnPg==")
+      no-repeat;
+    background-position: 100% center;
 
-  border: none;
-  border-bottom: 1px solid #9e9e9e;
+    border: none;
+    border-bottom: 1px solid #9e9e9e;
 
-  outline: none;
-  transition: 250ms;
-  &.valid {
-    border-bottom-color: #4caf50;
+    outline: none;
+    transition: 250ms;
+    &.valid {
+      border-bottom-color: #4caf50 !important;
+    }
+    &.invalid {
+      border-bottom-color: #f44336 !important;
+    }
+
+    &.readonly,
+    &:disabled {
+      opacity: 0.8;
+      color: #9e9e9e;
+    }
   }
-  &.invalid {
-    border-bottom-color: #f44336;
+  &:focus-within {
+    .browser-default {
+      border-bottom-color: #26a69a;
+    }
+    label {
+      color: #26a69a;
+      &.valid {
+        color: #4caf50 !important;
+      }
+      &.invalid {
+        color: #f44336 !important;
+      }
+    }
   }
 }

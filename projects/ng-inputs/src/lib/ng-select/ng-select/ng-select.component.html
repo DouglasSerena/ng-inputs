@@ -5,9 +5,24 @@
   [htmlFor]="formControlName"
   [control]="control"
   [errors]="errors"
-  [enableTheme]="false"
+  [activeLabel]="configService.theme === 'materialize'"
 >
-  <label>{{ label }}<span *ngIf="required" class="text-danger">*</span></label>
+  <label
+    *ngIf="configService.theme === 'materialize'"
+    [ngClass]="{
+      active: configService.theme === 'materialize',
+      invalid:
+        configService.theme === 'materialize' &&
+        !readonly &&
+        this.control.invalid &&
+        this.control.touched,
+      valid:
+        configService.theme === 'materialize' &&
+        this.control.valid &&
+        this.control.touched
+    }"
+    >{{ label }}<span *ngIf="required" class="text-danger">*</span></label
+  >
   <select
     #select
     (change)="change.emit($event)"
@@ -15,7 +30,6 @@
     (focus)="focus.emit($event)"
     [class.readonly]="readonly"
     [tabIndex]="readonly ? '-1' : ''"
-    class="browser-default"
     [id]="name"
     [formControl]="control"
     [ngClass]="className"
