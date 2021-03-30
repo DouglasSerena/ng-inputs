@@ -20,6 +20,7 @@ export class NgBaseComponent implements OnInit {
   @Input() control: FormControl | null = null;
   @Input() errors: IObject = {};
   @Input() activeLabel: boolean = false;
+  @Input() enableTheme = true;
 
   get theme() {
     return this.configService.theme;

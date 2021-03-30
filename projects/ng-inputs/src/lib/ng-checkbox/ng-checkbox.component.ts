@@ -69,7 +69,7 @@ export class NgCheckboxComponent extends CheckboxControlValueAccessor {
       className +=
         this.configService.theme === 'bootstrap'
           ? ` col-lg-${this._cols.lg}`
-          : ` lg${this._cols.lg}`;
+          : ` l${this._cols.lg}`;
     if (this._cols.md)
       className +=
         this.configService.theme === 'bootstrap'

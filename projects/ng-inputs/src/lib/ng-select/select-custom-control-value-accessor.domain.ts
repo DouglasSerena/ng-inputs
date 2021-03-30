@@ -89,7 +89,7 @@ export class SelectCustomControlValueAccessor
       className +=
         this._configService.theme === 'bootstrap'
           ? ` col-lg-${this._cols.lg}`
-          : ` lg${this._cols.lg}`;
+          : ` l${this._cols.lg}`;
     if (this._cols.md)
       className +=
         this._configService.theme === 'bootstrap'

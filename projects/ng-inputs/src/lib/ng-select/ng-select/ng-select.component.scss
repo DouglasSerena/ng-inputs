@@ -1,5 +1,22 @@
 .readonly {
   background-color: #e9ecef;
   pointer-events: none;
-  touch-action: none
+  touch-action: none;
+}
+select {
+  appearance: none;
+  background: url("/assets/dss-arrow-down.svg") no-repeat;
+  background-position: 100% center;
+
+  border: none;
+  border-bottom: 1px solid #9e9e9e;
+
+  outline: none;
+  transition: 250ms;
+  &.valid {
+    border-bottom-color: #4caf50;
+  }
+  &.invalid {
+    border-bottom-color: #f44336;
+  }
 }

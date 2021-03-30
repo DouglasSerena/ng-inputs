@@ -3,10 +3,11 @@
   [readonly]="readonly"
   [required]="required"
   [htmlFor]="formControlName"
-  [label]="label"
   [control]="control"
   [errors]="errors"
+  [enableTheme]="false"
 >
+  <label>{{ label }}<span *ngIf="required" class="text-danger">*</span></label>
   <select
     #select
     (change)="change.emit($event)"
@@ -14,7 +15,7 @@
     (focus)="focus.emit($event)"
     [class.readonly]="readonly"
     [tabIndex]="readonly ? '-1' : ''"
-    class="form-select"
+    class="browser-default"
     [id]="name"
     [formControl]="control"
     [ngClass]="className"

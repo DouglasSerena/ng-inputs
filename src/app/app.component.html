@@ -14,8 +14,6 @@
       type="email"
       label="email: "
       formControlName="email"
-      alignIcon="left"
-      iconImage="/assets/brands/visa.png"
       [errors]="{ required: 'Campo obrigatório.', email: 'Email invalid.' }"
     ></dss-input>
     {{ { value: form.controls.email.value } | json }}

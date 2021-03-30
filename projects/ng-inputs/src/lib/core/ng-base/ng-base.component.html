@@ -1,16 +1,17 @@
 <div
   class="mt-2 mb-2"
   [ngClass]="{
-    'form-group': field === 'group' && theme === 'bootstrap',
-    'form-floating': field === 'floating' && theme === 'bootstrap',
-    'input-field': theme === 'materialize'
+    'form-group': field === 'group' && theme === 'bootstrap' && enableTheme,
+    'form-floating':
+      field === 'floating' && theme === 'bootstrap' && enableTheme,
+    'input-field': theme === 'materialize' && enableTheme
   }"
 >
   <!-- LABEL GROUP -->
   <ng-container *ngIf="!!label && field === 'group' && theme === 'bootstrap'">
-    <label [for]="htmlFor"
-      >{{ label }} <span *ngIf="required" class="text-danger">*</span></label
-    >
+    <label [for]="htmlFor">
+      {{ label }} <span *ngIf="required" class="text-danger">*</span>
+    </label>
   </ng-container>
 
   <ng-content></ng-content>
@@ -19,9 +20,9 @@
   <ng-container
     *ngIf="!!label && (field === 'floating' || theme === 'materialize')"
   >
-    <label [for]="htmlFor" [class.active-materialize]="activeLabel"
-      >{{ label }} <span *ngIf="required" class="text-danger">*</span></label
-    >
+    <label [for]="htmlFor" [class.active-materialize]="activeLabel">
+      {{ label }} <span *ngIf="required" class="text-danger">*</span>
+    </label>
   </ng-container>
 </div>
 <!-- MESSAGE ERRORS -->

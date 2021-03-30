@@ -11,7 +11,6 @@ import {
 import { ControlContainer, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { NgInputConfigService } from '../../core/ng-input-config.service';
 import { SelectCustomControlValueAccessor } from '../select-custom-control-value-accessor.domain';
-import { FormSelect } from 'materialize-css';
 
 interface IOption {
   label: string;
@@ -36,7 +35,6 @@ export class NgSelectComponent
   implements OnChanges {
   @ViewChild('select', { static: true })
   elementSelect: ElementRef<HTMLSelectElement>;
-  selectMaterialize: FormSelect | null;
 
   @Input() optionDefault: IOption = {
     label: 'Selecione uma opção',
@@ -63,26 +61,8 @@ export class NgSelectComponent
   ngOnChanges(params: { options: SimpleChange }) {
     if (!!params.options && !!params.options.currentValue) {
       this.formatOptions();
-
-      if (this.configService.theme === 'materialize') {
-        this.updateSelect();
-      }
     }
   }
-
-  updateSelect() {
-    if (this.selectMaterialize) this.selectMaterialize.destroy();
-    this.initSelect();
-  }
-
-  initSelect() {
-    setTimeout(() => {
-      this.selectMaterialize = FormSelect.init(
-        this.elementSelect?.nativeElement
-      );
-    }, 200);
-  }
-
   formatOptions() {
     if (this.options.length > 0) {
       const option: IOption[] = [];
