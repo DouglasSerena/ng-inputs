@@ -69,9 +69,11 @@ export class NgInputComponent
   @Input() iconClickable: null | boolean = null;
   private _icon: string | null = null;
   @Input() set icon(icon: string | null) {
-    this._icon = `form-control-feedback ${icon}`;
+    this._icon = `form-control-feedback  ${icon}`;
+    if (this.iconClickable) this._icon += ' clickable';
   }
   get icon(): string | null {
+    if (this._icon && this.iconClickable) this._icon += ' clickable';
     return this._icon;
   }
 
@@ -148,8 +150,6 @@ export class NgInputComponent
         }
       }
     }
-
-    console.log(this.iconClickable);
 
     if (!typeInputsProps.includes(this.type)) this.type = 'text';
 
