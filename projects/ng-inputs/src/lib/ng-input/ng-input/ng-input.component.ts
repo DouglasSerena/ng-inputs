@@ -64,16 +64,15 @@ export class NgInputComponent
     ? (`align-icon-${this.configService.field.alignIcons}` as any)
     : 'align-icon-left';
 
-  @Output() onClickIcon = new EventEmitter();
+  @Output() clickIcon = new EventEmitter();
 
   @Input() iconClickable: null | boolean = null;
+
   private _icon: string | null = null;
   @Input() set icon(icon: string | null) {
     this._icon = `form-control-feedback  ${icon}`;
-    if (this.iconClickable) this._icon += ' clickable';
   }
   get icon(): string | null {
-    if (this._icon && this.iconClickable) this._icon += ' clickable';
     return this._icon;
   }
 
@@ -171,10 +170,18 @@ export class NgInputComponent
     });
   }
 
-  clickIcon(event: Event) {
+  onClickIcon(event: Event) {
     if (this.iconClickable) {
-      this.onClickIcon.emit(event);
+      this.clickIcon.emit(event);
     }
+  }
+
+  onFocus(event: Event) {
+    if (this.isFieldCurrency || this.isFieldPercent) {
+      const length = this.input.nativeElement.value.length;
+      this.input.nativeElement.setSelectionRange(0, length);
+    }
+    this.focus.emit(event);
   }
 
   togglePassword() {

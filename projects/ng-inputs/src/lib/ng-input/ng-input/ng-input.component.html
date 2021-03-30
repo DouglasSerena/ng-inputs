@@ -15,13 +15,13 @@
     [autocomplete]="autocomplete"
     [formControl]="control"
     (blur)="blur.emit($event)"
-    (focus)="focus.emit($event)"
+    (focus)="onFocus($event)"
     [readonly]="readonly"
     [ngClass]="className"
     [ngStyle]="{ 'text-align': alignText }"
   />
   <i
-    (click)="clickIcon($event)"
+    (click)="onClickIcon($event)"
     (click)="togglePassword()"
     *ngIf="iconClickable && isFieldPassword && !icon && !hideEye && !iconImage"
     class="cursor-pointer form-control-feedback"
@@ -34,7 +34,7 @@
 
   <!-- IMAGE BACKGROUND -->
   <i
-    (click)="clickIcon($event)"
+    (click)="onClickIcon($event)"
     *ngIf="!!iconImage && !icon"
     class="form-control-feedback background-image"
     [class.clickable]="iconClickable"
@@ -43,5 +43,10 @@
   ></i>
 
   <!-- ICON -->
-  <i (click)="clickIcon($event)" *ngIf="icon" [class]="icon"></i>
+  <i
+    [ngClass]="{ clickable: iconClickable }"
+    (click)="onClickIcon($event)"
+    *ngIf="icon"
+    [class]="icon"
+  ></i>
 </dss-ng-base>

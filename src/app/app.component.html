@@ -46,6 +46,7 @@
       type="currency"
       label="Value: "
       formControlName="currency"
+      [iconClickable]="true"
     ></dss-input>
     {{ { value: form.controls.currency.value } | json }}
     {{ form.controls.currency.value | dssMask: "currency" }}
