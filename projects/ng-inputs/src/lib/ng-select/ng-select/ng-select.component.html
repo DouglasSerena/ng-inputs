@@ -5,6 +5,7 @@
   [htmlFor]="formControlName"
   [control]="control"
   [errors]="errors"
+  [label]="configService.theme === 'bootstrap' ? label : ''"
   [activeLabel]="configService.theme === 'materialize'"
 >
   <label
