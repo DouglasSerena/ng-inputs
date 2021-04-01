@@ -119,7 +119,7 @@ All inputs are used with Reactive Form and already offer it, without needing to 
 - **percent:** the percent type has predefined settings that can be customized in the import settings in the app
 - **password:** Password already has an eye icon with the option to show password
 
-- masks:
+- **masks:**
   - **zipCode: "00000-000"**
   - **cpf: "000.000.000-00"**
   - **cnpj: "00.000.000/0000-00"**
