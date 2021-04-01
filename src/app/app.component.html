@@ -21,6 +21,12 @@
     <dss-input
       type="password"
       label="password: "
+      placeholder="password"
+      alignIcon="left"
+      alignText="right"
+      [disabled]="true"
+      [readonly]="true"
+      field="floating"
       formControlName="password"
       [errors]="{ required: 'Errro' }"
     ></dss-input>

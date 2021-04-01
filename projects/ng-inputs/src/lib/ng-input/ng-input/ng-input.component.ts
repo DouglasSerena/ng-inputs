@@ -172,6 +172,7 @@ export class NgInputComponent
 
   onClickIcon(event: Event) {
     if (this.iconClickable) {
+      console.log('oi');
       this.clickIcon.emit(event);
     }
   }

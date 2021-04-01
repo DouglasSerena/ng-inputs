@@ -25,7 +25,8 @@ export class NgInputMasksService {
       | 'rg_estadual'
       | 'currency'
       | 'percent'
-      | 'date',
+      | 'date'
+      | 'zipCode',
     options?: IOptions
   ) {
     if (masksType === 'date') {
@@ -70,7 +71,7 @@ export class NgInputMasksService {
       | 'rg'
       | 'rg_estadual'
       | 'currency'
-      | 'cep'
+      | 'zipCode'
       | 'percent',
     options?: IOptions
   ) {
@@ -129,7 +130,7 @@ export class NgInputMasksService {
       mask: [this.rg, this.estadual],
     } as IMask.AnyMaskedOptions;
   }
-  get cep() {
+  get zipCode() {
     return {
       mask: '00000-000',
     } as IMask.AnyMaskedOptions;
