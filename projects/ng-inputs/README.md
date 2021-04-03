@@ -47,10 +47,10 @@ const config: INgInputConfig = {
   field: {
     alignIcons: 'left', // Align is set to defautl for all icons if it doesn't get past
     /**
-     * os icones são definidos com o tipo que é passado no
-     * input podendo fazer tipos customizados,
-     * caso não chega * nativo do html sera alterado
-     * para text
+     * the icons are defined with the type that is passed in the
+     * input being able to make custom types,
+     * if not enough * native html will be changed
+     * to text
      */
     icons: {
       currency: {
@@ -89,29 +89,34 @@ const configCurrencyAndPercent = {
 
 All inputs are used with Reactive Form and already offer it, without needing to import **ReactiveFormsModule** and **FormsModule**
 
-#### NgInput
+#### NgInputModule
+
+###### dss-input
 
 ```html
 <dss-input
-  type="password"
   label="password: "
   placeholder="password"
-  alignIcon="left"
-  alignText="right"
+  formControlName="password"
+  field="floating"
   [disabled]="true"
   [readonly]="true"
-  field="floating"
+  [name]="password-id-custom"
+  [errors]="{ required: 'Errro' }"
+  [cols]="{default: 12,lg: 6,md: 9,sm: 12}"
+  type="password"
+  alignIcon="left"
+  alignText="right"
   [hideEye]="true"
   [icon]="fas fa-dollar-sign"
   [iconClickable]="true"
   [iconImage]="https://malcoded.com/static/8c48d4c4bb8b1f2793fa9c6536dae7c6/ba299/angular-reactive-forms-tutorial.png"
   [alignIcon]="left"
   [mask]="0000000/00000|0000000000/0000000"
-  [name]="password-id-custom"
-  formControlName="password"
-  [errors]="{ required: 'Errro' }"
 ></dss-input>
 ```
+
+- **Name** is used in case of conflict of the id which is automatically defined by taking the name of the formControlName
 
 ##### types with mask or custom:
 
@@ -128,3 +133,82 @@ All inputs are used with Reactive Form and already offer it, without needing to 
   - **estadual: "00.0.000.0000000-0"**
   - **rg_estadual: "00.000.000-0" | "00.0.000.0000000-0"**
   - **tel: "(00) 0000-0000" | "(00) 0 0000-0000"**
+
+###### dss-text-area
+
+```html
+<dss-text-area
+  label="description: "
+  placeholder="description"
+  formControlName="description"
+  field="floating"
+  [disabled]="true"
+  [readonly]="true"
+  [name]="description-id-custom"
+  [errors]="{ required: 'Errro' }"
+  [cols]="{default: 12,lg: 6,md: 9,sm: 12}"
+  [rows]="2"
+  [length]="300"
+></dss-text-area>
+```
+
+#### NgSelectModule
+
+###### dss-select
+
+```html
+<dss-select
+  label="State: "
+  formControlName="state"
+  [optionDefault]="{label: 'Select client', value: '', hide: true}"
+  [options]="clients"
+  [path]="{'people.name': 'people.id'}"
+  [disabled]="true"
+  [readonly]="true"
+  [name]="password-id-custom"
+  field="floating"
+  [errors]="{ required: 'Errro' }"
+  [cols]="{default: 12,lg: 6,md: 9,sm: 12}"
+></dss-select>
+```
+
+- **options**: use if it is not defined as a standard object {label: '', value: ''}
+- **path**: use if it is not defined as a standard object {label: '', value: ''}
+- **optionDefault**: use if it is not defined as a standard object {label: '', value: ''}
+
+###### dss-search
+
+```html
+<dss-search
+  type="search"
+  label="search: "
+  placeholder="search"
+  alignIcon="left"
+  alignText="right"
+  [disabled]="true"
+  [readonly]="true"
+  field="floating"
+  [value]="valueStart"
+  pathLabel="people.name"
+  uri="{url}/client/name/{value}"
+  responseData="data"
+  return="pessoa.id"
+></dss-search>
+```
+
+- **return**
+- **value**
+- **pathLabel**
+- **uri**
+- **responseData**
+
+
+#### NgCheckboxModule
+
+### Errors
+
+the errors are rendered with the type that is defined in the ReactiveFormsModule
+
+### References
+
+-
