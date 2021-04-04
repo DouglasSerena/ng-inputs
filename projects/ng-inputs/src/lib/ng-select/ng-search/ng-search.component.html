@@ -1,83 +1,81 @@
 <div
-  class="mt-2 mb-2"
+  class="form-group form-control-search"
   [ngClass]="{
-    'form-group': !label || field === 'group',
-    'form-floating': !!label && field === 'floating'
+    invalid: control.invalid && control.touched,
+    valid: control.valid && control.touched,
+    'form-group-label': !!label,
+    active: !!control?.value
   }"
 >
-  <!-- LABEL GROUP -->
-  <ng-container *ngIf="!!label && field === 'group'">
-    <label [for]="formControlName"
-      >{{ label }}
-      <span *ngIf="!readonly && required" class="text-danger">*</span></label
+  <div class="form-content">
+    <i
+      class="form-icon-floating icon-background left"
+      [ngClass]="{ search: !loading, loading: loading }"
+    ></i>
+
+    <input
+      #inputSearch
+      type="search"
+      class="form-control browser-default"
+      [placeholder]="_placeholder"
+      [id]="name"
+      [formControl]="control"
+      [readonly]="readonly"
+      autocomplete="off"
+      autocapitalize="off"
+      (blur)="onBlur($event)"
+      (focus)="onFocus($event)"
+      [ngClass]="{
+        readonly: readonly,
+        'is-invalid': !readonly && control.invalid && control.touched
+      }"
+    />
+
+    <!-- BORDER -->
+    <span class="focus-border">
+      <i></i>
+    </span>
+
+    <!-- LABEL -->
+    <label *ngIf="label" [for]="name">
+      {{ label }}<span class="required">*</span>
+    </label>
+
+    <ul
+      class="options-list hidden"
+      [class.hidden]="control.value?.length === 0 || loading || !focused"
     >
-  </ng-container>
+      <li
+        *ngIf="options.length === 0; else template_options"
+        class="not-found option-item"
+      >
+        {{ notFound }}
+      </li>
 
-  <i
-    class="fa fa-search icon-left"
-    [class.show]="!label || field === 'group' || !!control.value"
-  ></i>
-
-  <input
-    #inputSearch
-    type="search"
-    [placeholder]="_placeholder"
-    [id]="name"
-    [formControl]="control"
-    [readonly]="readonly"
-    class="form-control"
-    autocomplete="off"
-    autocapitalize="off"
-    (blur)="onBlur($event)"
-    (focus)="onFocus($event)"
-    [ngClass]="{
-      readonly: readonly,
-      'is-invalid': !readonly && control.invalid && control.touched,
-      reset: !!control.value
-    }"
-  />
-
-  <i
-    *ngIf="!loading"
-    (click)="inputChange('')"
-    class="fas fa-times-circle icon-right"
-  ></i>
-  <i *ngIf="loading" class="fas fa-spinner icon-right"></i>
-
-  <!-- LABEL FLOATING -->
-  <ng-container *ngIf="!!label && field === 'floating'">
-    <label [for]="formControlName"
-      >{{ label }}
-      <span *ngIf="!readonly && required" class="text-danger">*</span></label
-    >
-  </ng-container>
-
-  <div
-    class="list-group"
-    #elementList
-    [class.hide]="!!control.value && focused"
-  >
-    <button
-      type="button"
-      *ngIf="options.length === 0 && !loading; else templateOptions"
-      class="list-group-item list-group-item-action text-center text-muted"
-      disabled
-    >
-      {{ notFound }}
-    </button>
-
-    <ng-template #templateOptions>
-      <ng-container *ngFor="let option of options">
-        <button
-          *ngIf="!loading"
-          type="button"
-          class="list-group-item list-group-item-action"
-          [class.select]="option.dssSelect"
-          (click)="inputChange(option)"
+      <ng-template #template_options>
+        <li
+          *ngFor="let option of options; let index = index"
+          role="listitem"
+          class="option-item"
+          [class.hover]="option.dssSelect"
+          [class.select]="itemSelect === index"
+          (click)="inputChange(option); itemSelect = index"
         >
           {{ option.dssLabel }}
-        </button>
-      </ng-container>
-    </ng-template>
+        </li>
+      </ng-template>
+    </ul>
   </div>
+
+  <!-- MESSAGE HELp -->
+  <div *ngIf="!!help" class="message">
+    {{ help }}
+  </div>
+
+  <ng-container *ngFor="let error of getKeys(errors)">
+    <!-- MESSAGE ERROR -->
+    <div *ngIf="getError(error)" class="message error">
+      {{ errors[error] }}
+    </div>
+  </ng-container>
 </div>

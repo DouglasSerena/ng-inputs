@@ -31,6 +31,7 @@ export class SelectCustomControlValueAccessor
   @Input() formControlName: string = '';
   @Input() name: string = this.formControlName;
   @Input() disabled = false;
+  @Input() help?: string;
 
   @Output() public change = new EventEmitter();
   @Output() public blur = new EventEmitter();

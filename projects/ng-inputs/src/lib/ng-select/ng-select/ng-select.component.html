@@ -1,46 +1,57 @@
-<dss-ng-base
-  [field]="field"
-  [readonly]="readonly"
-  [required]="required"
-  [htmlFor]="formControlName"
-  [control]="control"
-  [errors]="errors"
-  [label]="configService.theme === 'bootstrap' ? label : ''"
-  [activeLabel]="configService.theme === 'materialize'"
+<div
+  class="form-group form-control-select active"
+  [ngClass]="{
+    invalid: control.invalid && control.touched,
+    valid: control.valid && control.touched,
+    'form-group-label': !!label
+  }"
 >
-  <label
-    *ngIf="configService.theme === 'materialize'"
-    [ngClass]="{
-      active: configService.theme === 'materialize',
-      invalid:
-        configService.theme === 'materialize' &&
-        !readonly &&
-        this.control.invalid &&
-        this.control.touched,
-      valid:
-        configService.theme === 'materialize' &&
-        this.control.valid &&
-        this.control.touched
-    }"
-    >{{ label }}<span *ngIf="required" class="text-danger">*</span></label
-  >
-  <select
-    #select
-    (change)="change.emit($event)"
-    (blur)="blur.emit($event)"
-    (focus)="focus.emit($event)"
-    [class.readonly]="readonly"
-    [tabIndex]="readonly ? '-1' : ''"
-    [id]="name"
-    [formControl]="control"
-    [ngClass]="className"
-  >
-    <option
-      *ngFor="let option of options"
-      [hidden]="option.hide"
-      [value]="option.value"
+  <div class="form-content">
+    <!-- SELECT -->
+    <select
+      #select
+      (change)="change.emit($event)"
+      (blur)="blur.emit($event)"
+      (focus)="focus.emit($event)"
+      [class.readonly]="readonly"
+      class="form-select browser-default"
+      [tabIndex]="readonly ? '-1' : ''"
+      [id]="name"
+      [formControl]="control"
+      [ngClass]="className"
     >
-      {{ option.label }}
-    </option>
-  </select>
-</dss-ng-base>
+      <option
+        *ngFor="let option of options"
+        [hidden]="option.hide"
+        [value]="option.value"
+      >
+        {{ option.label }}
+      </option>
+    </select>
+
+    <!-- BORDER -->
+    <span class="focus-border">
+      <i></i>
+    </span>
+
+    <!-- LABEL -->
+    <label
+      *ngIf="label"
+      [for]="name"
+      [class.active]="control.value?.length > 0"
+    >
+      {{ label }}<span class="required">*</span>
+    </label>
+  </div>
+  <!-- MESSAGE HELp -->
+  <div *ngIf="!!help" class="message">
+    {{ help }}
+  </div>
+
+  <ng-container *ngFor="let error of getKeys(errors)">
+    <!-- MESSAGE ERROR -->
+    <div *ngIf="getError(error)" class="message error">
+      {{ errors[error] }}
+    </div>
+  </ng-container>
+</div>

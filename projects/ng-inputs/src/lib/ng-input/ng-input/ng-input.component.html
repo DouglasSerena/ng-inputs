@@ -1,52 +1,61 @@
-<dss-ng-base
-  [field]="field"
-  [readonly]="readonly"
-  [required]="required"
-  [htmlFor]="formControlName"
-  [label]="label"
-  [control]="control"
-  [errors]="errors"
-  [activeLabel]="true"
+<div
+  class="form-group form-control-input"
+  [ngClass]="{
+    invalid: control.invalid && control.touched,
+    valid: control.valid && control.touched,
+    'form-group-label': !!label,
+    active: activeField
+  }"
 >
-  <input
-    #input
-    [type]="type"
-    [id]="name"
-    [autocomplete]="autocomplete"
-    [formControl]="control"
-    (blur)="blur.emit($event)"
-    (focus)="onFocus($event)"
-    [readonly]="readonly"
-    [ngClass]="className"
-    [ngStyle]="{ 'text-align': alignText }"
-  />
-  <i
-    (click)="onClickIcon($event)"
-    (click)="togglePassword()"
-    *ngIf="iconClickable && isFieldPassword && !icon && !hideEye && !iconImage"
-    class="cursor-pointer form-control-feedback"
-    [ngClass]="{
-      'fa fa-eye': type === 'password',
-      'fas fa-eye-slash': type === 'text',
-      clickable: iconClickable
-    }"
-  ></i>
+  <div class="form-content">
+    <!-- ICON -->
+    <i
+      (click)="onClickIcon($event)"
+      *ngIf="(isFieldPassword || !!_icon?.icon) && !_icon?.hide"
+      [class]="_icon.class"
+      [ngClass]="{
+        'icon-background': !_icon.icon && isFieldPassword,
+        eye: !_icon.icon && isFieldPassword && type === 'password',
+        'eye-close': !_icon.icon && isFieldPassword && type === 'text'
+      }"
+    ></i>
 
-  <!-- IMAGE BACKGROUND -->
-  <i
-    (click)="onClickIcon($event)"
-    *ngIf="!!iconImage && !icon"
-    class="form-control-feedback background-image"
-    [class.clickable]="iconClickable"
-    role="img"
-    [ngStyle]="iconImage"
-  ></i>
+    <!-- INPUT -->
+    <input
+      #input
+      [type]="type"
+      [id]="name"
+      class="form-control browser-default"
+      [autocomplete]="autocomplete"
+      [formControl]="control"
+      [placeholder]="placeholder"
+      (blur)="blur.emit($event)"
+      (focus)="onFocus($event)"
+      [readonly]="readonly"
+      [ngClass]="className"
+      [ngStyle]="{ 'text-align': align }"
+    />
 
-  <!-- ICON -->
-  <i
-    [ngClass]="{ clickable: iconClickable }"
-    (click)="onClickIcon($event)"
-    *ngIf="icon"
-    [class]="icon"
-  ></i>
-</dss-ng-base>
+    <!-- BORDER -->
+    <span class="focus-border">
+      <i></i>
+    </span>
+
+    <!-- LABEL -->
+    <label *ngIf="label" [for]="name">
+      {{ label }}<span class="required">*</span>
+    </label>
+  </div>
+
+  <!-- MESSAGE HELp -->
+  <div *ngIf="!!help" class="message">
+    {{ help }}
+  </div>
+
+  <ng-container *ngFor="let error of getKeys(errors)">
+    <!-- MESSAGE ERROR -->
+    <div *ngIf="getError(error)" class="message error">
+      {{ errors[error] }}
+    </div>
+  </ng-container>
+</div>

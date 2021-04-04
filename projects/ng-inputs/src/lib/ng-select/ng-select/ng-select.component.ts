@@ -21,7 +21,6 @@ interface IOption {
 @Component({
   selector: 'dss-select',
   templateUrl: './ng-select.component.html',
-  styleUrls: ['./ng-select.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -94,18 +93,12 @@ export class NgSelectComponent
   }
 
   get className() {
-    const bootstrap = this.configService.theme === 'bootstrap';
     const validField = this.control.valid && this.control.touched;
     const invalidField = this.control.invalid && this.control.touched;
     return {
-      floating: !bootstrap && this.field === 'floating',
       readonly: this.readonly,
-      'is-invalid': bootstrap && !this.readonly && invalidField,
-      'is-valid': bootstrap && validField,
-      invalid: !bootstrap && !this.readonly && invalidField,
-      valid: !bootstrap && validField,
-      'form-select': bootstrap,
-      'browser-default': !bootstrap,
+      'is-invalid': !this.readonly && invalidField,
+      'is-valid': validField,
     };
   }
 }

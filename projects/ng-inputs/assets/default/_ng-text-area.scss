@@ -1,0 +1,52 @@
+.form-group.form-control-text-area {
+  .form-content {
+    .counter {
+      position: absolute;
+      bottom: -17px;
+      right: 12px;
+
+      font-weight: 500;
+      font-size: 11px;
+      color: var(--dss-text-light);
+    }
+
+    .focus-border {
+      &::before,
+      &::after {
+        bottom: 5px;
+      }
+    }
+
+    label {
+      top: 20px;
+      bottom: auto;
+      transform: translateY(0);
+    }
+  }
+
+  textarea {
+    resize: vertical;
+    &:focus + .focus-border + label {
+      top: 5px;
+    }
+  }
+
+  &.active {
+    label {
+      top: 5px;
+    }
+  }
+
+  &.form-group-counter {
+    margin-bottom: 28px;
+    .message {
+      padding-right: 75px;
+    }
+    &.form-group-help {
+      margin-bottom: 10px;
+    }
+    &.invalid {
+      margin-bottom: 0;
+    }
+  }
+}

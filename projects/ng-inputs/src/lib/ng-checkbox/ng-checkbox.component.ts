@@ -19,7 +19,6 @@ import { NgInputConfigService } from './../core/ng-input-config.service';
 interface IObject {
   [key: string]: string;
 }
-
 @Component({
   selector: 'dss-checkbox',
   templateUrl: './ng-checkbox.component.html',
@@ -43,8 +42,9 @@ export class NgCheckboxComponent extends CheckboxControlValueAccessor {
 
   @Input() readonly: boolean;
   @Input() required: boolean = false;
+  @Input() help?: string;
 
-  @Input() errors: IObject[] = [];
+  @Input() errors: IObject = {};
 
   @Input() suffix: string = '';
   @Input() prefix: string = '';
@@ -95,14 +95,6 @@ export class NgCheckboxComponent extends CheckboxControlValueAccessor {
 
   ngOnInit() {}
 
-  getError(error: IObject, value: 'key' | 'value') {
-    const key = Object.keys(error)[0];
-
-    return value === 'key'
-      ? this.control.errors && this.control.errors[key]
-      : error[key];
-  }
-
   // #############################
 
   // ATTRIBUTE AND METHODS CONTROL
@@ -119,6 +111,13 @@ export class NgCheckboxComponent extends CheckboxControlValueAccessor {
       this.formControl ||
       this.controlContainer?.control?.get(this.formControlName)
     );
+  }
+
+  getKeys(errors: IObject) {
+    return Object.keys(errors);
+  }
+  getError(key: string) {
+    return this.control?.errors?.[key] && this.control?.touched;
   }
 
   writeValue(value: any): void {

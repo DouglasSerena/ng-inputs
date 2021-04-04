@@ -22,6 +22,28 @@ export const typeInputsProps = [
   'url',
   'week',
 ];
+
+export const typeInputsPropsCustom = [
+  'cpf',
+  'cnpj',
+  'cpf_cnpj',
+  'rg',
+  'rg_estadual',
+  'percent',
+  'cep',
+  'currency',
+];
+
+export type ITypeInputsPropsCustom =
+  | 'cpf'
+  | 'cnpj'
+  | 'cpf_cnpj'
+  | 'rg'
+  | 'rg_estadual'
+  | 'percent'
+  | 'cep'
+  | 'currency';
+
 export type ITypeInputProps =
   | 'button'
   | 'checkbox'

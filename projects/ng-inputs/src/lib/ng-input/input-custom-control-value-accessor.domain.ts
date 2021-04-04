@@ -31,6 +31,7 @@ export class InputCustomControlValueAccessor
   @Input() formControl: FormControl;
   @Input() formControlName: string;
   @Input() name: string;
+  @Input() help?: string;
   @Input() disabled: boolean = false;
 
   @Output() blur = new EventEmitter();

@@ -1,36 +1,55 @@
-<dss-ng-base
-  [readonly]="readonly"
-  [required]="required"
-  [control]="control"
-  [label]="label"
-  [errors]="errors"
-  [field]="field"
-  [htmlFor]="formControlName"
+<div
+  class="form-group form-control-text-area"
+  [ngClass]="{
+    invalid: control.invalid && control.touched,
+    valid: control.valid && control.touched,
+    'form-group-counter': !!length,
+    'form-group-help': !!help,
+    'form-group-label': !!label,
+    active: !!control?.value
+  }"
 >
-  <textarea
-    #textarea
-    class="form-control"
-    [id]="name"
-    [readonly]="readonly"
-    [formControl]="control"
-    [cols]="cols"
-    (blur)="blur.emit($event)"
-    (focus)="focus.emit($event)"
-    [maxlength]="length"
-    [ngStyle]="{
-      height: rows + (configService.theme === 'materialize' ? 10 : 100) + 'px'
-    }"
-    [ngClass]="className"
-  ></textarea>
+  <div class="form-content">
+    <!-- TEXT AREA -->
+    <textarea
+      #textarea
+      [id]="name"
+      [readonly]="readonly"
+      [formControl]="control"
+      class="form-control"
+      [cols]="cols"
+      [maxlength]="length"
+      [ngStyle]="{ height: rows + 'px' }"
+      [ngClass]="className"
+      (blur)="blur.emit($event)"
+      (focus)="focus.emit($event)"
+    ></textarea>
 
-  <div
-    class="counter badge"
-    [ngClass]="{
-      floating: field === 'floating' && configService.theme === 'bootstrap',
-      invalid: control.invalid && control.touched,
-      errors: getKeys(errors).length > 0
-    }"
-  >
-    {{ !!control.value ? control.value.length : 0 }}/{{ length }}
+    <!-- BORDER -->
+    <span class="focus-border">
+      <i></i>
+    </span>
+
+    <!-- LABEL -->
+    <label *ngIf="label" [for]="name">
+      {{ label }}<span class="required">*</span>
+    </label>
+
+    <!-- COUNTER CHARACTER -->
+    <div class="counter" *ngIf="!!length">
+      {{ !!control.value ? control.value.length : 0 }}/{{ length }}
+    </div>
   </div>
-</dss-ng-base>
+
+  <!-- MESSAGE HELp -->
+  <div *ngIf="!!help" class="message">
+    {{ help }}
+  </div>
+
+  <ng-container *ngFor="let error of getKeys(errors)">
+    <!-- MESSAGE ERROR -->
+    <div *ngIf="getError(error)" class="message error">
+      {{ errors[error] }}
+    </div>
+  </ng-container>
+</div>

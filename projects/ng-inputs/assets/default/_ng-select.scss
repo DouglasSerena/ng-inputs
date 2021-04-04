@@ -1,0 +1,19 @@
+.form-group.form-control-select {
+  .form-content {
+    select {
+      height: 55px;
+    }
+
+    .focus-border {
+      &::before,
+      &::after {
+        background-color: transparent;
+      }
+    }
+  }
+  &.active {
+    label {
+      color: var(--dss-label);
+    }
+  }
+}

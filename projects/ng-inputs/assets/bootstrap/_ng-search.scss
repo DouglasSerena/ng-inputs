@@ -1,0 +1,66 @@
+.form-group.form-control-search {
+  .form-content {
+    .form-icon-floating {
+      z-index: 4;
+      &.icon-background {
+        background-size: 15px;
+      }
+    }
+
+    .options-list {
+      position: absolute;
+      top: 100%;
+      left: 0;
+
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 8px;
+      overflow: hidden;
+
+      box-shadow: 0 3px 7px 0 var(--dss-shadow);
+
+      border: 1px solid var(--dss-border);
+      border-radius: 8px;
+
+      background-color: var(--dss-background);
+
+      list-style: none;
+
+      z-index: 2;
+      clip-path: inset(0 0 0 0);
+      transition: 250ms;
+      .option-item {
+        display: block;
+        padding: 8px;
+        border-radius: 8px;
+        margin-top: 5px;
+        height: 100%;
+
+        color: var(--dss-text);
+        cursor: pointer;
+        transition: 250ms;
+        transition-delay: height 250ms;
+        &.select {
+          background-color: var(--dss-select);
+          color: var(--dss-text-select);
+        }
+        &.not-found {
+          color: var(--dss-text);
+          touch-action: none;
+          pointer-events: none;
+          opacity: 0.6;
+        }
+        &:hover,
+        &.hover {
+          background-color: var(--dss-select);
+        }
+      }
+      &.hidden {
+        clip-path: inset(0 0 100% 0);
+        .option-item {
+          height: 0;
+        }
+      }
+    }
+  }
+}

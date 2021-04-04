@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {
   Component,
   ElementRef,
@@ -17,14 +17,9 @@ import { Debounce } from '../../decorators/debounce.decorator';
 import { NgInputConfigService } from '../../core/ng-input-config.service';
 import { SelectCustomControlValueAccessor } from '../select-custom-control-value-accessor.domain';
 
-interface IOnWrite {
-  (value: string): void;
-}
-
 @Component({
   selector: 'dss-search',
   templateUrl: './ng-search.component.html',
-  styleUrls: ['./ng-search.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -36,12 +31,6 @@ interface IOnWrite {
 export class NgSearchComponent
   extends SelectCustomControlValueAccessor
   implements OnInit {
-  @ViewChild('elementList', { static: true })
-  elementList: ElementRef<HTMLDivElement>;
-  get list() {
-    return this.elementList.nativeElement;
-  }
-
   @Input() notFound: string = 'Sem resultado.';
   @Input() pathLabel = 'label';
   @Input() value: any = null;
@@ -52,6 +41,7 @@ export class NgSearchComponent
 
   loading = false;
   focused = false;
+  itemSelect?: number;
 
   constructor(
     protected controlContainer: ControlContainer,
@@ -77,7 +67,14 @@ export class NgSearchComponent
 
       this.loading = true;
       try {
-        const response = await this.httpClient.get(uri).toPromise();
+        const response = await this.httpClient
+          .get(uri, {
+            headers: {
+              Authorization:
+                'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE4IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVXN1YXJpbyIsImVtYWlsIjoiZG91Z2xhc0BiaXR0aS5zaXRlIiwibmFtZSI6IkRvdWdsYXMifQ.7UcFfuGvgnJtCjzsqxlhcZHBLMgh0OH2bJpWLYfFL-Y',
+            },
+          })
+          .toPromise();
         this.options = this.responseData
           ? this.getMultiLabels(response, this.responseData.split('.'))
           : response;
@@ -116,11 +113,8 @@ export class NgSearchComponent
 
         const index = this.options.findIndex((option) => option.dssSelect);
 
-        const calcScroll = 41 * (this.options.length - 4);
-
         if (index === -1) {
           this.options[this.options.length - 1].dssSelect = true;
-          this.list.scroll(0, calcScroll);
           return;
         }
 
@@ -128,19 +122,10 @@ export class NgSearchComponent
 
         if (index === 0) {
           this.options[this.options.length - 1].dssSelect = true;
-          this.list.scroll(0, calcScroll);
           return;
         }
 
         this.options[index - 1].dssSelect = true;
-
-        const button = this.list.querySelector(
-          `button:nth-child(${index})`
-        ) as HTMLButtonElement;
-
-        const offset = button.offsetTop - this.list.scrollTop;
-
-        if (offset < 0) this.list.scroll(0, this.list.scrollTop - 41);
       },
       ArrowDown: () => {
         event.preventDefault();
@@ -155,25 +140,14 @@ export class NgSearchComponent
         if (index === -1) {
           this.options[0].dssSelect = true;
         }
-
         this.options[index].dssSelect = false;
 
         if (index === this.options.length - 1) {
-          this.list.scroll(0, 0);
           this.options[0].dssSelect = true;
           return;
         }
 
         this.options[index + 1].dssSelect = true;
-
-        const bottom = this.list.getClientRects().item(0)?.bottom as number;
-        const button = this.list.querySelector(
-          `button:nth-child(${index})`
-        ) as HTMLButtonElement;
-
-        const offset = bottom - (button.offsetTop - this.list.scrollTop);
-
-        if (offset < 360) this.list.scroll(0, this.list.scrollTop + 41);
       },
       Enter: () => {
         event.preventDefault();
@@ -186,6 +160,7 @@ export class NgSearchComponent
         const index = this.options.findIndex((option) => option.dssSelect);
         if (index !== -1) {
           this.focused = false;
+          this.itemSelect = index;
           this.inputChange(this.options[index]);
         }
       },
@@ -204,14 +179,12 @@ export class NgSearchComponent
   }
 
   @Output() blur = new EventEmitter();
-  @Debounce(250)
   onBlur(event: Event) {
     this.focused = false;
     this.blur.emit(event);
   }
 
   @Output() focus = new EventEmitter();
-  @Debounce(250)
   onFocus(event: Event) {
     this.focused = true;
     this.focus.emit(event);
@@ -243,6 +216,7 @@ export class NgSearchComponent
       this.onChange(value);
     } else {
       const newValue = { ...value };
+
       delete newValue.dssLabel;
       delete newValue.dssSelect;
 
@@ -257,9 +231,9 @@ export class NgSearchComponent
   }
 
   format() {
-    this.options.map((option) => {
+    this.options.map((option, index) => {
       option.dssLabel = this.getMultiLabels(option, this.pathLabel.split('.'));
-      option.dssSelect = false;
+      option.dssSelect = this.itemSelect === index;
     });
   }
 }

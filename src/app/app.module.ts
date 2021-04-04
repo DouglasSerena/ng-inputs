@@ -7,6 +7,9 @@ import { NgInputsModule } from 'projects/ng-inputs/src/public-api';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+// export const theme = 'materialize';
+export const theme = 'bootstrap';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -25,7 +28,7 @@ import { AppComponent } from './app.component';
         url: 'http://api-sandbox2.construtoramontebello.net.br/api/financeiro',
       },
       currency: { prefix: '' },
-      // theme: 'materialize',
+      theme: theme,
     }),
   ],
   providers: [],

@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
@@ -14,12 +13,24 @@ import { InputMask } from 'imask';
 import { NgInputConfigService } from '../../core/ng-input-config.service';
 import { NgInputMasksService } from '../../core/ng-input-masks.service';
 import { InputCustomControlValueAccessor } from '../input-custom-control-value-accessor.domain';
-import { ITypeInputProps, typeInputsProps } from './typesInput';
+import {
+  ITypeInputProps,
+  typeInputsProps,
+  ITypeInputsPropsCustom,
+  typeInputsPropsCustom,
+} from './typesInput';
+
+interface IIconProps {
+  icon?: string | undefined;
+  align?: 'right' | 'left' | undefined;
+  clickable?: boolean | undefined;
+  hide?: boolean;
+  class: string;
+}
 
 @Component({
   selector: 'dss-input',
   templateUrl: './ng-input.component.html',
-  styleUrls: ['./ng-input.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -32,72 +43,53 @@ export class NgInputComponent
   extends InputCustomControlValueAccessor
   implements OnInit {
   @ViewChild('input', { static: true }) input: ElementRef<HTMLInputElement>;
-  @Input() alignText: 'right' | 'left' | null = null;
-  @Input() allowNegative?: boolean;
+  @Input() align: 'right' | 'left' | 'center' | null = 'left';
   @Input() autocomplete = 'work';
   @Input() mask?: string;
-  @Input() type:
-    | ITypeInputProps
-    | 'cpf'
-    | 'cnpj'
-    | 'cpf_cnpj'
-    | 'rg'
-    | 'rg_estadual'
-    | 'percent'
-    | 'cep'
-    | 'currency' = 'text';
-  typesMask = [
-    'tel',
-    'cpf',
-    'cnpj',
-    'cpf_cnpj',
-    'rg',
-    'rg_estadual',
-    'percent',
-    'currency',
-    'cep',
-  ];
+  @Input() allowNegative?: boolean;
+  @Input() type: ITypeInputsPropsCustom | ITypeInputProps = 'text';
+  typesMask = typeInputsPropsCustom;
   typeInit: string = 'text';
-
-  _alignIcon: 'align-icon-right' | 'align-icon-left' = this.configService.field
-    .alignIcons
-    ? (`align-icon-${this.configService.field.alignIcons}` as any)
-    : 'align-icon-left';
 
   @Output() clickIcon = new EventEmitter();
 
-  @Input() iconClickable: null | boolean = null;
+  _icon: IIconProps = {
+    clickable: false,
+    align: this.configService.field.alignIcons,
+    hide: false,
+    class: '',
+  };
+  @Input() set icon(icon: IIconProps | any) {
+    this._icon = Object.assign(this._icon, icon);
 
-  private _icon: string | null = null;
-  @Input() set icon(icon: string | null) {
-    this._icon = `form-control-feedback  ${icon}`;
-  }
-  get icon(): string | null {
-    return this._icon;
-  }
-
-  private _iconImage: string | null = null;
-  @Input() set iconImage(value: any) {
-    this._iconImage = value;
-  }
-  get iconImage(): any {
-    return this._iconImage
-      ? { 'background-image': `url(${this._iconImage})` }
-      : null;
+    if (icon) {
+      this._icon.class = `form-icon-floating ${icon.icon} ${this._icon.align} ${
+        this._icon.clickable && 'clickable'
+      }`;
+    }
   }
 
-  @Input() set alignIcon(align: 'right' | 'left') {
-    this._alignIcon = `align-icon-${align}` as any;
-  }
-
-  @Input() hideEye: boolean = false;
   isFieldPassword: boolean = false;
-
   isFieldCurrency: boolean = false;
-
   isFieldPercent: boolean = false;
 
   instance: null | { unmaskedValue?: string; formatToNumber(): number } = null;
+
+  get activeField() {
+    const typesActive = [
+      'date',
+      'month',
+      'currency',
+      'percent',
+      'time',
+      'week',
+      'datetime-local',
+      'color',
+    ];
+    return (
+      this.control.value?.length > 0 || typesActive.includes(this.typeInit)
+    );
+  }
 
   constructor(
     private controlContainer: ControlContainer,
@@ -111,13 +103,6 @@ export class NgInputComponent
     this.ngOnInitSuper();
     this.typeInit = this.type;
 
-    if (this.placeholder.length > 0) {
-      this.input.nativeElement.setAttribute('placeholder', this.placeholder);
-    } else {
-      if (this.configService.theme === 'bootstrap')
-        this.input.nativeElement.setAttribute('placeholder', '  ');
-    }
-
     this.isFieldPassword = this.type === 'password';
     if (this.typesMask.includes(this.type) || this.mask) {
       this.instance = this.masksService.set(
@@ -126,27 +111,21 @@ export class NgInputComponent
         { allowNegative: this.allowNegative, mask: this.mask }
       );
 
-      if (this.type === 'currency') this.isFieldCurrency = true;
-      if (this.type === 'percent') this.isFieldPercent = true;
+      if (this.type === 'currency') {
+        this.isFieldCurrency = true;
+        if (this.configService.currency.align)
+          this.align = this.configService.currency.align;
+      }
+      if (this.type === 'percent') {
+        this.isFieldPercent = true;
+        if (this.configService.percent.align)
+          this.align = this.configService.percent.align;
+      }
     }
 
-    if (this.icon === null && this.configService.field.icons) {
+    if (this._icon.icon === undefined && this.configService.field.icons) {
       if (this.configService.field.icons[this.type]) {
-        if (this.configService.field.icons[this.type].icon) {
-          this.icon = this.configService.field.icons[this.type].icon as any;
-        }
-        if (this.configService.field.icons[this.type].align) {
-          this.alignIcon = this.configService.field.icons[this.type].align as
-            | 'left'
-            | 'right';
-        }
-        if (
-          this.iconClickable === null &&
-          this.configService.field.icons[this.type].clickable
-        ) {
-          this.iconClickable = this.configService.field.icons[this.type]
-            .clickable as boolean;
-        }
+        this.icon = this.configService.field.icons[this.type] as any;
       }
     }
 
@@ -171,8 +150,10 @@ export class NgInputComponent
   }
 
   onClickIcon(event: Event) {
-    if (this.iconClickable) {
-      console.log('oi');
+    if (this._icon.clickable) {
+      if (this.isFieldPassword)
+        this.type = this.type === 'password' ? 'text' : 'password';
+
       this.clickIcon.emit(event);
     }
   }
@@ -183,11 +164,6 @@ export class NgInputComponent
       this.input.nativeElement.setSelectionRange(0, length);
     }
     this.focus.emit(event);
-  }
-
-  togglePassword() {
-    if (this.isFieldPassword)
-      this.type = this.type === 'password' ? 'text' : 'password';
   }
 
   time: any = 0;
@@ -217,26 +193,12 @@ export class NgInputComponent
   }
 
   get className() {
-    const bootstrap = this.configService.theme === 'bootstrap';
     const validField = this.control.valid && this.control.touched;
     const invalidField = this.control.invalid && this.control.touched;
-    const align =
-      (this.isFieldCurrency && this.configService.currency.align === 'right') ||
-      (this.isFieldPercent && this.configService.percent.align === 'right');
     return {
-      'form-control': bootstrap,
-      'form-materialize': !bootstrap,
-      floating: this.field === 'floating',
       readonly: this.readonly,
-      'is-invalid': bootstrap && !this.readonly && invalidField,
-      'is-valid': bootstrap && validField,
-      invalid: !bootstrap && !this.readonly && invalidField,
-      valid: !bootstrap && validField,
-      [this._alignIcon]:
-        (this.isFieldPassword && this.hideEye === false) ||
-        this.icon ||
-        this.iconImage,
-      'align-right': align,
+      'is-invalid': !this.readonly && invalidField,
+      'is-valid': validField,
     };
   }
 }

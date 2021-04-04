@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+import { theme } from './app.module';
+
 @Component({
   selector: 'dss-root',
   templateUrl: './app.component.html',
@@ -8,6 +10,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class AppComponent implements OnInit {
   form: FormGroup;
+  theme = theme;
   title = 'tmp';
   option: any = [];
   valueStart: any = { pessoa: null };
@@ -43,7 +46,7 @@ export class AppComponent implements OnInit {
     this.form.controls.cpf_cnpj.setValue('00000000000');
     this.form.controls.rg_estadual.setValue('00000000000');
 
-    const value = 15000.01230 + 0.0 + 0.0 - 0.0;
+    const value = 15000.0123 + 0.0 + 0.0 - 0.0;
 
     this.form.controls.currency.setValue(value.toFixed(2));
 

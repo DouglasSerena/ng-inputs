@@ -1,0 +1,15 @@
+.form-group.form-control-input {
+  .form-content {
+    .form-icon-floating {
+      &.icon-background {
+        background-size: 20px;
+      }
+    }
+
+    label {
+      position: absolute;
+      top: 0;
+      left: 12px;
+    }
+  }
+}
