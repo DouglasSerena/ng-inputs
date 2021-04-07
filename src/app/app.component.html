@@ -94,7 +94,7 @@
     {{ { value: form.controls.password.value } | json }}
 
     <dss-input
-      type="percent"
+      type="tel"
       label="Percent: "
       formControlName="percent"
     ></dss-input>
@@ -102,7 +102,7 @@
     {{ form.controls.percent.value | dssMask: "text" }}
 
     <dss-input
-      type="date"
+      type="zipCode"
       label="Current date: "
       formControlName="date"
     ></dss-input>
@@ -131,6 +131,7 @@
     {{ { value: form.controls.rg_estadual.value } | json }}
 
     <dss-search
+      label="cpf cnpj: "
       formControlName="client"
       pathLabel="pessoa.razaoSocial"
       uri="{url}/Fornecedor/filtro/{value}"

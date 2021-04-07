@@ -37,7 +37,7 @@
     </span>
 
     <!-- LABEL -->
-    <label *ngIf="label" [for]="name">
+    <label *ngIf="!!label" [for]="name">
       {{ label }}<span class="required">*</span>
     </label>
 

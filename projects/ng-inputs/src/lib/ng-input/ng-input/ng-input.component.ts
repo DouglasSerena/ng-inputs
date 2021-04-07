@@ -48,7 +48,7 @@ export class NgInputComponent
   @Input() mask?: string;
   @Input() allowNegative?: boolean;
   @Input() type: ITypeInputsPropsCustom | ITypeInputProps = 'text';
-  typesMask = typeInputsPropsCustom;
+  typesMask = [...typeInputsPropsCustom];
   typeInit: string = 'text';
 
   @Output() clickIcon = new EventEmitter();

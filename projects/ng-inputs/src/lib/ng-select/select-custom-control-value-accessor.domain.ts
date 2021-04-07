@@ -70,7 +70,7 @@ export class SelectCustomControlValueAccessor
   }
 
   @Input() readonly: boolean = false;
-  @Input() required: boolean = false;
+  @Input() required?: boolean;
 
   @Input() errors: IObject = {};
 
@@ -120,7 +120,8 @@ export class SelectCustomControlValueAccessor
 
   ngOnInitSuper() {
     if (!this.name) this.name = this.name = this.formControlName;
-    if (!this.required) {
+
+    if (this.required === undefined) {
       this.required = this.control.errors?.required;
       if (!this.required)
         this.required = Object.keys(this.errors).includes('required');

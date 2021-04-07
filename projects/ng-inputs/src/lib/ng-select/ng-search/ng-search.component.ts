@@ -67,7 +67,14 @@ export class NgSearchComponent
 
       this.loading = true;
       try {
-        const response = await this.httpClient.get(uri).toPromise();
+        const response = await this.httpClient
+          .get(uri, {
+            headers: {
+              Authorization:
+                'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE4IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVXN1YXJpbyIsImVtYWlsIjoiZG91Z2xhc0BiaXR0aS5zaXRlIiwibmFtZSI6IkRvdWdsYXMifQ.7UcFfuGvgnJtCjzsqxlhcZHBLMgh0OH2bJpWLYfFL-Y',
+            },
+          })
+          .toPromise();
         this.options = this.responseData
           ? this.getMultiLabels(response, this.responseData.split('.'))
           : response;
@@ -172,12 +179,14 @@ export class NgSearchComponent
   }
 
   @Output() blur = new EventEmitter();
+  @Debounce(100)
   onBlur(event: Event) {
     this.focused = false;
     this.blur.emit(event);
   }
 
   @Output() focus = new EventEmitter();
+  @Debounce(100)
   onFocus(event: Event) {
     this.focused = true;
     this.focus.emit(event);

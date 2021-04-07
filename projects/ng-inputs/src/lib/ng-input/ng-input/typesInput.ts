@@ -32,6 +32,8 @@ export const typeInputsPropsCustom = [
   'percent',
   'cep',
   'currency',
+  'tel',
+  'zipCode',
 ];
 
 export type ITypeInputsPropsCustom =
