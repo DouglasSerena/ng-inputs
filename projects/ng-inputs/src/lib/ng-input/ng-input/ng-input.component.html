@@ -1,7 +1,7 @@
 <div
   class="form-group form-control-input"
   [ngClass]="{
-    invalid: control.invalid && control.touched,
+    invalid: control.invalid && control.touched && control.dirty,
     valid: control.valid && control.touched,
     'form-group-label': !!label,
     active: activeField
@@ -47,15 +47,15 @@
     </label>
   </div>
 
-  <!-- MESSAGE HELp -->
-  <div *ngIf="!!help" class="message">
-    {{ help }}
-  </div>
-
   <ng-container *ngFor="let error of getKeys(errors)">
     <!-- MESSAGE ERROR -->
     <div *ngIf="getError(error)" class="message error">
       {{ errors[error] }}
     </div>
   </ng-container>
+
+  <!-- MESSAGE HELp -->
+  <div *ngIf="!!help" class="message">
+    {{ help }}
+  </div>
 </div>

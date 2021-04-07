@@ -1,10 +1,101 @@
 .form-group.form-control-checkbox {
   .form-content {
-    input {
-      margin-right: 5px;
-    }
     label {
+      display: flex;
+      align-items: center;
+
       color: var(--dss-text);
+      font-size: 16px;
+      span {
+        &:not(.lever) {
+          height: 20px;
+        }
+        &.lever {
+          vertical-align: auto !important;
+          margin: 0 10px 0 0;
+        }
+        //   position: relative;
+        //   display: inline-block;
+        //   padding-left: 35px;
+
+        //   height: 25px;
+        //   line-height: 25px;
+        //   font-size: 1rem;
+
+        //   cursor: pointer;
+        //   user-select: none;
+        //   &::before {
+        //     content: "";
+        //     position: absolute;
+
+        //     width: 0;
+        //     height: 0;
+
+        //     border: 3px solid transparent;
+        //     border-radius: 1px;
+        //     margin-top: 3px;
+
+        //     left: 6px;
+        //     top: 10px;
+
+        //     transform: rotateZ(37deg);
+        //     transform-origin: 100% 100%;
+        //     transition: border 0.25s, background-color 0.25s, width 0.2s 0.1s,
+        //       height 0.2s 0.1s, top 0.2s 0.1s, left 0.2s 0.1s;
+        //     z-index: 1;
+        //   }
+        //   &::after {
+        //     content: "";
+        //     position: absolute;
+        //     top: 0px;
+        //     left: 0;
+
+        //     height: 20px;
+        //     width: 20px;
+
+        //     background-color: transparent;
+        //     border: 2px solid #5a5a5a;
+        //     border-radius: 2px;
+
+        //     transition: border 0.25s, background-color 0.25s, width 0.2s 0.1s,
+        //       height 0.2s 0.1s, top 0.2s 0.1s, left 0.2s 0.1s;
+        //     z-index: 0;
+        //   }
+      }
+
+      // input {
+      //   margin-right: 5px;
+
+      //   &:checked {
+      //     & + span {
+      //       &::before {
+      //         top: 0;
+      //         left: 1px;
+
+      //         width: 8px;
+      //         height: 13px;
+
+      //         border-top: 2px solid transparent;
+      //         border-left: 2px solid transparent;
+      //         border-right: 2px solid #fff;
+      //         border-bottom: 2px solid #fff;
+
+      //         transform-origin: 100% 100%;
+      //         backface-visibility: hidden;
+      //       }
+      //       &::after {
+      //         top: 0;
+      //         width: 20px;
+      //         height: 20px;
+
+      //         border: 2px solid var(--dss-primary);
+      //         background-color: var(--dss-primary);
+
+      //         z-index: 0;
+      //       }
+      //     }
+      //   }
+      // }
     }
   }
   .message {

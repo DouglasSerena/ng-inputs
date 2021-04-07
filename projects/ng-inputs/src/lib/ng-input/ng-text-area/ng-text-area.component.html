@@ -34,16 +34,6 @@
     <label *ngIf="label" [for]="name">
       {{ label }}<span class="required">*</span>
     </label>
-
-    <!-- COUNTER CHARACTER -->
-    <div class="counter" *ngIf="!!length">
-      {{ !!control.value ? control.value.length : 0 }}/{{ length }}
-    </div>
-  </div>
-
-  <!-- MESSAGE HELp -->
-  <div *ngIf="!!help" class="message">
-    {{ help }}
   </div>
 
   <ng-container *ngFor="let error of getKeys(errors)">
@@ -52,4 +42,14 @@
       {{ errors[error] }}
     </div>
   </ng-container>
+
+  <!-- MESSAGE HELp -->
+  <div *ngIf="!!help" class="message">
+    {{ help }}
+  </div>
+
+  <!-- COUNTER CHARACTER -->
+  <div class="counter" *ngIf="!!length">
+    {{ !!control.value ? control.value.length : 0 }}/{{ length }}
+  </div>
 </div>

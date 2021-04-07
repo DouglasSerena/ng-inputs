@@ -67,15 +67,15 @@
     </ul>
   </div>
 
-  <!-- MESSAGE HELp -->
-  <div *ngIf="!!help" class="message">
-    {{ help }}
-  </div>
-
   <ng-container *ngFor="let error of getKeys(errors)">
     <!-- MESSAGE ERROR -->
     <div *ngIf="getError(error)" class="message error">
       {{ errors[error] }}
     </div>
   </ng-container>
+
+  <!-- MESSAGE HELp -->
+  <div *ngIf="!!help" class="message">
+    {{ help }}
+  </div>
 </div>

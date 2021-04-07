@@ -150,11 +150,14 @@ export class SelectCustomControlValueAccessor
     this.formControlDirective.valueAccessor?.registerOnTouched(fn);
   }
 
+  onChange: (value: any) => void;
   registerOnChange(fn: any): void {
     this.onChange = fn;
   }
 
+  onWrite: (value: any) => void;
   writeValue(obj: any): void {
+    this.onWrite = obj;
     this.formControlDirective.valueAccessor?.writeValue(obj);
   }
 

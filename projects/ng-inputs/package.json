@@ -1,6 +1,6 @@
 {
   "name": "@douglas-serena/ng-inputs",
-  "version": "1.0.42",
+  "version": "1.1.3",
   "author": "DouglasSerena <douglas222serena@rede.ulbra.br>",
   "description": "angular entry library",
   "repository": {
@@ -11,19 +11,15 @@
     "postinstall": "ngcc"
   },
   "dependencies": {
-    "bootstrap": "^5.0.0-beta2",
     "imask": "^6.0.7",
-    "simple-mask-money": "^3.0.1",
-    "materialize-css": "1.0.0"
+    "simple-mask-money": "^3.0.1"
   },
   "peerDependencies": {
     "@angular/common": "^8.2.14",
     "@angular/core": "^8.2.14",
     "@angular/forms": "^8.2.14",
-    "bootstrap": "^5.0.0-beta2",
     "imask": "^6.0.7",
-    "simple-mask-money": "^3.0.1",
-    "materialize-css": "1.0.0"
+    "simple-mask-money": "^3.0.1"
   },
   "keywords": [
     "angular",

@@ -19,8 +19,8 @@ export const theme = 'bootstrap';
     HttpClientModule,
     NgInputsModule.forRoot({
       field: {
-        type: 'group',
         icons: {
+          address: { icon: 'fas fa-map-marked-alt', align: 'right' },
           currency: { icon: 'fas fa-money-bill-wave' },
         },
       },
@@ -28,7 +28,6 @@ export const theme = 'bootstrap';
         url: 'http://api-sandbox2.construtoramontebello.net.br/api/financeiro',
       },
       currency: { prefix: '' },
-      theme: theme,
     }),
   ],
   providers: [],
