@@ -40,7 +40,7 @@
       [for]="name"
       [class.active]="control.value?.length > 0"
     >
-      {{ label }}<span class="required">*</span>
+      {{ label }}<span *ngIf="required" class="required">*</span>
     </label>
   </div>
   <ng-container *ngFor="let error of getKeys(errors)">

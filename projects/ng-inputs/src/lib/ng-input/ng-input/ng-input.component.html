@@ -43,7 +43,7 @@
 
     <!-- LABEL -->
     <label *ngIf="label" [for]="name">
-      {{ label }}<span class="required">*</span>
+      {{ label }}<span *ngIf="required" class="required">*</span>
     </label>
   </div>
 
