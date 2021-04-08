@@ -45,6 +45,7 @@ export class NgInputComponent
   @ViewChild('input', { static: true }) input: ElementRef<HTMLInputElement>;
   @Input() align: 'right' | 'left' | 'center' | null = 'left';
   @Input() autocomplete = 'work';
+  @Input() fillDateCurrent = false;
   @Input() mask?: string;
   @Input() allowNegative?: boolean;
   @Input() type: ITypeInputsPropsCustom | ITypeInputProps = 'text';
@@ -131,6 +132,28 @@ export class NgInputComponent
 
     if (!typeInputsProps.includes(this.type)) this.type = 'text';
 
+    const dates = ['date', 'datetime-local', 'month', 'week', 'time'];
+    if (
+      !Boolean(this.control.value) &&
+      dates.includes(this.type) &&
+      this.fillDateCurrent
+    ) {
+      let value = new Date().toISOString();
+      if (this.type === 'date') {
+        value = value.slice(0, 10);
+        this.control.setValue(value);
+      } else if (this.type === 'datetime-local') {
+        value = value.slice(0, 16);
+        this.control.setValue(value);
+      } else if (this.type === 'month') {
+        value = value.slice(0, 7);
+        this.control.setValue(value);
+      } else if (this.type === 'time') {
+        value = value.slice(11, 16);
+        this.control.setValue(value);
+      }
+    }
+
     this.input.nativeElement.addEventListener('input', ({ target }) => {
       let { value } = target as HTMLInputElement;
 
@@ -172,9 +195,8 @@ export class NgInputComponent
     this.time = setTimeout(() => {
       if (this.typesMask.includes(this.typeInit)) {
         if (this.isFieldCurrency || this.isFieldPercent) {
-          obj = parseFloat(Number(`${obj}`).toFixed(2));
           this.input.nativeElement.value = this.masksService.format(
-            `${obj}`,
+            obj,
             this.isFieldCurrency ? 'currency' : 'percent',
             { allowNegative: this.allowNegative, mask: this.mask }
           );

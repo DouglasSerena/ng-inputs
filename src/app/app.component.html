@@ -4,13 +4,21 @@
   <form [formGroup]="form" class="row">
     <dss-input
       formControlName="name"
-      label="name"
-      placeholder="Full name"
-      type="date"
+      label="currency"
+      placeholder="currency"
       [icon]="{ clickable: true }"
       [errors]="{ required: 'Campo obrigatório.' }"
     ></dss-input>
-    {{ { value: form.controls.name.value } | json }}
+    {{ form.controls.name.value | dssMask: "currency" }}
+
+    <dss-select
+      label="city: "
+      formControlName="city"
+      [options]="option"
+      [path]="{ 'label.value': 'value.id' }"
+      [readonly]="true"
+    ></dss-select>
+    {{ { value: form.controls.city.value } | json }}
 
     <dss-text-area
       label="description: "
@@ -102,14 +110,16 @@
     {{ form.controls.percent.value | dssMask: "text" }}
 
     <dss-input
-      type="zipCode"
       label="Current date: "
       formControlName="date"
+      [fillDateCurrent]="true"
+      type="time"
     ></dss-input>
     {{ { value: form.controls.date.value } | json }}
 
     <dss-input
       label="Value: "
+      type="currency"
       formControlName="currency"
       [icon]="{ clickable: true }"
     ></dss-input>
@@ -140,23 +150,14 @@
       [value]="valueStart"
     ></dss-search>
     {{ { value: form.controls.client.value } | json }}
-
-    <dss-select
-      label="city: "
-      formControlName="city"
-      [options]="option"
-      [path]="{ 'label.value': 'value.id' }"
-      [readonly]="true"
-    ></dss-select>
-    {{ { value: form.controls.city.value } | json }}
   </form>
 </div>
-<link
+<!-- <link
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
 />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-<!-- <link
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
+<link
   href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
   rel="stylesheet"
   integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
@@ -176,4 +177,4 @@
   src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js"
   integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG"
   crossorigin="anonymous"
-></script> -->
+></script>

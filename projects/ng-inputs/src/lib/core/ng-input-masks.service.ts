@@ -5,6 +5,8 @@ import IMask from 'imask';
 import SimpleMaskMoney from 'simple-mask-money';
 import { NgInputConfigService } from './ng-input-config.service';
 
+import calcJs from '@douglas-serena/calc.js';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -40,12 +42,15 @@ export class NgInputMasksService {
       if (options?.allowNegative !== undefined)
         config.allowNegative = options.allowNegative;
 
-      value =
-        this.configService[masksType].decimalSeparator === '.'
-          ? `${value}`
-          : `${value}`.replace('.', ',');
+      value = calcJs(`${value}`.replace(/[,.]/g, '.')).toString();
 
-      return SimpleMaskMoney.formatToCurrency(value, config);
+      return SimpleMaskMoney.formatToCurrency(
+        value.replace(
+          /[,.]/g,
+          this.configService[masksType].decimalSeparator as string
+        ),
+        config
+      );
     }
 
     let mask: any = null;
