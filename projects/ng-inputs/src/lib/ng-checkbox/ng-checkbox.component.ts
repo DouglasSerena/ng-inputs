@@ -37,7 +37,8 @@ interface IObject {
 })
 export class NgCheckboxComponent extends CheckboxControlValueAccessor {
   @Input() label: string = 'Sem label: ';
-  @Input() type: 'checkbox' | 'switch' = 'checkbox';
+  @Input() type: 'checkbox' | 'switch' | 'button-checkbox' | 'button-switch' =
+    'checkbox';
   @Input() line: boolean = false;
 
   @Input() readonly: boolean;

@@ -7,8 +7,18 @@
     valid: control.valid && control.touched
   }"
 >
-  <div class="form-content" [class.switch]="type === 'switch'">
-    <label class="form-check-label">
+  <div
+    class="form-content"
+    [class.switch]="type === 'switch' || type === 'button-switch'"
+  >
+    <label
+      class="form-check-label"
+      [class]="
+        type === 'button-checkbox' || type === 'button-switch'
+          ? 'btn btn-light w-100'
+          : ''
+      "
+    >
       <input
         type="checkbox"
         class="form-check-input filled-in"

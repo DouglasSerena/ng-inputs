@@ -67,6 +67,12 @@
     }
   }
 
+  &:not(.form-group-label) {
+    .form-content {
+      padding-top: 23px;
+    }
+  }
+
   .readonly {
     pointer-events: none;
     touch-action: none;

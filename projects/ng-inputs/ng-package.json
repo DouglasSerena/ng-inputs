@@ -1,7 +1,11 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../dist/ng-inputs",
-  "allowedNonPeerDependencies": ["imask", "simple-mask-money"],
+  "allowedNonPeerDependencies": [
+    "imask",
+    "simple-mask-money",
+    "@douglas-serena/calc.js"
+  ],
   "assets": ["assets"],
   "lib": {
     "entryFile": "src/public-api.ts"
