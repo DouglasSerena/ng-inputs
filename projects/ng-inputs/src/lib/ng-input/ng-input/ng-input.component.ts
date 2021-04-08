@@ -9,6 +9,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ControlContainer, NG_VALUE_ACCESSOR } from '@angular/forms';
+import * as dayjs from 'dayjs';
 import { InputMask } from 'imask';
 import { NgInputConfigService } from '../../core/ng-input-config.service';
 import { NgInputMasksService } from '../../core/ng-input-masks.service';
@@ -28,6 +29,11 @@ interface IIconProps {
   class: string;
 }
 
+interface IDateProps {
+  fill?: boolean;
+  date?: string | Date;
+}
+
 @Component({
   selector: 'dss-input',
   templateUrl: './ng-input.component.html',
@@ -45,7 +51,7 @@ export class NgInputComponent
   @ViewChild('input', { static: true }) input: ElementRef<HTMLInputElement>;
   @Input() align: 'right' | 'left' | 'center' | null = 'left';
   @Input() autocomplete = 'work';
-  @Input() fillDateCurrent = false;
+  @Input() date: IDateProps = { fill: false, date: new Date() };
   @Input() mask?: string;
   @Input() allowNegative?: boolean;
   @Input() type: ITypeInputsPropsCustom | ITypeInputProps = 'text';
@@ -76,19 +82,21 @@ export class NgInputComponent
 
   instance: null | { unmaskedValue?: string; formatToNumber(): number } = null;
 
+  typesDates = ['date', 'datetime-local', 'month', 'time'];
+  typesActive = [
+    'date',
+    'month',
+    'currency',
+    'percent',
+    'time',
+    'week',
+    'datetime-local',
+    'color',
+  ];
+
   get activeField() {
-    const typesActive = [
-      'date',
-      'month',
-      'currency',
-      'percent',
-      'time',
-      'week',
-      'datetime-local',
-      'color',
-    ];
     return (
-      this.control.value?.length > 0 || typesActive.includes(this.typeInit)
+      this.control.value?.length > 0 || this.typesActive.includes(this.typeInit)
     );
   }
 
@@ -132,27 +140,12 @@ export class NgInputComponent
 
     if (!typeInputsProps.includes(this.type)) this.type = 'text';
 
-    const dates = ['date', 'datetime-local', 'month', 'week', 'time'];
-    if (
-      !Boolean(this.control.value) &&
-      dates.includes(this.type) &&
-      this.fillDateCurrent
-    ) {
-      let value = new Date().toISOString();
-      if (this.type === 'date') {
-        value = value.slice(0, 10);
-        this.control.setValue(value);
-      } else if (this.type === 'datetime-local') {
-        value = value.slice(0, 16);
-        this.control.setValue(value);
-      } else if (this.type === 'month') {
-        value = value.slice(0, 7);
-        this.control.setValue(value);
-      } else if (this.type === 'time') {
-        value = value.slice(11, 16);
-        this.control.setValue(value);
-      }
-    }
+    const isValidFormat =
+      this.date.fill &&
+      this.typesDates.includes(this.type) &&
+      !Boolean(this.control.value);
+
+    if (isValidFormat) this.control.setValue(this.formatDate());
 
     this.input.nativeElement.addEventListener('input', ({ target }) => {
       let { value } = target as HTMLInputElement;
@@ -170,6 +163,16 @@ export class NgInputComponent
 
       this.onWrite(value);
     });
+  }
+
+  formatDate(date = this.date.date) {
+    const dates = {
+      'datetime-local': dayjs(date).format('YYYY-MM-DDTHH:mm:ss'),
+      date: dayjs(date).format('YYYY-MM-DD'),
+      month: dayjs(date).format('YYYY-MM'),
+      time: dayjs(date).format('HH:mm'),
+    };
+    return dates[this.type];
   }
 
   onClickIcon(event: Event) {
@@ -193,6 +196,12 @@ export class NgInputComponent
   writeValue(obj: any): void {
     clearTimeout(this.time);
     this.time = setTimeout(() => {
+      const isValidFormat = this.typesDates.includes(this.type);
+
+      if (isValidFormat) {
+        this.input.nativeElement.value = this.formatDate(obj);
+      }
+
       if (this.typesMask.includes(this.typeInit)) {
         if (this.isFieldCurrency || this.isFieldPercent) {
           this.input.nativeElement.value = this.masksService.format(

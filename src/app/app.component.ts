@@ -45,6 +45,7 @@ export class AppComponent implements OnInit {
 
     this.form.controls.cpf_cnpj.setValue('00000000000');
     this.form.controls.rg_estadual.setValue('00000000000');
+    this.form.controls.date.setValue('2013-12-13T23:34:12');
 
     const value = 15000.0123 + 0.0 + 0.0 - 0.0;
 

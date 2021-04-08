@@ -30,7 +30,7 @@ export class InputCustomControlValueAccessor
   formControlDirective: FormControlDirective;
   @Input() formControl: FormControl;
   @Input() formControlName: string;
-  @Input() name: string;
+  @Input() name?: string;
   @Input() help?: string;
   @Input() disabled: boolean = false;
 
@@ -116,7 +116,8 @@ export class InputCustomControlValueAccessor
   }
 
   protected ngOnInitSuper() {
-    if (!this.name) this.name = this.name = this.formControlName;
+    if (this.name === undefined) this.name = this.formControlName;
+
     if (this.required === undefined) {
       this.required = this.control.errors?.required;
       if (!this.required)

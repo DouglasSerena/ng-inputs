@@ -27,6 +27,7 @@
     "@douglas-serena/calc.js": "^1.0.3",
     "@types/materialize-css": "^1.0.8",
     "bootstrap": "^5.0.0-beta2",
+    "dayjs": "^1.10.4",
     "imask": "^6.0.7",
     "materialize-css": "^1.0.0",
     "rxjs": "~6.6.0",

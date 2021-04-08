@@ -104,8 +104,7 @@
     <dss-input
       label="Current date: "
       formControlName="date"
-      [fillDateCurrent]="true"
-      type="time"
+      type="date"
     ></dss-input>
 
     <dss-input
@@ -126,16 +125,6 @@
       label="Rg Estadual: "
       formControlName="rg_estadual"
     ></dss-input>
-
-    <dss-search
-      label="cpf cnpj: "
-      formControlName="client"
-      pathLabel="pessoa.razaoSocial"
-      uri="{url}/Fornecedor/filtro/{value}"
-      responseData="data"
-      return="pessoa.id"
-      [value]="valueStart"
-    ></dss-search>
   </form>
 </div>
 <link
