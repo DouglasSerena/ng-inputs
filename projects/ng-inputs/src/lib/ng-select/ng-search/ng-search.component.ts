@@ -13,7 +13,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ControlContainer, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Debounce } from '../../decorators/debounce.decorator';
 import { NgInputConfigService } from '../../core/ng-input-config.service';
 import { SelectCustomControlValueAccessor } from '../select-custom-control-value-accessor.domain';
 
@@ -53,32 +52,35 @@ export class NgSearchComponent
     super(controlContainer, elementRef, renderer, configService);
   }
 
-  @Debounce(300)
+  timeInput: any = 0;
   @HostListener('input', ['$event'])
-  async onInput({ target }: KeyboardEvent) {
-    const { value } = target as HTMLInputElement;
+  onInput({ target }: KeyboardEvent) {
+    clearTimeout(this.timeInput);
+    this.timeInput = setTimeout(async () => {
+      const { value } = target as HTMLInputElement;
 
-    if (value.length === 0) return;
-    if (!this.focused) this.focused = true;
+      if (value.length === 0) return;
+      if (!this.focused) this.focused = true;
 
-    if (this.uri) {
-      let uri = this.createUrl(this.uri);
-      uri = uri?.replace('{value}', value) as string;
+      if (this.uri) {
+        let uri = this.createUrl(this.uri);
+        uri = uri?.replace('{value}', value) as string;
 
-      this.loading = true;
-      try {
-        const response = await this.httpClient.get(uri).toPromise();
-        this.options = this.responseData
-          ? this.getMultiLabels(response, this.responseData.split('.'))
-          : response;
-        this.format();
-      } catch (error) {
-        if (!this.configService.environments.debug) {
-          console.log(error);
+        this.loading = true;
+        try {
+          const response = await this.httpClient.get(uri).toPromise();
+          this.options = this.responseData
+            ? this.getMultiLabels(response, this.responseData.split('.'))
+            : response;
+          this.format();
+        } catch (error) {
+          if (!this.configService.environments.debug) {
+            console.log(error);
+          }
         }
+        this.loading = false;
       }
-      this.loading = false;
-    }
+    }, 300);
   }
 
   createUrl(uri: string) {
@@ -171,18 +173,24 @@ export class NgSearchComponent
     this.format();
   }
 
+  timeBlur: any = 0;
   @Output() blur = new EventEmitter();
-  @Debounce(100)
   onBlur(event: Event) {
-    this.focused = false;
-    this.blur.emit(event);
+    clearTimeout(this.timeBlur);
+    this.timeBlur = setTimeout(() => {
+      this.focused = false;
+      this.blur.emit(event);
+    }, 300);
   }
 
+  timeFocus: any = 0;
   @Output() focus = new EventEmitter();
-  @Debounce(100)
   onFocus(event: Event) {
-    this.focused = true;
-    this.focus.emit(event);
+    clearTimeout(this.timeFocus);
+    this.timeFocus = setTimeout(() => {
+      this.focused = true;
+      this.focus.emit(event);
+    }, 100);
   }
 
   ngOnChanges({

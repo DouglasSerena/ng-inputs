@@ -37,7 +37,10 @@
     />
 
     <!-- BORDER -->
-    <span class="focus-border">
+    <span
+      class="focus-border"
+      [class.disabled]="isFieldPassword && validate !== 'NONE'"
+    >
       <i></i>
     </span>
 

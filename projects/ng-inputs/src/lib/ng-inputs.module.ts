@@ -10,6 +10,7 @@ import { NgSelectModule } from './ng-select/ng-select.module';
 import { NgInputModule } from './ng-input/ng-input.module';
 import { NgCheckboxModule } from './ng-checkbox/ng-checkbox.module';
 import { NgCoreModule } from './core/ng-core.module';
+
 @NgModule({
   imports: [NgSelectModule, NgInputModule, NgCheckboxModule, NgCoreModule],
   providers: [NgInputConfigService, NgInputMasksService],

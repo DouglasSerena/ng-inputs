@@ -116,6 +116,9 @@ export class SelectCustomControlValueAccessor
 
   ngOnInit() {
     this.ngOnInitSuper();
+
+    if (this.disabled) this.control.disable();
+    else this.control.enable();
   }
 
   ngOnInitSuper() {
@@ -126,9 +129,6 @@ export class SelectCustomControlValueAccessor
       if (!this.required)
         this.required = Object.keys(this.errors).includes('required');
     }
-
-    if (this.disabled) this.control.disable();
-    else this.control.enable();
   }
 
   getMultiLabels(labels: any, label: string[]): any {

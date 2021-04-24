@@ -4,7 +4,8 @@
   "allowedNonPeerDependencies": [
     "imask",
     "simple-mask-money",
-    "@douglas-serena/calc.js"
+    "@douglas-serena/calc.js",
+    "dayjs"
   ],
   "assets": ["assets"],
   "lib": {

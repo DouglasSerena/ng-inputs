@@ -32,7 +32,7 @@ export class AppComponent implements OnInit {
       percent: ['', [Validators.required]],
       date: ['', [Validators.required]],
       cpf_cnpj: [''],
-      state: ['', [Validators.required]],
+      state: [{ value: '', disabled: true }, [Validators.required]],
       city: ['1', [Validators.required]],
       accept: ['', [Validators.required]],
       dark: ['', [Validators.required]],

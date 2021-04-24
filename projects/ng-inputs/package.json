@@ -1,6 +1,6 @@
 {
   "name": "@douglas-serena/ng-inputs",
-  "version": "1.1.9",
+  "version": "1.1.12",
   "author": "DouglasSerena <douglas222serena@rede.ulbra.br>",
   "description": "angular entry library",
   "repository": {
@@ -13,7 +13,8 @@
   "dependencies": {
     "imask": "^6.0.7",
     "simple-mask-money": "^3.0.1",
-    "@douglas-serena/calc.js": "^1.0.3"
+    "@douglas-serena/calc.js": "^1.0.3",
+    "dayjs": "^1.10.4"
   },
   "peerDependencies": {
     "@angular/common": "^8.2.14",
@@ -21,7 +22,8 @@
     "@angular/forms": "^8.2.14",
     "imask": "^6.0.7",
     "simple-mask-money": "^3.0.1",
-    "@douglas-serena/calc.js": "^1.0.3"
+    "@douglas-serena/calc.js": "^1.0.3",
+    "dayjs": "^1.10.4"
   },
   "keywords": [
     "angular",

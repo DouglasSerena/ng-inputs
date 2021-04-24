@@ -5,6 +5,7 @@
 import { NgInputsModule } from './lib/ng-inputs.module';
 
 // SERVICES
+import { NgCoreModule } from './lib/core/ng-core.module';
 import { NgInputMasksService } from './lib/core/ng-input-masks.service';
 import { NgPipeModule } from './lib/core/pipe/ng-pipe.module';
 
@@ -14,6 +15,7 @@ import { NgSelectModule } from './lib/ng-select/ng-select.module';
 import { INgInputConfig } from './lib/core/ng-input-config.service';
 
 export {
+  NgCoreModule,
   NgInputsModule,
   NgInputModule,
   NgCheckboxModule,

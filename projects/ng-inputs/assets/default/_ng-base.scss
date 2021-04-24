@@ -207,6 +207,15 @@
         }
       }
     }
+
+    .form-content {
+      .focus-border {
+        &::before,
+        &::after {
+          background-color: transparent !important;
+        }
+      }
+    }
   }
 
   .message {

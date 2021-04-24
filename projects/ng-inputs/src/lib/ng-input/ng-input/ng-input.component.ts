@@ -54,6 +54,7 @@ export class NgInputComponent
   @Input() date: IDateProps = { fill: false, date: new Date() };
   @Input() mask?: string;
   @Input() allowNegative?: boolean;
+  @Input() validate?: 'STRONG' | 'NORMAL' | 'LOW' | 'NONE' = 'NORMAL';
   @Input() type: ITypeInputsPropsCustom | ITypeInputProps = 'text';
   typesMask = [...typeInputsPropsCustom];
   typeInit: string = 'text';
