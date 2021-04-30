@@ -163,11 +163,19 @@
         top: 15px;
         left: 12px;
 
+        transform: translate(0, 0) !important;
+
         color: var(--dss-label);
 
         font-size: 16px;
 
         transition: 250ms;
+
+        white-space: nowrap;
+        width: 80%;
+        overflow: hidden;
+
+        text-overflow: ellipsis;
       }
     }
     &.active {

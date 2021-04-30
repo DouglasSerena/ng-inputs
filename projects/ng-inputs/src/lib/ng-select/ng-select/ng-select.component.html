@@ -6,7 +6,7 @@
     'form-group-label': !!label
   }"
 >
-  <div class="form-content">
+  <div class="form-content input-field">
     <!-- SELECT -->
     <select
       #select
@@ -14,7 +14,9 @@
       (blur)="blur.emit($event)"
       (focus)="focus.emit($event)"
       [class.readonly]="readonly"
-      class="form-select browser-default"
+      class="form-select"
+      [MSelect]="MSelectSettings"
+      [options]="options"
       [tabIndex]="readonly ? '-1' : ''"
       [id]="name"
       [formControl]="control"
@@ -24,6 +26,7 @@
         *ngFor="let option of options"
         [hidden]="option.hide"
         [value]="option.value"
+        [attr.data-icon]="option?.icon"
       >
         {{ option.label }}
       </option>

@@ -34,9 +34,21 @@
       label="State: "
       formControlName="state"
       [options]="[
-        { label: 'Duplicata', name: { douglas: '' } },
-        { label: 'Cheque', name: { douglas: '' } },
-        { label: 'Boleto', name: { douglas: '' } }
+        {
+          label: 'Duplicata',
+          value: '',
+          icon: '/assets/dss-arrow-down.svg'
+        },
+        {
+          label: 'Cheque',
+          value: '',
+          icon: '/assets/dss-arrow-down.svg'
+        },
+        {
+          label: 'Boleto',
+          value: '',
+          icon: '/assets/dss-arrow-down.svg'
+        }
       ]"
       [path]="{ label: '' }"
       (change)="testEvent($event)"

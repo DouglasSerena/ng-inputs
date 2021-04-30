@@ -9,6 +9,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ControlContainer, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { IMSelect } from '../../core/directive/select.directive';
 import { NgInputConfigService } from '../../core/ng-input-config.service';
 import { SelectCustomControlValueAccessor } from '../select-custom-control-value-accessor.domain';
 
@@ -16,6 +17,7 @@ interface IOption {
   label: string;
   value: string;
   hide?: boolean;
+  icon?: string;
 }
 
 @Component({
@@ -35,6 +37,7 @@ export class NgSelectComponent
   @ViewChild('select', { static: true })
   elementSelect: ElementRef<HTMLSelectElement>;
 
+  @Input() MSelectSettings?: IMSelect;
   @Input() optionDefault: IOption = {
     label: 'Selecione uma opção',
     value: '',

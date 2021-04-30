@@ -28,6 +28,7 @@ export const theme = 'bootstrap';
         url: 'http://api-sandbox2.construtoramontebello.net.br/api/financeiro',
       },
       currency: { prefix: '' },
+      theme: 'materialize',
     }),
   ],
   providers: [],

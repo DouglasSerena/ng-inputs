@@ -1,5 +1,14 @@
 .form-group.form-control-select {
   .form-content {
+    .select-wrapper {
+      input {
+        box-sizing: border-box;
+        padding-right: 45px;
+      }
+      svg {
+        right: 12px;
+      }
+    }
     select {
       appearance: none;
       background-image: url(data:image/svg+xml;base64,PHN2ZyBhcmlhLWhpZGRlbj0idHJ1ZSIgZm9jdXNhYmxlPSJmYWxzZSIgZGF0YS1wcmVmaXg9ImZhcyIgZGF0YS1pY29uPSJzb3J0LWRvd24iIGNsYXNzPSJzdmctaW5saW5lLS1mYSBmYS1zb3J0LWRvd24gZmEtdy0xMCIgcm9sZT0iaW1nIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMjAgNTEyIj48cGF0aCBmaWxsPSJjdXJyZW50Q29sb3IiIGQ9Ik00MSAyODhoMjM4YzIxLjQgMCAzMi4xIDI1LjkgMTcgNDFMMTc3IDQ0OGMtOS40IDkuNC0yNC42IDkuNC0zMy45IDBMMjQgMzI5Yy0xNS4xLTE1LjEtNC40LTQxIDE3LTQxeiI+PC9wYXRoPjwvc3ZnPg==);
