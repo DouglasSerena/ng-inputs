@@ -1122,10 +1122,10 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
-"@douglas-serena/calc.js@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@douglas-serena/calc.js/-/calc.js-1.0.3.tgz#de07c8ec4fb362d6b90e5bce103f9db12c5bdee1"
-  integrity sha512-sl0JxYzyVGOIxIyvr4O4XaxDYpfd3dvJ32mOXXsI3CcpPbjiJxaDpTSCQ7NNfYLJ4veTVTOLpupoXGoVxjm5vw==
+"@douglas-serena/calc.js@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@douglas-serena/calc.js/-/calc.js-2.0.0.tgz#9d34b5fe54f0bc85110a86d8149129036970bcf9"
+  integrity sha512-n3mG2ZXJRuDeXNW2xGFll40MhtxFuNIieas3akiBosnGKsTzDXYKRJs6T+7QTYcyDIGfJvdL6oqD9PQXYUTVgA==
 
 "@istanbuljs/schema@^0.1.2":
   version "0.1.3"

@@ -42,15 +42,16 @@ export class NgInputMasksService {
       if (options?.allowNegative !== undefined)
         config.allowNegative = options.allowNegative;
 
-      value = calcJs(`${value}`.replace(/[,.]/g, '.')).toString();
+      value = calcJs(`${value}`.replace(/[,.]/g, '.'))
+        .toString()
+        .replace('.', config.decimalSeparator as string)
+        .replace((config.decimalSeparator as string) + '00', '');
 
-      return SimpleMaskMoney.formatToCurrency(
-        value.replace(
-          /[,.]/g,
-          this.configService[masksType].decimalSeparator as string
-        ),
-        config
-      );
+      console.log(value);
+
+      console.log(value, SimpleMaskMoney.formatToCurrency(value, config));
+
+      return SimpleMaskMoney.formatToCurrency(value, config);
     }
 
     let mask: any = null;
