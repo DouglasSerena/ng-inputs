@@ -44,7 +44,8 @@ export type ITypeInputsPropsCustom =
   | 'rg_estadual'
   | 'percent'
   | 'cep'
-  | 'currency';
+  | 'currency'
+  | 'amount';
 
 export type ITypeInputProps =
   | 'button'

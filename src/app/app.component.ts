@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
       new Promise((resolve) => setTimeout(resolve, time));
 
     this.form = this.formBuilder.group({
-      name: ['', [Validators.required]],
+      name: [null],
       email: [
         { value: '', disabled: false },
         [Validators.required, Validators.email],
@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
       accept: ['', [Validators.required]],
       dark: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      amount: ['0.000'],
+      amount: ['12'],
       rg_estadual: [''],
       client: [''],
     });

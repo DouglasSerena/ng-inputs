@@ -55,6 +55,9 @@ export class NgInputComponent
   @Input() mask?: string;
   @Input() allowNegative?: boolean;
   @Input() validate?: 'STRONG' | 'NORMAL' | 'LOW' | 'NONE' = 'NORMAL';
+  @Input() currency = {
+    returnZero: false,
+  };
   @Input() type: ITypeInputsPropsCustom | ITypeInputProps = 'text';
   typesMask = [...typeInputsPropsCustom];
   typeInit: string = 'text';
@@ -187,7 +190,10 @@ export class NgInputComponent
         if (this.isFieldCurrency || this.isFieldPercent) {
           const currencyOrPercent = this.instance?.formatToNumber() as any;
           if (this.required) {
-            value = currencyOrPercent === 0 ? null : currencyOrPercent;
+            value =
+              currencyOrPercent === 0 && !this.currency.returnZero
+                ? null
+                : currencyOrPercent;
           } else value = currencyOrPercent;
         } else {
           value = this.instance?.unmaskedValue as string;
@@ -237,13 +243,28 @@ export class NgInputComponent
         this.input.nativeElement.value = this.formatDate(obj);
       }
 
-      if (this.typesMask.includes(this.typeInit)) {
+      if (this.typeInit === 'amount') {
+        let value = obj.toString().replace(/\.0+/g, '');
+
+        if (/^0/g.test(value)) {
+          value = value.replace(/0+(?!$)/, '');
+        }
+
+        this.input.nativeElement.value = value + '.000';
+      } else if (this.typesMask.includes(this.typeInit)) {
         if (this.isFieldCurrency || this.isFieldPercent) {
-          this.input.nativeElement.value = this.masksService.format(
+          let result = this.masksService.format(
             obj,
             this.isFieldCurrency ? 'currency' : 'percent',
             { allowNegative: this.allowNegative, mask: this.mask }
           );
+          this.input.nativeElement.value =
+            result === 0 && !this.currency.returnZero ? null : result;
+
+          result = this.instance?.formatToNumber() as any;
+          if (result === 0 && this.currency.returnZero) {
+            this.onWrite(result);
+          }
         } else {
           this.input.nativeElement.value = this.masksService.format(
             `${obj}`,
