@@ -20,7 +20,7 @@ interface IObject {
 }
 
 interface IOnWrite {
-  (value: string): void;
+  (value: any): void;
 }
 
 @Component({ selector: '', template: '' })

@@ -85,7 +85,9 @@ export class NgInputMasksService {
     }
 
     let mask: any = null;
-    if (masksType) mask = this[masksType as any];
+    if (masksType) {
+      mask = this[masksType as any];
+    }
     if (options?.mask) {
       mask = {
         mask: options?.mask.split('|').map((mask) => ({

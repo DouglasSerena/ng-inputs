@@ -49,7 +49,7 @@ export class NgInputComponent
   extends InputCustomControlValueAccessor
   implements OnInit {
   @ViewChild('input', { static: true }) input: ElementRef<HTMLInputElement>;
-  @Input() align: 'right' | 'left' | 'center' | null = 'left';
+  @Input() align: 'right' | 'left' | 'center' | null = null;
   @Input() autocomplete = 'work';
   @Input() date: IDateProps = { fill: false, date: new Date() };
   @Input() mask?: string;
@@ -139,19 +139,51 @@ export class NgInputComponent
       }
     }
 
-    if (!typeInputsProps.includes(this.type)) this.type = 'text';
+    if (!typeInputsProps.includes(this.type)) {
+      this.type = 'text';
+    }
 
     const isValidFormat =
       this.date.fill &&
       this.typesDates.includes(this.type) &&
       !Boolean(this.control.value);
 
-    if (isValidFormat) this.control.setValue(this.formatDate());
+    if (isValidFormat) {
+      this.control.setValue(this.formatDate());
+    }
 
-    this.input.nativeElement.addEventListener('input', ({ target }) => {
-      let { value } = target as HTMLInputElement;
+    if (this.align) {
+      this.align = 'left';
+    }
 
-      if (this.instance) {
+    this.input.nativeElement.addEventListener('input', (event) => {
+      let { value } = event.target as HTMLInputElement;
+
+      if (this.typeInit === 'amount') {
+        let eventInput = event as InputEvent;
+        value = value.replace(/\.0+/g, '');
+
+        if (/^0/g.test(value)) {
+          value = value.replace(/0+(?!$)/, '');
+        }
+
+        if (eventInput.inputType === 'deleteContentBackward') {
+          let arrayChar = value.split('');
+          arrayChar.pop();
+          if (arrayChar.length === 0) {
+            value = '0';
+          } else {
+            value = arrayChar.join('');
+          }
+        }
+
+        if (eventInput.data === '0' && value !== '0') {
+          value += '0';
+        }
+
+        this.onWrite(Number(value));
+        this.input.nativeElement.value = value + '.000';
+      } else if (this.instance) {
         if (this.isFieldCurrency || this.isFieldPercent) {
           const currencyOrPercent = this.instance?.formatToNumber() as any;
           if (this.required) {
@@ -160,9 +192,11 @@ export class NgInputComponent
         } else {
           value = this.instance?.unmaskedValue as string;
         }
-      }
 
-      this.onWrite(value);
+        this.onWrite(value);
+      } else {
+        this.onWrite(value);
+      }
     });
   }
 

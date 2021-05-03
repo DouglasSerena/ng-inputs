@@ -37,6 +37,7 @@ export class AppComponent implements OnInit {
       accept: ['', [Validators.required]],
       dark: ['', [Validators.required]],
       description: ['', [Validators.required]],
+      amount: ['0.000'],
       rg_estadual: [''],
       client: [''],
     });
