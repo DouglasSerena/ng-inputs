@@ -47,10 +47,6 @@ export class NgInputMasksService {
         .replace('.', config.decimalSeparator as string)
         .replace((config.decimalSeparator as string) + '00', '');
 
-      console.log(value);
-
-      console.log(value, SimpleMaskMoney.formatToCurrency(value, config));
-
       return SimpleMaskMoney.formatToCurrency(value, config);
     }
 
