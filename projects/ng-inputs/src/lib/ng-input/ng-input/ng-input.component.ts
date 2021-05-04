@@ -55,8 +55,8 @@ export class NgInputComponent
   @Input() mask?: string;
   @Input() allowNegative?: boolean;
   @Input() validate?: 'STRONG' | 'NORMAL' | 'LOW' | 'NONE' = 'NORMAL';
-  @Input() currency = {
-    returnZero: false,
+  @Input() number = {
+    returnNULL: true,
   };
   @Input() type: ITypeInputsPropsCustom | ITypeInputProps = 'text';
   typesMask = [...typeInputsPropsCustom];
@@ -83,6 +83,7 @@ export class NgInputComponent
   isFieldPassword: boolean = false;
   isFieldCurrency: boolean = false;
   isFieldPercent: boolean = false;
+  isFieldAmount: boolean = false;
 
   instance: null | { unmaskedValue?: string; formatToNumber(): number } = null;
 
@@ -117,6 +118,12 @@ export class NgInputComponent
     this.typeInit = this.type;
 
     this.isFieldPassword = this.type === 'password';
+
+    if (this.align === null && this.typeInit === 'amount') {
+      this.isFieldAmount = true;
+      this.align = 'right';
+    }
+
     if (this.typesMask.includes(this.type) || this.mask) {
       this.instance = this.masksService.set(
         this.input.nativeElement,
@@ -155,43 +162,35 @@ export class NgInputComponent
       this.control.setValue(this.formatDate());
     }
 
-    if (this.align) {
+    if (this.align === null) {
       this.align = 'left';
     }
 
     this.input.nativeElement.addEventListener('input', (event) => {
       let { value } = event.target as HTMLInputElement;
 
-      if (this.typeInit === 'amount') {
-        let eventInput = event as InputEvent;
-        value = value.replace(/\.0+/g, '');
+      if (this.isFieldAmount) {
+        value = value.replace(/\D/g, '');
 
         if (/^0/g.test(value)) {
-          value = value.replace(/0+(?!$)/, '');
+          value = value.replace(/0+/, '');
         }
 
-        if (eventInput.inputType === 'deleteContentBackward') {
-          let arrayChar = value.split('');
-          arrayChar.pop();
-          if (arrayChar.length === 0) {
-            value = '0';
-          } else {
-            value = arrayChar.join('');
-          }
+        const result = Number(value) / 1000;
+
+        if (result === 0 && this.number.returnNULL) {
+          this.onWrite(null);
+        } else {
+          this.onWrite(result);
         }
 
-        if (eventInput.data === '0' && value !== '0') {
-          value += '0';
-        }
-
-        this.onWrite(Number(value));
-        this.input.nativeElement.value = value + '.000';
+        this.input.nativeElement.value = result.toFixed(3);
       } else if (this.instance) {
         if (this.isFieldCurrency || this.isFieldPercent) {
           const currencyOrPercent = this.instance?.formatToNumber() as any;
           if (this.required) {
             value =
-              currencyOrPercent === 0 && !this.currency.returnZero
+              currencyOrPercent === 0 && this.number.returnNULL
                 ? null
                 : currencyOrPercent;
           } else value = currencyOrPercent;
@@ -226,7 +225,7 @@ export class NgInputComponent
   }
 
   onFocus(event: Event) {
-    if (this.isFieldCurrency || this.isFieldPercent) {
+    if (this.isFieldCurrency || this.isFieldPercent || this.isFieldAmount) {
       const length = this.input.nativeElement.value.length;
       this.input.nativeElement.setSelectionRange(0, length);
     }
@@ -244,13 +243,25 @@ export class NgInputComponent
       }
 
       if (this.typeInit === 'amount') {
-        let value = obj.toString().replace(/\.0+/g, '');
+        let value = `${obj}`;
 
         if (/^0/g.test(value)) {
-          value = value.replace(/0+(?!$)/, '');
+          value = value.replace(/0+/, '');
         }
 
-        this.input.nativeElement.value = value + '.000';
+        let result = Number(value);
+
+        if (Number.isNaN(result)) {
+          result = 0;
+        }
+
+        if (result === 0 && this.number.returnNULL) {
+          this.onWrite(null);
+        } else {
+          this.onWrite(result);
+        }
+
+        this.input.nativeElement.value = result.toFixed(3);
       } else if (this.typesMask.includes(this.typeInit)) {
         if (this.isFieldCurrency || this.isFieldPercent) {
           let result = this.masksService.format(
@@ -258,11 +269,12 @@ export class NgInputComponent
             this.isFieldCurrency ? 'currency' : 'percent',
             { allowNegative: this.allowNegative, mask: this.mask }
           );
+
           this.input.nativeElement.value =
-            result === 0 && !this.currency.returnZero ? null : result;
+            result === 0 && this.number.returnNULL ? null : result;
 
           result = this.instance?.formatToNumber() as any;
-          if (result === 0 && this.currency.returnZero) {
+          if (result === 0 && !this.number.returnNULL) {
             this.onWrite(result);
           }
         } else {

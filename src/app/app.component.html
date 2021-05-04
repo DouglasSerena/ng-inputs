@@ -1,7 +1,10 @@
 <div class="container">
   <h1>Exemplos</h1>
 
-  {{ { moeda: form.controls.name.value } | json }}
+  {{
+    { moeda: form.controls.name.value, amount: form.controls.amount.value }
+      | json
+  }}
 
   <form [formGroup]="form" class="row">
     <dss-input
@@ -9,10 +12,15 @@
       label="currency"
       placeholder="currency"
       type="currency"
-      [currency]="{ returnZero: true }"
       [icon]="{ clickable: true }"
       [errors]="{ required: 'Campo obrigatório.' }"
       [cols]="{ md: 4 }"
+    ></dss-input>
+
+    <dss-input
+      type="amount"
+      label="Amount: "
+      formControlName="amount"
     ></dss-input>
 
     <dss-select
@@ -109,12 +117,6 @@
       formControlName="password"
       [errors]="{ required: 'Errro' }"
       [cols]="{ md: 4 }"
-    ></dss-input>
-
-    <dss-input
-      type="amount"
-      label="Amount: "
-      formControlName="amount"
     ></dss-input>
 
     <dss-input
