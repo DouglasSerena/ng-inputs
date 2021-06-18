@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import {
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -29,7 +30,9 @@ import { SelectCustomControlValueAccessor } from '../select-custom-control-value
 })
 export class NgSearchComponent
   extends SelectCustomControlValueAccessor
-  implements OnInit {
+  implements OnInit
+{
+  @ViewChild('inputRef') inputRef: ElementRef<HTMLInputElement>;
   @Input() notFound: string = 'Sem resultado.';
   @Input() pathLabel = 'label';
   @Input() value: any = null;
@@ -47,14 +50,21 @@ export class NgSearchComponent
     protected elementRef: ElementRef,
     protected renderer: Renderer2,
     private httpClient: HttpClient,
-    private configService: NgInputConfigService
+    private configService: NgInputConfigService,
+    changeDetectorRef: ChangeDetectorRef
   ) {
-    super(controlContainer, elementRef, renderer, configService);
+    super(
+      controlContainer,
+      elementRef,
+      renderer,
+      configService,
+      changeDetectorRef
+    );
   }
 
   timeInput: any = 0;
   @HostListener('input', ['$event'])
-  onInput({ target }: KeyboardEvent) {
+  onInput({ target }: Event) {
     clearTimeout(this.timeInput);
     this.timeInput = setTimeout(async () => {
       const { value } = target as HTMLInputElement;
@@ -186,6 +196,7 @@ export class NgSearchComponent
   timeFocus: any = 0;
   @Output() focus = new EventEmitter();
   onFocus(event: Event) {
+    this.onInput(event);
     clearTimeout(this.timeFocus);
     this.timeFocus = setTimeout(() => {
       this.focused = true;

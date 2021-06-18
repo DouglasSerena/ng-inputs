@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Component,
   ElementRef,
   forwardRef,
@@ -29,9 +30,10 @@ export class NgTextAreaComponent extends InputCustomControlValueAccessor {
 
   constructor(
     protected controlContainer: ControlContainer,
-    public configService: NgInputConfigService
+    public configService: NgInputConfigService,
+    changeDetectorRef: ChangeDetectorRef
   ) {
-    super(controlContainer, configService);
+    super(controlContainer, configService, changeDetectorRef);
   }
 
   ngOnInit() {

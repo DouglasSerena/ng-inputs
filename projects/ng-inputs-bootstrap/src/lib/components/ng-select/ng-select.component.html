@@ -1,0 +1,72 @@
+<label class="form-label" *ngIf="label" [for]="id">{{ label }}</label>
+
+<div class="input-group">
+  <ng-icon
+    [control]="control"
+    [icon]="icon?.left"
+    className="ng-icon__left"
+    (iconClick)="handleClickIcon($event, selectRef, icon.left, 'left')"
+  ></ng-icon>
+
+  <select
+    [id]="id"
+    #selectRef
+    (focus)="handleFocus($event)"
+    [attr.readonly]="readonly"
+    [formControl]="control"
+    [class.disabled]="disabled"
+    [class.readonly]="readonly"
+    [compareWith]="handleCompareWith.bind(this)"
+    class="form-select shadow-focus"
+    [tabIndex]="control.disabled ? -1 : 1"
+    [class.form-select-sm]="size === 'sm'"
+    [class.form-select-lg]="size === 'lg'"
+    [class.ng-icon__left]="icon?.left && !icon?.left?.hidden"
+    [class.ng-icon__right]="icon?.right && !icon?.right?.hidden"
+    [class.is-valid]="this.control.touched && this.control.valid"
+    [class.is-invalid]="this.control.touched && this.control.invalid"
+  >
+    <ng-container *ngIf="position === 'start'">
+      <option
+        *ngFor="let option of _options"
+        [ngValue]="option.value"
+        [selected]="option.value.name === 'ddwada'"
+      >
+        {{ option.label }}
+      </option>
+    </ng-container>
+
+    <ng-content></ng-content>
+
+    <ng-container *ngIf="position === 'end'">
+      <option *ngFor="let option of _options" [ngValue]="option.value">
+        {{ option.label }}
+      </option>
+    </ng-container>
+  </select>
+
+  <ng-icon
+    [control]="control"
+    [icon]="icon?.right"
+    className="ng-icon__right"
+    (click)="handleClickIcon($event, selectRef, icon.right, 'right')"
+  ></ng-icon>
+</div>
+
+<div class="ng-helper">
+  <span
+    class="ng-helper__text text-muted"
+    *ngIf="help && !(control.touched && control.invalid)"
+  >
+    {{ help }}
+  </span>
+
+  <ng-container *ngFor="let errorKey of _errorsKeys">
+    <span
+      class="ng-helper__text ng-helper__error"
+      *ngIf="control.touched && control.getError(errorKey)"
+    >
+      {{ _errors[errorKey] }}
+    </span>
+  </ng-container>
+</div>

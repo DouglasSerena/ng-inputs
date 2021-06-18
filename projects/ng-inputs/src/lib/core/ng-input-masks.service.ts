@@ -98,47 +98,6 @@ export class NgInputMasksService {
 
     return IMask(element, mask);
   }
-
-  get tel() {
-    return {
-      mask: [{ mask: '(00) 0000-0000' }, { mask: '(00) 0 0000-0000' }],
-    } as IMask.AnyMaskedOptions;
-  }
-  get cpf() {
-    return {
-      mask: '000.000.000-00',
-    } as IMask.AnyMaskedOptions;
-  }
-  get cnpj() {
-    return {
-      mask: '00.000.000/0000-00',
-    } as IMask.AnyMaskedOptions;
-  }
-  get cpf_cnpj() {
-    return {
-      mask: [this.cpf, this.cnpj],
-    } as IMask.AnyMaskedOptions;
-  }
-  get rg() {
-    return {
-      mask: '00.000.000-0',
-    } as IMask.AnyMaskedOptions;
-  }
-  get estadual() {
-    return {
-      mask: '00.0.000.0000000-0',
-    } as IMask.AnyMaskedOptions;
-  }
-  get rg_estadual() {
-    return {
-      mask: [this.rg, this.estadual],
-    } as IMask.AnyMaskedOptions;
-  }
-  get zipCode() {
-    return {
-      mask: '00000-000',
-    } as IMask.AnyMaskedOptions;
-  }
 }
 
 interface IOptions {

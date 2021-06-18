@@ -1,34 +1,55 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgInputsModule } from 'projects/ng-inputs/src/public-api';
+import {
+  NgAutocompleteModule,
+  NgCheckboxModule,
+  NgInputModule,
+  NgInputsBootstrap,
+  NgMaskPipeModule,
+  NgSelectModule,
+  NgSwitchModule,
+  NgTextAreaModule,
+  NgUtilsDirectiveModule,
+} from 'projects/ng-inputs-bootstrap/src/public-api';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
-// export const theme = 'materialize';
-export const theme = 'bootstrap';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     BrowserModule,
-    AppRoutingModule,
     HttpClientModule,
-    NgInputsModule.forRoot({
-      field: {
-        icons: {
-          address: { icon: 'fas fa-map-marked-alt', align: 'right' },
-          currency: { icon: 'fas fa-money-bill-wave' },
+    NgInputsBootstrap.forRoot({
+      global: {
+        select: {
+          types: {
+            'select-2': {
+              icon: {
+                left: {
+                  class: 'fas fa-text-width',
+                  click: () => {
+                    console.log('opio');
+                  },
+                },
+              },
+            },
+          },
         },
       },
-      environments: {
-        url: 'http://api-sandbox2.construtoramontebello.net.br/api/financeiro',
-      },
-      currency: { prefix: '' },
     }),
+    NgMaskPipeModule,
+    NgUtilsDirectiveModule,
+    NgInputModule,
+    NgSelectModule,
+    NgTextAreaModule,
+    NgAutocompleteModule,
+    NgCheckboxModule,
+    NgSwitchModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

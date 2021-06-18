@@ -14,7 +14,7 @@
     ></i>
 
     <input
-      #inputSearch
+      #inputRef
       type="search"
       class="form-control browser-default"
       [placeholder]="_placeholder"
@@ -45,6 +45,7 @@
       class="options-list hidden"
       [class.hidden]="control.value?.length === 0 || loading || !focused"
     >
+      <ng-content *ngIf="options.length === 0"> </ng-content>
       <li
         *ngIf="options.length === 0; else template_options"
         class="not-found option-item"

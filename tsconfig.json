@@ -15,9 +15,17 @@
     "checkJs": false,
     "strictPropertyInitialization": false,"noImplicitAny": false,
     "paths": {
+      "ng-fields": [
+        "dist/ng-fields/ng-fields",
+        "dist/ng-fields"
+      ],
       "ng-inputs": [
         "dist/ng-inputs/ng-inputs",
         "dist/ng-inputs"
+      ],
+      "ng-material-inputs": [
+        "dist/ng-material-inputs/ng-material-inputs",
+        "dist/ng-material-inputs"
       ]
     },
     "experimentalDecorators": true,

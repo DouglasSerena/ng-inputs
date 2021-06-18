@@ -1,4 +1,6 @@
+import { ChangeDetectorRef } from '@angular/core';
 import {
+  AfterViewInit,
   Component,
   EventEmitter,
   HostBinding,
@@ -25,7 +27,8 @@ interface IOnWrite {
 
 @Component({ selector: '', template: '' })
 export class InputCustomControlValueAccessor
-  implements ControlValueAccessor, OnInit {
+  implements ControlValueAccessor, OnInit
+{
   @ViewChild(FormControlDirective, { static: true })
   formControlDirective: FormControlDirective;
   @Input() formControl: FormControl;
@@ -106,7 +109,8 @@ export class InputCustomControlValueAccessor
 
   constructor(
     private _controlContainer: ControlContainer,
-    private _configService: NgInputConfigService
+    private _configService: NgInputConfigService,
+    private _changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -118,11 +122,7 @@ export class InputCustomControlValueAccessor
   protected ngOnInitSuper() {
     if (this.name === undefined) this.name = this.formControlName;
 
-    if (this.required === undefined) {
-      this.required = this.control.errors?.required;
-      if (!this.required)
-        this.required = Object.keys(this.errors).includes('required');
-    }
+    this.validRequired();
   }
 
   getKeys(errors: IObject) {
@@ -130,6 +130,17 @@ export class InputCustomControlValueAccessor
   }
   getError(key: string) {
     return this.control?.errors?.[key] && this.control?.touched;
+  }
+
+  validRequired() {
+    const value = this.control.value;
+    this?.onWrite?.(null);
+    this._changeDetectorRef.detectChanges();
+    if (this.required === undefined) {
+      this.required = this.control.errors?.required;
+    }
+    this?.onWrite?.(value);
+    this._changeDetectorRef.detectChanges();
   }
 
   registerOnTouched(fn: any): void {
@@ -141,8 +152,12 @@ export class InputCustomControlValueAccessor
     this.onWrite = fn;
   }
 
+  time: any = 0;
   writeValue(obj: any): void {
-    this.formControlDirective.valueAccessor?.writeValue(obj);
+    clearTimeout(this.time);
+    this.time = setTimeout(() => {
+      this.onWrite(obj);
+    });
   }
 
   setDisabledState(isDisabled: boolean): void {

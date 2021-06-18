@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -47,7 +48,8 @@ interface IDateProps {
 })
 export class NgInputComponent
   extends InputCustomControlValueAccessor
-  implements OnInit {
+  implements OnInit
+{
   @ViewChild('input', { static: true }) input: ElementRef<HTMLInputElement>;
   @Input() align: 'right' | 'left' | 'center' | null = null;
   @Input() autocomplete = 'work';
@@ -108,9 +110,10 @@ export class NgInputComponent
   constructor(
     private controlContainer: ControlContainer,
     private masksService: NgInputMasksService,
-    public configService: NgInputConfigService
+    public configService: NgInputConfigService,
+    private changeDetectorRef: ChangeDetectorRef
   ) {
-    super(controlContainer, configService);
+    super(controlContainer, configService, changeDetectorRef);
   }
 
   ngOnInit() {
@@ -283,11 +286,12 @@ export class NgInputComponent
             this.typeInit as 'currency',
             { allowNegative: this.allowNegative, mask: this.mask }
           );
-          ((this.instance as unknown) as InputMask<any>)?.updateValue();
+          (this.instance as unknown as InputMask<any>)?.updateValue();
         }
         this.input.nativeElement.blur();
         this.control.markAsUntouched();
       }
+      this.changeDetectorRef.detectChanges();
     }, 250);
   }
 

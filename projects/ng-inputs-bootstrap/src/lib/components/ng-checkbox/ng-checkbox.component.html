@@ -1,0 +1,12 @@
+<div class="form-check form-check-inline">
+  <input
+    [id]="id"
+    #checkboxRef
+    type="checkbox"
+    [formControl]="control"
+    class="form-check-input shadow-focus"
+  />
+  <label [for]="id" class="form-check-label">
+    <ng-content></ng-content>
+  </label>
+</div>

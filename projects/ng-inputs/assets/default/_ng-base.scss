@@ -176,6 +176,9 @@
         overflow: hidden;
 
         text-overflow: ellipsis;
+        .required {
+          color: var(--dss-danger);
+        }
       }
     }
     &.active {

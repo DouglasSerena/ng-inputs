@@ -1,5 +1,8 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": false
+  },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
@@ -15,7 +18,7 @@
       },
       "root": "",
       "sourceRoot": "src",
-      "prefix": "dss",
+      "prefix": "ng",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -118,7 +121,7 @@
       "projectType": "library",
       "root": "projects/ng-inputs",
       "sourceRoot": "projects/ng-inputs/src",
-      "prefix": "dss",
+      "prefix": "ng",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
@@ -146,6 +149,82 @@
             "tsConfig": [
               "projects/ng-inputs/tsconfig.lib.json",
               "projects/ng-inputs/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        }
+      }
+    },
+    "ng-inputs-bootstrap": {
+      "projectType": "library",
+      "root": "projects/ng-inputs-bootstrap",
+      "sourceRoot": "projects/ng-inputs-bootstrap/src",
+      "prefix": "ng",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/ng-inputs-bootstrap/tsconfig.lib.json",
+            "project": "projects/ng-inputs-bootstrap/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ng-inputs-bootstrap/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ng-inputs-bootstrap/src/test.ts",
+            "tsConfig": "projects/ng-inputs-bootstrap/tsconfig.spec.json",
+            "karmaConfig": "projects/ng-inputs-bootstrap/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ng-inputs-bootstrap/tsconfig.lib.json",
+              "projects/ng-inputs-bootstrap/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        }
+      }
+    },
+    "ng-material-inputs": {
+      "projectType": "library",
+      "root": "projects/ng-material-inputs",
+      "sourceRoot": "projects/ng-material-inputs/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/ng-material-inputs/tsconfig.lib.json",
+            "project": "projects/ng-material-inputs/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ng-material-inputs/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ng-material-inputs/src/test.ts",
+            "tsConfig": "projects/ng-material-inputs/tsconfig.spec.json",
+            "karmaConfig": "projects/ng-material-inputs/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ng-material-inputs/tsconfig.lib.json",
+              "projects/ng-material-inputs/tsconfig.spec.json"
             ],
             "exclude": ["**/node_modules/**"]
           }

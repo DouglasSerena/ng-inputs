@@ -1,3 +1,4 @@
+import { ChangeDetectorRef } from '@angular/core';
 import {
   Component,
   ElementRef,
@@ -33,7 +34,8 @@ interface IOption {
 })
 export class NgSelectComponent
   extends SelectCustomControlValueAccessor
-  implements OnChanges {
+  implements OnChanges
+{
   @ViewChild('select', { static: true })
   elementSelect: ElementRef<HTMLSelectElement>;
 
@@ -50,9 +52,16 @@ export class NgSelectComponent
     protected controlContainer: ControlContainer,
     protected elementRef: ElementRef,
     protected renderer: Renderer2,
-    public configService: NgInputConfigService
+    public configService: NgInputConfigService,
+    changeDetectorRef: ChangeDetectorRef
   ) {
-    super(controlContainer, elementRef, renderer, configService);
+    super(
+      controlContainer,
+      elementRef,
+      renderer,
+      configService,
+      changeDetectorRef
+    );
     this.formatOptions();
   }
 
@@ -65,6 +74,7 @@ export class NgSelectComponent
       this.formatOptions();
     }
   }
+
   formatOptions() {
     if (this.options.length > 0) {
       const option: IOption[] = [];

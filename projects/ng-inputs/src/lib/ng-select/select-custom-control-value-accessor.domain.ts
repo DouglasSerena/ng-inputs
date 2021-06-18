@@ -1,4 +1,6 @@
+import { ChangeDetectorRef } from '@angular/core';
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
@@ -21,10 +23,15 @@ interface IObject {
   [key: string]: string;
 }
 
+interface IOnWrite {
+  (value: any): void;
+}
+
 @Component({ selector: '', template: '' })
 export class SelectCustomControlValueAccessor
   extends SelectControlValueAccessor
-  implements OnInit {
+  implements OnInit
+{
   @ViewChild(FormControlDirective, { static: true })
   formControlDirective: FormControlDirective;
   @Input() formControl: FormControl;
@@ -108,7 +115,8 @@ export class SelectCustomControlValueAccessor
     protected _controlContainer: ControlContainer,
     protected elementRef: ElementRef,
     protected renderer: Renderer2,
-    private _configService: NgInputConfigService
+    private _configService: NgInputConfigService,
+    private _changeDetectorRef: ChangeDetectorRef
   ) {
     super(renderer, elementRef);
     this.readonly = false;
@@ -124,11 +132,7 @@ export class SelectCustomControlValueAccessor
   ngOnInitSuper() {
     if (this.name === undefined) this.name = this.formControlName;
 
-    if (this.required === undefined) {
-      this.required = this.control.errors?.required;
-      if (!this.required)
-        this.required = Object.keys(this.errors).includes('required');
-    }
+    this.validRequired();
   }
 
   getMultiLabels(labels: any, label: string[]): any {
@@ -143,23 +147,37 @@ export class SelectCustomControlValueAccessor
   getKeys(errors: IObject) {
     return Object.keys(errors);
   }
+
   getError(key: string) {
     return this.control?.errors?.[key] && this.control?.touched;
+  }
+
+  validRequired() {
+    const value = this.control.value;
+    this?.onWrite?.(null);
+    this._changeDetectorRef.detectChanges();
+    if (this.required === undefined) {
+      this.required = this.control.errors?.required;
+    }
+    this?.onWrite?.(value);
+    this._changeDetectorRef.detectChanges();
   }
 
   registerOnTouched(fn: any): void {
     this.formControlDirective.valueAccessor?.registerOnTouched(fn);
   }
 
-  onChange: (value: any) => void;
-  registerOnChange(fn: any): void {
-    this.onChange = fn;
+  onWrite: IOnWrite;
+  registerOnChange(fn: IOnWrite): void {
+    this.onWrite = fn;
   }
 
-  onWrite: (value: any) => void;
+  time: any = 0;
   writeValue(obj: any): void {
-    this.onWrite = obj;
-    this.formControlDirective.valueAccessor?.writeValue(obj);
+    clearTimeout(this.time);
+    this.time = setTimeout(() => {
+      this.onWrite(obj);
+    });
   }
 
   setDisabledState(isDisabled: boolean): void {

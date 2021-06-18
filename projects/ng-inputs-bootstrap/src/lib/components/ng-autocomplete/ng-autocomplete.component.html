@@ -1,0 +1,85 @@
+<label class="form-label" *ngIf="label" [for]="id">{{ label }}</label>
+
+<div class="input-group">
+  <ng-icon
+    *ngIf="!loading"
+    [control]="control"
+    [icon]="icon?.left"
+    className="ng-icon__left"
+    (iconClick)="handleClickIcon($event, rootRef, icon.left, 'left')"
+  ></ng-icon>
+
+  <ng-icon
+    *ngIf="loading"
+    [control]="control"
+    [icon]="icon?.loading"
+    className="ng-icon__left"
+    (iconClick)="handleClickIcon($event, rootRef, icon.loading, 'left')"
+  ></ng-icon>
+
+  <input
+    [id]="id"
+    #rootRef
+    [type]="type"
+    autocomplete="off"
+    [readonly]="readonly"
+    [formControl]="control"
+    [class.disabled]="disabled"
+    [class.readonly]="readonly"
+    (blur)="handleBlur($event)"
+    (focus)="handleFocus($event)"
+    (click)="handleOpenMenu($event)"
+    class="form-control shadow-focus"
+    [tabIndex]="control.disabled ? -1 : 1"
+    [class.form-control-sm]="size === 'sm'"
+    [class.form-control-lg]="size === 'lg'"
+    [class.ng-icon__left]="icon?.left && !icon?.left?.hidden"
+    [class.ng-icon__right]="icon?.right && !icon?.right?.hidden"
+    [class.is-valid]="this.control.touched && this.control.valid"
+    [class.is-invalid]="this.control.touched && this.control.invalid"
+  />
+
+  <ng-icon
+    [control]="control"
+    [icon]="icon?.right"
+    className="ng-icon__right"
+    (click)="handleClickIcon($event, rootRef, icon.right, 'right')"
+  ></ng-icon>
+
+  <ul
+    class="dropdown-menu ng-dropdown show"
+    *ngIf="_dropdownIsOpen && !loading"
+  >
+    <ng-content *ngIf="_options.length === 0"></ng-content>
+    <button
+      tabIndex="1"
+      (click)="handleSelect(index)"
+      (focus)="handleFocus($event)"
+      (blur)="handleBlur($event, index)"
+      (keyup.enter)="handleSelect(index)"
+      class="ng-dropdown-item dropdown-item"
+      [class.active]="_indexSelect === index"
+      *ngFor="let option of _options; let index = index"
+    >
+      {{ option?._label }}
+    </button>
+  </ul>
+</div>
+
+<div class="ng-helper">
+  <span
+    class="ng-helper__text text-muted"
+    *ngIf="help && !(control.touched && control.invalid)"
+  >
+    {{ help }}
+  </span>
+
+  <ng-container *ngFor="let errorKey of _errorsKeys">
+    <span
+      class="ng-helper__text ng-helper__error"
+      *ngIf="control.touched && control.getError(errorKey)"
+    >
+      {{ _errors[errorKey] }}
+    </span>
+  </ng-container>
+</div>
