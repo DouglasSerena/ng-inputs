@@ -1,0 +1,66 @@
+<mat-form-field
+  [color]="color"
+  [appearance]="theme"
+  [hideRequiredMarker]="!required"
+  [floatLabel]="labelFixed ? 'always' : 'auto'"
+>
+  <!-- LABEL -->
+  <mat-label *ngIf="label">{{ label }}</mat-label>
+  <!-- ICON LEFT -->
+  <ng-icon
+    matPrefix
+    [icon]="icon?.left"
+    (iconClick)="handleClickIcon($event, rootRef, icon.left, 'left')"
+  ></ng-icon>
+
+  <!-- PREFIX -->
+  <span matPrefix *ngIf="!!prefix">{{ prefix }}</span>
+
+  <mat-select
+    #rootRef
+    [id]="id"
+    [required]="!!required"
+    [multiple]="multiple"
+    [formControl]="control"
+    (opened)="handleFocus($event)"
+    [tabIndex]="control.disabled ? -1 : 1"
+    [compareWith]="handleCompareWithBind"
+    (selectionChange)="handleSelect($event)"
+  >
+    <mat-option *ngIf="!!firstOptionLabel" [value]="firstOptionValue">{{
+      firstOptionLabel
+    }}</mat-option>
+
+    <ng-container *ngIf="position === 'start'">
+      <mat-option *ngFor="let option of _options" [value]="option._value">
+        {{ option._label }}
+      </mat-option>
+    </ng-container>
+
+    <ng-content></ng-content>
+
+    <ng-container *ngIf="position === 'end'">
+      <mat-option *ngFor="let option of _options" [value]="option._value">
+        {{ option._label }}
+      </mat-option>
+    </ng-container>
+  </mat-select>
+
+  <!-- SUFFIX -->
+  <span matSuffix *ngIf="!!suffix">{{ suffix }}</span>
+
+  <!-- DICA -->
+  <mat-hint *ngIf="help && !(control.touched && control.invalid)">{{
+    help
+  }}</mat-hint>
+
+  <!-- MENSAGEM DE ERRO -->
+  <mat-error [ng-messages-errors]="errors" [control]="control"></mat-error>
+
+  <!-- ICON RIGHT -->
+  <ng-icon
+    matSuffix
+    [icon]="icon?.right"
+    (iconClick)="handleClickIcon($event, rootRef, icon.right, 'right')"
+  ></ng-icon>
+</mat-form-field>

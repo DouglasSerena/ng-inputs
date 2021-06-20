@@ -6,7 +6,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "tmp": {
+    "ng-inputs-template": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -18,36 +18,23 @@
       },
       "root": "",
       "sourceRoot": "src",
-      "prefix": "ng",
+      "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/tmp",
+            "outputPath": "dist/ng-inputs-template",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "aot": true,
+            "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.scss"],
+            "styles": ["./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css", "src/styles.scss"],
             "scripts": []
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -59,25 +46,42 @@
                   "maximumWarning": "2kb",
                   "maximumError": "4kb"
                 }
-              ]
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "tmp:build"
-          },
           "configurations": {
             "production": {
-              "browserTarget": "tmp:build:production"
+              "browserTarget": "ng-inputs-template:build:production"
+            },
+            "development": {
+              "browserTarget": "ng-inputs-template:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "tmp:build"
+            "browserTarget": "ng-inputs-template:build"
           }
         },
         "test": {
@@ -87,32 +91,10 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
+            "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.scss"],
+            "styles": ["./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css", "src/styles.scss"],
             "scripts": []
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
-            ],
-            "exclude": ["**/node_modules/**"]
-          }
-        },
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "tmp:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "tmp:serve:production"
-            }
           }
         }
       }
@@ -121,19 +103,22 @@
       "projectType": "library",
       "root": "projects/ng-inputs",
       "sourceRoot": "projects/ng-inputs/src",
-      "prefix": "ng",
+      "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "tsConfig": "projects/ng-inputs/tsconfig.lib.json",
             "project": "projects/ng-inputs/ng-package.json"
           },
           "configurations": {
             "production": {
               "tsConfig": "projects/ng-inputs/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ng-inputs/tsconfig.lib.json"
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
@@ -142,15 +127,36 @@
             "tsConfig": "projects/ng-inputs/tsconfig.spec.json",
             "karmaConfig": "projects/ng-inputs/karma.conf.js"
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+        }
+      }
+    },
+    "ng-inputs-material": {
+      "projectType": "library",
+      "root": "projects/ng-inputs-material",
+      "sourceRoot": "projects/ng-inputs-material/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "tsConfig": [
-              "projects/ng-inputs/tsconfig.lib.json",
-              "projects/ng-inputs/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**"]
+            "project": "projects/ng-inputs-material/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ng-inputs-material/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ng-inputs-material/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ng-inputs-material/src/test.ts",
+            "tsConfig": "projects/ng-inputs-material/tsconfig.spec.json",
+            "karmaConfig": "projects/ng-inputs-material/karma.conf.js"
           }
         }
       }
@@ -159,19 +165,22 @@
       "projectType": "library",
       "root": "projects/ng-inputs-bootstrap",
       "sourceRoot": "projects/ng-inputs-bootstrap/src",
-      "prefix": "ng",
+      "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "tsConfig": "projects/ng-inputs-bootstrap/tsconfig.lib.json",
             "project": "projects/ng-inputs-bootstrap/ng-package.json"
           },
           "configurations": {
             "production": {
               "tsConfig": "projects/ng-inputs-bootstrap/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ng-inputs-bootstrap/tsconfig.lib.json"
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
@@ -180,57 +189,40 @@
             "tsConfig": "projects/ng-inputs-bootstrap/tsconfig.spec.json",
             "karmaConfig": "projects/ng-inputs-bootstrap/karma.conf.js"
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/ng-inputs-bootstrap/tsconfig.lib.json",
-              "projects/ng-inputs-bootstrap/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**"]
-          }
         }
       }
     },
-    "ng-material-inputs": {
+    "ng-masks": {
       "projectType": "library",
-      "root": "projects/ng-material-inputs",
-      "sourceRoot": "projects/ng-material-inputs/src",
+      "root": "projects/ng-masks",
+      "sourceRoot": "projects/ng-masks/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "tsConfig": "projects/ng-material-inputs/tsconfig.lib.json",
-            "project": "projects/ng-material-inputs/ng-package.json"
+            "project": "projects/ng-masks/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/ng-material-inputs/tsconfig.lib.prod.json"
+              "tsConfig": "projects/ng-masks/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ng-masks/tsconfig.lib.json"
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/ng-material-inputs/src/test.ts",
-            "tsConfig": "projects/ng-material-inputs/tsconfig.spec.json",
-            "karmaConfig": "projects/ng-material-inputs/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/ng-material-inputs/tsconfig.lib.json",
-              "projects/ng-material-inputs/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**"]
+            "main": "projects/ng-masks/src/test.ts",
+            "tsConfig": "projects/ng-masks/tsconfig.spec.json",
+            "karmaConfig": "projects/ng-masks/karma.conf.js"
           }
         }
       }
     }
   },
-  "defaultProject": "tmp"
+  "defaultProject": "ng-inputs-template"
 }

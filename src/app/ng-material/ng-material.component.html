@@ -1,0 +1,213 @@
+<form [formGroup]="form" class="row">
+  <div [columns]="{ md: 4 }">
+    <pre><code [highlight]="form.getRawValue() | json"></code></pre>
+  </div>
+
+  <div [columns]="{ md: 8 }" class="row">
+    <!-- DEFAULT -->
+    <ng-input
+      length="30"
+      id="mat-default"
+      help="Text of helper"
+      [columns]="{ md: 4 }"
+      label="field default"
+      placeholder="default"
+      formControlName="default"
+      [errors]="{ required: 'field is required' }"
+    ></ng-input>
+
+    <!-- DISABLED -->
+    <ng-input
+      id="mat-disabled"
+      [columns]="{ md: 4 }"
+      label="field disabled"
+      placeholder="disabled"
+      formControlName="disabled"
+    ></ng-input>
+
+    <!-- READONLY -->
+    <ng-input
+      id="mat-readonly"
+      [readonly]="true"
+      [columns]="{ md: 4 }"
+      label="field readonly"
+      placeholder="readonly"
+      formControlName="readonly"
+    ></ng-input>
+
+    <!-- CURRENCY -->
+    <ng-input
+      id="mat-currency"
+      type="currency"
+      [columns]="{ md: 4 }"
+      label="field currency"
+      placeholder="currency"
+      formControlName="currency"
+    ></ng-input>
+
+    <!-- PERCENT -->
+    <ng-input
+      id="mat-percent"
+      type="percent"
+      [columns]="{ md: 4 }"
+      label="field percent"
+      placeholder="percent"
+      formControlName="percent"
+    ></ng-input>
+
+    <!-- AMOUNT -->
+    <ng-input
+      id="mat-amount"
+      type="amount"
+      [columns]="{ md: 4 }"
+      label="field amount"
+      placeholder="amount"
+      formControlName="amount"
+    ></ng-input>
+
+    <!-- MASK -->
+    <ng-input
+      id="mat-CPF_CNPJ"
+      type="CPF_CNPJ"
+      [columns]="{ md: 6 }"
+      label="field mask"
+      placeholder="cpf cnpj"
+      formControlName="mask"
+    ></ng-input>
+
+    <!-- DATE -->
+    <ng-input
+      id="mat-date"
+      type="date"
+      [columns]="{ md: 6 }"
+      [autoFillDate]="true"
+      label="field date auto fill"
+      placeholder="date"
+      formControlName="date"
+    ></ng-input>
+
+    <!-- SELECT -->
+    <ng-select
+      id="mat-select"
+      firstOptionLabel="--- EMPTY ---"
+      [firstOptionValue]="null"
+      keyLabel="name"
+      keyValue="name"
+      keyCompare="name"
+      [options]="option"
+      [columns]="{ md: 6 }"
+      label="field select"
+      formControlName="select"
+    ></ng-select>
+
+    <!-- AUTOCOMPLETE -->
+    <ng-autocomplete
+      keyLabel="name"
+      id="mat-autocomplete"
+      [columns]="{ md: 6 }"
+      [service]="testService"
+      methodService="searchByName"
+      label="field autocomplete"
+      formControlName="autocomplete"
+      secondaryControlName="autocompleteId"
+      secondaryKeyValueControl="id"
+    >
+      Is Empty
+    </ng-autocomplete>
+
+    <!-- TEL -->
+    <ng-input
+      id="mat-tel"
+      type="tel"
+      [columns]="{ md: 4 }"
+      label="field tel"
+      placeholder="tel"
+      formControlName="tel"
+    ></ng-input>
+
+    <!-- zipCode -->
+    <ng-input
+      id="mat-zip-code"
+      type="ZIP_CODE"
+      [columns]="{ md: 4 }"
+      label="field zip code"
+      placeholder="zip code"
+      formControlName="zipCode"
+    ></ng-input>
+
+    <!-- PASSWORD -->
+    <ng-input
+      id="mat-password"
+      type="password"
+      [columns]="{ md: 4 }"
+      label="field password"
+      placeholder="password"
+      formControlName="password"
+    ></ng-input>
+
+    <!-- TEXTAREA -->
+    <ng-text-area
+      length="1000"
+      id="mat-text-area"
+      label="field text area"
+      formControlName="textArea"
+      [columns]="{ default: 12 }"
+    ></ng-text-area>
+
+    <div>
+      <ng-checkbox class="mr-2" formControlName="checkbox">
+        field checkbox
+      </ng-checkbox>
+      <ng-checkbox formControlName="indeterminate" [indeterminate]="true">
+        field checkbox indeterminate
+      </ng-checkbox>
+    </div>
+    <ng-switch formControlName="switch">field switch</ng-switch>
+
+    <h2 class="mt-2">Themes</h2>
+
+    <!-- FILL -->
+    <ng-input
+      id="mat-fill"
+      [columns]="{ md: 3 }"
+      theme="fill"
+      [labelFixed]="true"
+      label="field fill"
+      placeholder="fill"
+      formControlName="fill"
+    ></ng-input>
+
+    <!-- OUTLINE -->
+    <ng-input
+      id="mat-outline"
+      theme="outline"
+      [labelFixed]="true"
+      [columns]="{ md: 3 }"
+      label="field outline"
+      placeholder="outline"
+      formControlName="outline"
+    ></ng-input>
+
+    <!-- STANDARD -->
+    <ng-input
+      id="mat-standard"
+      theme="standard"
+      [labelFixed]="true"
+      [columns]="{ md: 3 }"
+      label="field standard"
+      placeholder="standard"
+      formControlName="standard"
+    ></ng-input>
+
+    <!-- LEGACY -->
+    <ng-input
+      id="mat-legacy"
+      theme="legacy"
+      [labelFixed]="true"
+      [columns]="{ md: 3 }"
+      label="field legacy"
+      placeholder="legacy"
+      formControlName="legacy"
+    ></ng-input>
+  </div>
+</form>

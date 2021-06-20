@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import {
+  INgConfigInput,
+  INgConfigSelect,
   NgConfig,
-  NgConfigInput,
-  NgConfigSelect,
   TypeFields,
-} from '../interfaces/ng-config.interface';
+} from '../interfaces/config/ng-config.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -17,10 +17,10 @@ export class NgConfigService {
       autocomplete: {
         icon: {
           loading: {
-            class: 'fas fa-spinner ng-loading',
+            icon: 'fas fa-spinner ng-bt-loading',
           },
           left: {
-            class: 'fas fa-search',
+            icon: 'fas fa-search',
           },
         },
       },
@@ -29,13 +29,13 @@ export class NgConfigService {
           password: {
             icon: {
               right: {
-                class: 'fas fa-eye',
+                icon: 'fas fa-eye',
                 click: (_, input, icon) => {
                   if (input.type === 'password') {
-                    icon.class = 'fas fa-eye-slash';
+                    icon.icon = 'fas fa-eye-slash';
                     (input as HTMLInputElement).type = 'text';
                   } else {
-                    icon.class = 'fas fa-eye';
+                    icon.icon = 'fas fa-eye';
                     (input as HTMLInputElement).type = 'password';
                   }
                 },
@@ -69,23 +69,23 @@ export class NgConfigService {
     this._config.global = { ...this._config.global, ...value.global } as any;
   }
 
-  types(field: TypeFields): NgConfigSelect | NgConfigInput {
-    return this.global?.[field]?.types as NgConfigSelect | NgConfigInput;
-  }
-  
-  get typesSelect(): NgConfigSelect {
-    return this.types('select') as NgConfigSelect;
+  types(field: TypeFields): INgConfigSelect | INgConfigInput {
+    return this.global?.[field]?.types as INgConfigSelect | INgConfigInput;
   }
 
-  get typesInput(): NgConfigInput {
-    return this.types('input') as NgConfigInput;
+  get typesSelect(): INgConfigSelect {
+    return this.types('select') as INgConfigSelect;
   }
 
-  get typesTextArea(): NgConfigSelect {
-    return this.types('textArea') as NgConfigSelect;
+  get typesInput(): INgConfigInput {
+    return this.types('input') as INgConfigInput;
   }
 
-  get typesAutocomplete(): NgConfigInput {
-    return this.types('autocomplete') as NgConfigInput;
+  get typesTextArea(): INgConfigSelect {
+    return this.types('textArea') as INgConfigSelect;
+  }
+
+  get typesAutocomplete(): INgConfigInput {
+    return this.types('autocomplete') as INgConfigInput;
   }
 }

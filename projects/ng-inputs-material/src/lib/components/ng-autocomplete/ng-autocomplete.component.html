@@ -1,0 +1,79 @@
+<mat-form-field
+  [color]="color"
+  [appearance]="theme"
+  [hideRequiredMarker]="!required"
+  [floatLabel]="labelFixed ? 'always' : 'auto'"
+>
+  <!-- LABEL -->
+  <mat-label *ngIf="label">{{ label }}</mat-label>
+  <!-- ICON LEFT -->
+  <ng-icon
+    matPrefix
+    *ngIf="!loading"
+    [icon]="icon?.left"
+    (iconClick)="handleClickIcon($event, rootRef, icon.left, 'left')"
+  ></ng-icon>
+
+  <!-- ICON LEFT -->
+  <ng-icon
+    matPrefix
+    *ngIf="loading"
+    [icon]="icon?.loading"
+    (iconClick)="handleClickIcon($event, rootRef, icon.loading, 'loading')"
+  ></ng-icon>
+
+  <!-- PREFIX -->
+  <span matPrefix *ngIf="!!prefix">{{ prefix }}</span>
+
+  <input
+    [id]="id"
+    #rootRef
+    matInput
+    [type]="type"
+    autocomplete="off"
+    [readonly]="readonly"
+    [required]="!!required"
+    [formControl]="control"
+    [matAutocomplete]="auto"
+    (blur)="handleBlur($event)"
+    (focus)="handleFocus($event)"
+    [matAutocompletePosition]="positionMenu"
+    [attr.placeholder]="'dawdawdawdawdawd'"
+    [tabIndex]="control.disabled ? -1 : 1"
+  />
+  <!-- SUFFIX -->
+  <span matSuffix *ngIf="!!suffix">{{ suffix }}</span>
+
+  <!-- DICA -->
+  <mat-hint *ngIf="help && !(control.touched && control.invalid)">{{
+    help
+  }}</mat-hint>
+
+  <!-- MENSAGEM DE ERRO -->
+  <mat-error [ng-messages-errors]="errors" [control]="control"></mat-error>
+
+  <!-- ICON RIGHT -->
+  <ng-icon
+    matSuffix
+    [icon]="icon?.right"
+    (iconClick)="handleClickIcon($event, rootRef, icon.right, 'right')"
+  ></ng-icon>
+
+  <mat-autocomplete
+    #auto="matAutocomplete"
+    (optionSelected)="handleSelect($event)"
+  >
+    <mat-option
+      *ngIf="_options.length === 0 && showIsEmpty"
+      [value]="{ _default: control.value }"
+    >
+      <ng-content></ng-content>
+    </mat-option>
+    <mat-option
+      *ngFor="let option of _options; let index = index"
+      [value]="option._value"
+    >
+      {{ option?._label }}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

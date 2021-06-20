@@ -11,15 +11,13 @@
     "postinstall": "ngcc"
   },
   "dependencies": {
+    "tslib": "^2.1.0",
     "imask": "^6.0.7",
     "simple-mask-money": "^3.0.1",
     "@douglas-serena/calc.js": "^1.0.3",
     "dayjs": "^1.10.4"
   },
   "peerDependencies": {
-    "@angular/common": "^8.2.14",
-    "@angular/core": "^8.2.14",
-    "@angular/forms": "^8.2.14",
     "imask": "^6.0.7",
     "simple-mask-money": "^3.0.1",
     "@douglas-serena/calc.js": "^1.0.3",

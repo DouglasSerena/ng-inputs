@@ -6,32 +6,35 @@
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
+    "noImplicitAny": false,
+    "strictNullChecks": false,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,
-    "allowJs": true,
-    "checkJs": false,
-    "strictPropertyInitialization": false,"noImplicitAny": false,
     "paths": {
-      "ng-fields": [
-        "dist/ng-fields/ng-fields",
-        "dist/ng-fields"
-      ],
       "ng-inputs": [
         "dist/ng-inputs/ng-inputs",
         "dist/ng-inputs"
       ],
-      "ng-material-inputs": [
-        "dist/ng-material-inputs/ng-material-inputs",
-        "dist/ng-material-inputs"
+      "ng-inputs-bootstrap": [
+        "dist/ng-inputs-bootstrap/ng-inputs-bootstrap",
+        "dist/ng-inputs-bootstrap"
+      ],
+      "ng-inputs-material": [
+        "dist/ng-inputs-material/ng-inputs-material",
+        "dist/ng-inputs-material"
+      ],
+      "ng-masks": [
+        "dist/ng-masks/ng-masks",
+        "dist/ng-masks"
       ]
     },
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es2015",
+    "target": "es2017",
     "module": "es2020",
     "lib": [
       "es2018",

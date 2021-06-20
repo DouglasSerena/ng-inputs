@@ -6,7 +6,7 @@ ng-checkbox {
     width: auto;
   }
 }
-.ng-btn-check {
+.ng-bt-btn-check {
   overflow: hidden;
 }
 .form-check-input {
@@ -33,10 +33,10 @@ ng-checkbox {
   &.disabled {
     background-color: var(--ng-color-background-disabled) !important;
   }
-  &.ng-icon__left {
+  &.ng-bt-icon__left {
     border-left: none !important;
   }
-  &.ng-icon__right {
+  &.ng-bt-icon__right {
     border-right: none !important;
   }
 }
@@ -45,19 +45,23 @@ ng-checkbox {
   height: 15px;
 }
 
-.ng-icon {
+.ng-bt-required-symbol {
+  color: var(--ng-color-danger);
+}
+
+.ng-bt-icon {
   background: var(--ng-color-background) !important;
   border-radius: 0 !important;
   cursor: text !important;
   transition: 250ms;
   height: 100%;
-  &.ng-icon__left {
+  &.ng-bt-icon__left {
     border-right: none !important;
   }
-  &.ng-icon__right {
+  &.ng-bt-icon__right {
     border-left: none !important;
   }
-  &.ng-icon__clickable {
+  &.ng-bt-icon__clickable {
     z-index: 4;
     cursor: pointer !important;
     &:hover,
@@ -74,32 +78,32 @@ ng-checkbox {
   }
 }
 
-.ng-helper {
+.ng-bt-helper {
   display: flex;
   justify-content: flex-end;
   width: 100%;
-  .ng-helper__text {
+  .ng-bt-helper__text {
     width: 100%;
     margin-top: 0.25rem;
     font-size: 0.875em;
   }
-  .ng-helper__error {
+  .ng-bt-helper__error {
     color: var(--ng-color-danger);
   }
-  .ng-helper__counter {
+  .ng-bt-helper__counter {
     margin-top: 0.25rem;
     margin-left: 1rem;
     font-size: 0.875em;
   }
 }
 
-.ng-dropdown {
+.ng-bt-dropdown {
   top: 100%;
   width: 100%;
   overflow-y: auto;
   max-height: 300px;
   background-color: var(--ng-color-background) !important;
-  .ng-dropdown-item {
+  .ng-bt-dropdown-item {
     transition: 150ms;
     color: var(--ng-color-text) !important;
     &.active {
@@ -114,7 +118,7 @@ ng-checkbox {
   }
 }
 
-.ng-loading {
+.ng-bt-loading {
   animation: 750ms linear infinite spinner;
 }
 

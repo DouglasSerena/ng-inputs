@@ -1,19 +1,20 @@
-<label class="form-label" *ngIf="label" [for]="id">{{ label }}</label>
+<label class="form-label" *ngIf="label" [for]="id">
+  {{ label }}
+  <span class="ng-bt-required-symbol" *ngIf="required">*</span>
+</label>
 
 <div class="input-group">
   <ng-icon
     *ngIf="!loading"
-    [control]="control"
     [icon]="icon?.left"
-    className="ng-icon__left"
+    className="ng-bt-icon__left"
     (iconClick)="handleClickIcon($event, rootRef, icon.left, 'left')"
   ></ng-icon>
 
   <ng-icon
     *ngIf="loading"
-    [control]="control"
     [icon]="icon?.loading"
-    className="ng-icon__left"
+    className="ng-bt-icon__left"
     (iconClick)="handleClickIcon($event, rootRef, icon.loading, 'left')"
   ></ng-icon>
 
@@ -23,6 +24,7 @@
     [type]="type"
     autocomplete="off"
     [readonly]="readonly"
+    [required]="required"
     [formControl]="control"
     [class.disabled]="disabled"
     [class.readonly]="readonly"
@@ -33,31 +35,30 @@
     [tabIndex]="control.disabled ? -1 : 1"
     [class.form-control-sm]="size === 'sm'"
     [class.form-control-lg]="size === 'lg'"
-    [class.ng-icon__left]="icon?.left && !icon?.left?.hidden"
-    [class.ng-icon__right]="icon?.right && !icon?.right?.hidden"
+    [class.ng-bt-icon__left]="icon?.left && !icon?.left?.hidden"
+    [class.ng-bt-icon__right]="icon?.right && !icon?.right?.hidden"
     [class.is-valid]="this.control.touched && this.control.valid"
     [class.is-invalid]="this.control.touched && this.control.invalid"
   />
 
   <ng-icon
-    [control]="control"
     [icon]="icon?.right"
-    className="ng-icon__right"
+    className="ng-bt-icon__right"
     (click)="handleClickIcon($event, rootRef, icon.right, 'right')"
   ></ng-icon>
 
   <ul
-    class="dropdown-menu ng-dropdown show"
+    class="dropdown-menu ng-bt-dropdown show"
     *ngIf="_dropdownIsOpen && !loading"
   >
     <ng-content *ngIf="_options.length === 0"></ng-content>
     <button
       tabIndex="1"
-      (click)="handleSelect(index)"
       (focus)="handleFocus($event)"
+      (click)="handleSelect(index)"
       (blur)="handleBlur($event, index)"
       (keyup.enter)="handleSelect(index)"
-      class="ng-dropdown-item dropdown-item"
+      class="ng-bt-dropdown-item dropdown-item"
       [class.active]="_indexSelect === index"
       *ngFor="let option of _options; let index = index"
     >
@@ -66,20 +67,18 @@
   </ul>
 </div>
 
-<div class="ng-helper">
+<div class="ng-bt-helper">
   <span
-    class="ng-helper__text text-muted"
+    class="ng-bt-helper__text text-muted"
     *ngIf="help && !(control.touched && control.invalid)"
   >
     {{ help }}
   </span>
 
-  <ng-container *ngFor="let errorKey of _errorsKeys">
-    <span
-      class="ng-helper__text ng-helper__error"
-      *ngIf="control.touched && control.getError(errorKey)"
-    >
-      {{ _errors[errorKey] }}
-    </span>
-  </ng-container>
+  <span
+    class="ng-bt-helper__text ng-bt-helper__error"
+    *ngIf="control.invalid && control.touched"
+    [ng-messages-errors]="errors"
+    [control]="control"
+  ></span>
 </div>

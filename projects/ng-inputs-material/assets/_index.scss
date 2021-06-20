@@ -1,0 +1,27 @@
+mat-form-field {
+  width: 100%;
+}
+
+.ng-mat-icon {
+  &:not(.ng-icon__clickable) {
+    touch-action: none;
+    pointer-events: none;
+  }
+}
+.mat-form-field-appearance-outline .mat-form-field-prefix,
+.mat-form-field-appearance-outline .mat-form-field-suffix {
+  top: 0 !important;
+}
+
+.ng-mat-loading {
+  animation: 750ms linear infinite spinner;
+}
+
+@keyframes spinner {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

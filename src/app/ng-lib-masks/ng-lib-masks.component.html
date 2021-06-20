@@ -1,0 +1,68 @@
+<p>
+  The examples below are demonstrations of the options it accepts, you can leave
+  it without which it will assume the default configuration that would be the
+  one of the own example.
+</p>
+
+<form [formGroup]="form" class="row">
+  <h2>Pipes</h2>
+
+  <div [columns]="{ md: 3 }">
+    <h3>Currency</h3>
+    <strong>{{ controls.currency.value | ngMaskCurrency }}</strong>
+    <pre><code [highlight]="exempleCurrencyPipe"></code></pre>
+  </div>
+  <div [columns]="{ md: 3 }">
+    <h3>Percent</h3>
+    <strong>{{ controls.percent.value | ngMaskPercent }}</strong>
+    <pre><code [highlight]="exemplePercentPipe"></code></pre>
+  </div>
+  <div [columns]="{ md: 3 }">
+    <h3>Amount</h3>
+    <strong>{{ controls.amount.value | ngMaskAmount }}</strong>
+    <pre><code [highlight]="exempleAmountPipe"></code></pre>
+  </div>
+  <div [columns]="{ md: 3 }">
+    <h3>Mask</h3>
+    <strong>{{ controls.mask.value | ngMask: "CPF_CNPJ" }}</strong>
+    <pre><code [highlight]="exempleMaskPipe"></code></pre>
+  </div>
+
+  <h2 class="mt-4">Directives with Inputs</h2>
+
+  <div [columns]="{ md: 3 }">
+    <label class="form-label">Currency</label>
+    <input
+      class="form-control"
+      formControlName="currency"
+      type="currency"
+      ngMaskCurrency
+    />
+    <pre><code [highlight]="exempleCurrency"></code></pre>
+  </div>
+  <div [columns]="{ md: 3 }">
+    <label class="form-label">Percent</label>
+    <input
+      class="form-control"
+      formControlName="percent"
+      type="percent"
+      ngMaskPercent
+    />
+    <pre><code [highlight]="exemplePercent"></code></pre>
+  </div>
+  <div [columns]="{ md: 3 }">
+    <label class="form-label">Amount</label>
+    <input
+      class="form-control"
+      formControlName="amount"
+      type="amount"
+      ngMaskAmount
+    />
+    <pre><code [highlight]="exempleAmount"></code></pre>
+  </div>
+  <div [columns]="{ md: 3 }">
+    <label class="form-label">Mask</label>
+    <input class="form-control" formControlName="mask" type="CPF_CNPJ" ngMask />
+    <pre><code [highlight]="exempleMask"></code></pre>
+  </div>
+</form>

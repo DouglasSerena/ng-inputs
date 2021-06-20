@@ -1,8 +1,10 @@
-<label class="form-label" *ngIf="label" [for]="id">{{ label }}</label>
+<label class="form-label" *ngIf="label" [for]="id">
+  {{ label }}
+  <span class="ng-bt-required-symbol" *ngIf="required">*</span>
+</label>
 
 <div class="input-group">
   <ng-icon
-    [control]="control"
     [icon]="icon?.left"
     className="ng-icon__left"
     (iconClick)="handleClickIcon($event, rootRef, icon.left, 'left')"
@@ -13,6 +15,7 @@
     #rootRef
     [rows]="rows"
     [cols]="cols"
+    [required]="required"
     [readonly]="readonly"
     [formControl]="control"
     [attr.maxlength]="length"
@@ -33,31 +36,28 @@
   </textarea>
 
   <ng-icon
-    [control]="control"
     [icon]="icon?.right"
-    className="ng-icon__right"
+    className="ng-bt-icon__right"
     (click)="handleClickIcon($event, rootRef, icon.right, 'right')"
   ></ng-icon>
 </div>
 
-<div class="ng-helper">
+<div class="ng-bt-helper">
   <span
-    class="ng-helper__text text-muted"
+    class="ng-bt-helper__text text-muted"
     *ngIf="help && !(control.touched && control.invalid)"
   >
     {{ help }}
   </span>
 
-  <ng-container *ngFor="let errorKey of _errorsKeys">
-    <span
-      class="ng-helper__text ng-helper__error"
-      *ngIf="control.touched && control.getError(errorKey)"
-    >
-      {{ _errors[errorKey] }}
-    </span>
-  </ng-container>
+  <span
+    class="ng-bt-helper__text ng-bt-helper__error"
+    *ngIf="control.invalid && control.touched"
+    [ng-messages-errors]="errors"
+    [control]="control"
+  ></span>
 
-  <span class="ng-helper__counter text-muted" *ngIf="length">
+  <span class="ng-bt-helper__counter text-muted" *ngIf="length">
     {{ rootRef?.value?.length }}/{{ length }}
   </span>
 </div>

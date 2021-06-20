@@ -1,57 +1,40 @@
-import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import {
-  NgAutocompleteModule,
-  NgCheckboxModule,
-  NgInputModule,
-  NgInputsBootstrap,
-  NgMaskPipeModule,
-  NgSelectModule,
-  NgSwitchModule,
-  NgTextAreaModule,
-  NgUtilsDirectiveModule,
-} from 'projects/ng-inputs-bootstrap/src/public-api';
 
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgBootstrapModule } from './ng-bootstrap/ng-bootstrap.module';
+import { NgMaterialModule } from './ng-material/ng-material.module';
+
+import { MatExpansionModule } from '@angular/material/expansion';
+import { NgLibMasksModule } from './ng-lib-masks/ng-lib-masks.module';
+import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    CommonModule,
-    ReactiveFormsModule,
     BrowserModule,
-    HttpClientModule,
-    NgInputsBootstrap.forRoot({
-      global: {
-        select: {
-          types: {
-            'select-2': {
-              icon: {
-                left: {
-                  class: 'fas fa-text-width',
-                  click: () => {
-                    console.log('opio');
-                  },
-                },
-              },
-            },
-          },
+    AppRoutingModule,
+    NgBootstrapModule,
+    NgMaterialModule,
+    NgLibMasksModule,
+    BrowserAnimationsModule,
+    MatExpansionModule,
+  ],
+  providers: [
+    {
+      provide: HIGHLIGHT_OPTIONS,
+      useValue: {
+        coreLibraryLoader: () => import('highlight.js/lib/core'),
+        lineNumbersLoader: () => import('highlightjs-line-numbers.js'), // Optional, only if you want the line numbers
+        languages: {
+          typescript: () => import('highlight.js/lib/languages/typescript'),
+          json: () => import('highlight.js/lib/languages/json'),
         },
       },
-    }),
-    NgMaskPipeModule,
-    NgUtilsDirectiveModule,
-    NgInputModule,
-    NgSelectModule,
-    NgTextAreaModule,
-    NgAutocompleteModule,
-    NgCheckboxModule,
-    NgSwitchModule,
+    },
   ],
-  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

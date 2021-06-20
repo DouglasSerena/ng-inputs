@@ -1,3 +1,42 @@
+<div class="container mt-5">
+  <h1>Libs angular</h1>
+
+  <mat-accordion multi>
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <h2>Bootstrap - ng-inputs-bootstrap</h2>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <ng-bootstrap></ng-bootstrap>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <h2>Material - ng-inputs-material</h2>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <ng-material></ng-material>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="mb-5">
+      <mat-expansion-panel-header>
+        <mat-panel-title> <h2>Masks - ng-masks</h2> </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <ng-lib-masks></ng-lib-masks>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+<link
+  rel="stylesheet"
+  href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+  integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+  crossorigin="anonymous"
+/>
+
 <link
   href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
   rel="stylesheet"
@@ -14,310 +53,3 @@
   integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT"
   crossorigin="anonymous"
 ></script>
-<div class="container">
-  <h1>Exemplos</h1>
-
-  <form [formGroup]="form" class="row">
-    <p [columns]="{ default: 12 }">
-      {{
-        {
-          currency: form.controls.currency.value,
-          percent: form.controls.percent.value,
-          cpf_cnpj: form.controls.cpf_cnpj.value,
-          amount: form.controls.amount.value,
-          name: form.controls.name.value,
-          state: form.controls.state.value,
-          dark: form.controls.dark.value,
-          accept: form.controls.accept.value
-        } | json
-      }}
-    </p>
-
-    <p>{{ "223.10" | ngMaskAmount }}</p>
-    <p>{{ "123" | ngMaskCurrency }}</p>
-    <p>{{ "100" | ngMaskPercent }}</p>
-    <p>
-      {{
-        "2323223232"
-          | ngMask: { mask: [{ mask: "00.00.00" }, { mask: "0.00.00.00" }] }
-      }}
-    </p>
-
-    <ng-input
-      formControlName="amount"
-      type="amount"
-      [columns]="{ md: 4 }"
-      placeholder="awdawdawd"
-      [errors]="{ required: 'Campo invalido' }"
-      [readonly]="true"
-    ></ng-input>
-
-    <ng-input
-      formControlName="date"
-      type="date"
-      [columns]="{ md: 4 }"
-      [fill]="true"
-      [errors]="{ required: 'Campo invalido' }"
-    ></ng-input>
-
-    <ng-input
-      type="password"
-      [columns]="{ md: 4 }"
-      formControlName="password"
-      [errors]="{ required: 'Campo invalido' }"
-    ></ng-input>
-
-    <ng-input
-      formControlName="currency"
-      type="currency"
-      (blur)="testEvent($event)"
-      (focus)="testEvent($event)"
-      [columns]="{ md: 4 }"
-      [errors]="{ required: 'Campo invalido' }"
-    ></ng-input>
-
-    <ng-select
-      label="State: "
-      formControlName="state"
-      (change)="testEvent($event)"
-      help="Info full name this field"
-      [errors]="{ required: 'Campo obrigatório.' }"
-      [columns]="{ md: 4 }"
-      type="select-2"
-      propLabel="name"
-      propCompare="pessoa.id"
-      position="end"
-      [options]="[
-        { name: 'aline', pessoa: { id: 4 }, age: 19 },
-        { name: 'jonh', pessoa: { id: 5 }, age: 30 },
-        { name: 'clair', pessoa: { id: 6 }, age: 53 }
-      ]"
-    >
-      <option value="" selected>Sem option</option>
-    </ng-select>
-
-    <ng-input
-      formControlName="cpf_cnpj"
-      label="Cpf Cnpj"
-      type="CPF_CNPJ"
-      [length]="20"
-      [columns]="{ md: 4 }"
-      [errors]="{
-        required:
-          'Campo invalido daw daw dawd awd awd wa DAWD AWD AWD AWD AW DAWD AW'
-      }"
-    ></ng-input>
-
-    <ng-input
-      formControlName="percent"
-      label="Percent"
-      type="percent"
-      [columns]="{ md: 4 }"
-      help="Text  wa daw daw daw awd aw daw daw daw daw daw dawd aw dwelp"
-      length="20"
-      [errors]="{ required: 'Campo invalido' }"
-    ></ng-input>
-
-    <ng-input
-      formControlName="name"
-      label="Name"
-      length="20"
-      [errors]="{ required: 'Campo invalido' }"
-    ></ng-input>
-
-    <ng-autocomplete
-      formControlName="rg_estadual"
-      id="class"
-      label="dawdaw"
-      help="dawdaw"
-      [errors]="{ required: 'Campo invalido' }"
-      propLabel="name"
-      (inputDebounce)="testEvent($event)"
-      [funcSearch]="handleSearch"
-    >
-      <button class="dropdown-item ng-dropdown" tabIndex="1">sem nada</button>
-    </ng-autocomplete>
-
-    <ng-text-area
-      rows="1"
-      label="description: "
-      formControlName="description"
-      length="100"
-      help="Info full name this field"
-      [errors]="{ required: 'Campo obrigatório.' }"
-      [icon]="{
-        left: {
-          class: 'fas fa-text-width',
-          click: handleClickIcon
-        }
-      }"
-    ></ng-text-area>
-
-    <ng-switch [indeterminate]="true" class="inline" formControlName="dark">
-      dwadawdawd
-    </ng-switch>
-    <ng-checkbox formControlName="accept" type="button">
-      dwadawdaw
-    </ng-checkbox>
-
-    <!-- <input formControlName="percent" ngMaskPercent type="percent" />
-    <span *ngIf="form.controls.percent.invalid">Campo invalid</span>
-    <input
-      type="CPF_CNPJ"
-      formControlName="cpf_cnpj"
-      [ngMask]="{ mask: '00.000,00,00' }"
-    />
-    <span *ngIf="form.controls.cpf_cnpj.invalid">Campo invalid</span>
-    <input type="currency" formControlName="currency" ngMaskCurrency />
-    <span *ngIf="form.controls.currency.invalid">Campo invalid</span>
-    <input type="amount" formControlName="amount" ngMaskAmount />
-    <span *ngIf="form.controls.amount.invalid">Campo invalid</span> -->
-
-    <!-- <select formControlName="state" ngMTSelect>
-      <option *ngFor="let item of state">{{ item }}</option>
-    </select> -->
-
-    <!-- <dss-input
-      formControlName="name"
-      label="currency"
-      placeholder="currency"
-      type="currency"
-      [icon]="{ clickable: true }"
-      [errors]="{ required: 'Campo obrigatório.' }"
-      [columns]="{ md: 4 }"
-    ></dss-input>
-
-    <dss-input
-      type="amount"
-      label="Amount: "
-      formControlName="amount"
-    ></dss-input>
-
-    <dss-select
-      label="city: "
-      formControlName="city"
-      [options]="option"
-      [path]="{ 'label.value': 'value.id' }"
-      [readonly]="true"
-      [columns]="{ md: 4 }"
-    ></dss-select>
-
-    <dss-text-area
-      label="description: "
-      formControlName="description"
-      (blur)="testEvent($event)"
-      (focus)="testEvent($event)"
-      help="Info full name this field"
-      [errors]="{ required: 'Campo obrigatório.' }"
-      [columns]="{ md: 4 }"
-    ></dss-text-area>
-
-    <dss-select
-      label="State: "
-      formControlName="state"
-      [options]="[
-        {
-          label: 'Duplicata',
-          value: '',
-          icon: '/assets/dss-arrow-down.svg'
-        },
-        {
-          label: 'Cheque',
-          value: '',
-          icon: '/assets/dss-arrow-down.svg'
-        },
-        {
-          label: 'Boleto',
-          value: '',
-          icon: '/assets/dss-arrow-down.svg'
-        }
-      ]"
-      [path]="{ label: '' }"
-      (change)="testEvent($event)"
-      (blur)="testEvent($event)"
-      (focus)="testEvent($event)"
-      help="Info full name this field"
-      [errors]="{ required: 'Campo obrigatório.' }"
-      [columns]="{ md: 4 }"
-    ></dss-select>
-
-    <dss-search
-      formControlName="client"
-      pathLabel="pessoa.razaoSocial"
-      uri="{url}/Fornecedor/filtro/{value}"
-      responseData="data"
-      return="pessoa.id"
-      [value]="valueStart"
-      [columns]="{ md: 4 }"
-    ></dss-search>
-
-    <dss-checkbox
-      label="accept: "
-      help="Info full name this field"
-      [errors]="{ required: 'Campo obrigatório.' }"
-      formControlName="accept"
-      type="checkbox"
-      [columns]="{ md: 4 }"
-    ></dss-checkbox>
-
-    <dss-checkbox
-      label="dark: "
-      type="switch"
-      formControlName="dark"
-      [columns]="{ md: 4 }"
-    ></dss-checkbox>
-
-    <dss-input
-      type="email"
-      label="email: "
-      formControlName="email"
-      help="Você deve informar seu nome completo"
-      [icon]="{ icon: 'fas fa-arrows-alt', align: 'left', clickable: true }"
-      [errors]="{ required: 'Campo obrigatório.', email: 'Email invalid.' }"
-      [columns]="{ md: 4 }"
-    ></dss-input>
-
-    <dss-input
-      type="password"
-      label="password: "
-      placeholder="password"
-      alignIcon="left"
-      alignText="right"
-      field="floating"
-      formControlName="password"
-      [errors]="{ required: 'Errro' }"
-      [columns]="{ md: 4 }"
-    ></dss-input>
-
-    <dss-input
-      type="tel"
-      label="Percent: "
-      formControlName="percent"
-    ></dss-input>
-
-    <dss-input
-      label="Current date: "
-      formControlName="date"
-      type="date"
-    ></dss-input>
-
-    <dss-input
-      label="Value: "
-      type="currency"
-      formControlName="currency"
-      [icon]="{ clickable: true }"
-    ></dss-input>
-
-    <dss-input
-      type="cpf_cnpj"
-      label="cpf cnpj: "
-      formControlName="cpf_cnpj"
-    ></dss-input>
-
-    <dss-input
-      type="rg_estadual"
-      label="Rg Estadual: "
-      formControlName="rg_estadual"
-    ></dss-input> -->
-  </form>
-</div>

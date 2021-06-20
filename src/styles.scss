@@ -1,2 +1,14 @@
 @import "./../projects/ng-inputs-bootstrap/assets";
-// @import "./../projects/ng-inputs/assets/ng-bootstrap.scss";
+@import "./../projects/ng-inputs-material/assets";
+@import '~highlight.js/styles/github.css';
+
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

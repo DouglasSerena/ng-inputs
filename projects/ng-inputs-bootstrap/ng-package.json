@@ -2,11 +2,9 @@
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../dist/ng-inputs-bootstrap",
   "allowedNonPeerDependencies": [
-    "imask",
     "dayjs",
-    "simple-mask-money",
-    "currency-symbol-map",
-    "@douglas-serena/calc.js"
+    "@douglas-serena/ng-masks",
+    "@angular/material"
   ],
   "assets": ["assets"],
   "lib": {

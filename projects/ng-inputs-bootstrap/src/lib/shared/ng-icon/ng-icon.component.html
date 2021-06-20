@@ -1,14 +1,12 @@
 <button
   [type]="type"
-  *ngIf="icon && !icon?.hidden"
   [disabled]="icon?.disabled"
-  [class]="'ng-icon input-group-text ' + className"
-  [class.is-valid]="this.control.touched && this.control.valid"
-  [tabIndex]="icon?.disabled || !icon?.click ? -1 : 1"
-  [class.is-invalid]="this.control.touched && this.control.invalid"
-  [class.shadow-focus]="!icon?.disabled && icon?.click"
-  [class.ng-icon__clickable]="!icon?.disabled && icon?.click"
+  *ngIf="icon && !icon?.hidden"
   (click)="iconClick.emit($event)"
+  [tabIndex]="icon?.disabled || !icon?.click ? -1 : 1"
+  [class.shadow-focus]="!icon?.disabled && icon?.click"
+  [class.ng-bt-icon__clickable]="!icon?.disabled && icon?.click"
+  [class]="'ng-bt-icon input-group-text ' + icon.className + ' ' + className"
 >
-  <i [class]="icon?.class" [ngStyle]="{ color: icon?.color }"></i>
+  <i [class]="icon?.icon" [ngStyle]="{ color: icon?.color }"></i>
 </button>

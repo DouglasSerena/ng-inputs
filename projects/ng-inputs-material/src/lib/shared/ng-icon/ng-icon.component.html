@@ -1,0 +1,12 @@
+<button
+  [type]="type"
+  mat-icon-button
+  [disabled]="icon.disabled"
+  *ngIf="icon && !icon?.hidden"
+  (click)="iconClick.emit($event)"
+  [tabIndex]="icon.disabled || !icon.click ? -1 : 1"
+  [class]="'ng-mat-icon ' + icon.className + ' ' + className"
+  [class.ng-icon__clickable]="!icon.disabled && icon.click"
+>
+  <mat-icon [ngStyle]="{ color: icon.color }">{{ icon.icon }}</mat-icon>
+</button>

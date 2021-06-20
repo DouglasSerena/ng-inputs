@@ -1,0 +1,13 @@
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../dist/ng-inputs-material",
+  "allowedNonPeerDependencies": [
+    "dayjs",
+    "@douglas-serena/ng-masks",
+    "@angular/material"
+  ],
+  "assets": ["assets"],
+  "lib": {
+    "entryFile": "src/public-api.ts"
+  }
+}

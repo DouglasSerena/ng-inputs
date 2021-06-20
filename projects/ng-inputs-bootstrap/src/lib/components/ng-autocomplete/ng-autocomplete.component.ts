@@ -17,17 +17,19 @@ import {
   ControlValueAccessor,
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
-import { typesCustom } from '../../config/MASKS';
-import { NgIMaskConfig } from '../../interfaces/ng-imask-config.interface';
-import { IMaskCurrencyServiceReturn } from '../../interfaces/ng-mask-service-return.interface';
-import { NgMaskService } from '../../services/masks/ng-mask.service';
-import * as MASKS from '../../config/MASKS';
 import { NgConfigService } from '../../config/ng-config.service';
 import { getProp } from '../../utils/get-prop';
-import { Observable } from 'rxjs';
 import { ControlBase } from '../../shared/base/control-base.template';
+import { handleTry } from '../../utils/handle-try';
+import {
+  IMaskServiceReturn,
+  INgIMaskConfig,
+  MASKS,
+  NgMaskService,
+} from '@douglas-serena/ng-masks';
+import { Observable } from 'rxjs';
 
-export const PROVIDER_VALUE_ACCESSOR: Provider = {
+const PROVIDER_VALUE_ACCESSOR: Provider = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => NgAutocompleteComponent),
   multi: true,
@@ -43,39 +45,41 @@ export class NgAutocompleteComponent
   implements OnInit, AfterViewInit, ControlValueAccessor
 {
   @Input() loading = false;
-  @Input() funcSearch: (value: any) => Promise<any> | Observable<any>;
-  @Input() debounceTimeMenuClose: number = 250;
+  @Input() keyLabel: string = '';
+  @Input() keyValue: string = '';
+  @Input() showIsEmpty: boolean = true;
+  @Input() secondaryControlName: string = '';
+  @Input() secondaryKeyValueControl: string = '';
+  @Input() positionMenu: 'auto' | 'above' | 'below' = 'auto';
+
+  @Input() service: any;
+  @Input() methodService: string;
   @Input() debounceTimeEventInput: number = 350;
-  @Input() propLabel: string = '';
-  @Input() propReturn: null | string = null;
-  @Input() showContentIsEmpty: boolean = true;
-  _dropdownIsOpen: boolean = false;
-  _indexSelect: number | null = null;
-  _indexFocus: number | null = null;
 
   @Input() set options(value: any[]) {
     this._options = value.reduce((prev, current) => {
-      let result = { _label: getProp(current, this.propLabel) } as any;
-      if (this.propReturn) {
-        result._value = getProp(current, this.propReturn);
+      let result = { _label: getProp(current, this.keyLabel) } as any;
+      if (this.keyValue) {
+        result._value = getProp(current, this.keyValue);
       } else {
         result._value = current;
       }
+      result._root = current;
       return prev.concat(result);
     }, []);
   }
-  _options: any = [];
+  _options: { _label: string; _value: any; _root: any }[] = [];
 
-  @Input() mask: NgIMaskConfig | string;
+  @Input() mask: INgIMaskConfig | string;
 
-  _maskRef: IMaskCurrencyServiceReturn;
+  _maskRef: IMaskServiceReturn;
 
   constructor(
     private renderer2: Renderer2,
     private ngMaskService: NgMaskService,
     private ngConfig: NgConfigService,
-    @SkipSelf() private changeDetectorRef: ChangeDetectorRef,
-    controlContainer: ControlContainer
+    controlContainer: ControlContainer,
+    @SkipSelf() private changeDetectorRef: ChangeDetectorRef
   ) {
     super(controlContainer, renderer2, ngConfig);
   }
@@ -106,7 +110,7 @@ export class NgAutocompleteComponent
         this.renderer2
       );
 
-      if (typesCustom.includes(type)) {
+      if (MASKS.typesCustom.includes(type)) {
         this.type = 'text';
       }
     }
@@ -116,7 +120,67 @@ export class NgAutocompleteComponent
     this.changeDetectorRef.detectChanges();
   }
 
+  handleSaveValue(value?: HTMLElement | string | number, unmask = true) {
+    if (this._maskRef) {
+      this.handleChange(unmask ? this._maskRef.unmaskedValue() : value);
+    } else {
+      this.handleChange(value);
+    }
+  }
+
+  debounceTimeInput: any = 0;
+  @Output() inputDebounce = new EventEmitter();
+  handleInputDebounce(value?: any) {
+    clearTimeout(this.debounceTimeInput);
+    this.debounceTimeInput = setTimeout(() => {
+      this.handleSearch(value);
+      this.inputDebounce.emit(value);
+    }, this.debounceTimeEventInput);
+  }
+
+  async handleSearch(value: string) {
+    if (this.service && value.length > 0) {
+      this.loading = true;
+      const [data] = await handleTry(this.service[this.methodService](value));
+      if (data) {
+        this.options = data;
+      }
+      this.loading = false;
+    }
+  }
+
+  writeValue = (value: number | string) => {
+    if (this.rootRef && this.keyLabel.length > 0) {
+      if (typeof value === 'string') {
+        this.handleSaveValue(value);
+      } else {
+        this.rootRef.nativeElement.value = getProp(value, this.keyLabel);
+        this.handleSaveValue(value, false);
+      }
+    } else {
+      setTimeout(() => {
+        this.writeValue(value);
+      }, 10);
+    }
+  };
+
+  // NOT SHARED
+  _indexSelect: number;
+  _indexFocus: number;
+  _dropdownIsOpen = false;
   debounceTimeBlur: any = 0;
+
+  @Output() selected = new EventEmitter();
+  handleSelect(index: number) {
+    this.rootRef.nativeElement.focus();
+    this._indexSelect = index;
+
+    this.handleCloseMenu();
+    this.handleSaveValue(this._options[index]._value);
+    this.rootRef.nativeElement.value = this._options[index]._label;
+  }
+
+  debounceTimeMenuClose: any = 0;
   handleBlur(event: FocusEvent, index?: number) {
     super.handleBlur(event);
     clearTimeout(this.debounceTimeBlur);
@@ -129,11 +193,11 @@ export class NgAutocompleteComponent
     super.handleFocus(event);
     clearTimeout(this.debounceTimeBlur);
   }
-
   @HostListener('keyup', ['$event'])
   handleInput(event: KeyboardEvent) {
     const value = (event.target as HTMLInputElement).value;
-    if (!!event.key.match('Arrow')) {
+
+    if (!!event.key?.match('Arrow')) {
       event.preventDefault();
       if (!this._dropdownIsOpen) {
         this.handleOpenMenu();
@@ -142,8 +206,9 @@ export class NgAutocompleteComponent
         this.rootRef.nativeElement.parentElement?.querySelector(
           '.dropdown-menu'
         );
-      const items =
-        dropdown?.querySelectorAll<HTMLElement>('.ng-dropdown-item');
+      const items = dropdown?.querySelectorAll<HTMLElement>(
+        '.ng-bt-dropdown-item'
+      );
 
       if (event.key === 'ArrowDown') {
         if (typeof this._indexFocus === 'number') {
@@ -176,28 +241,15 @@ export class NgAutocompleteComponent
       }
     } else {
       if (event.key !== 'Enter') {
-        this.handleSaveValue(value);
         this.handleInputDebounce(value);
+        if (this.required) {
+          this.handleSaveValue('');
+          this.control.markAsUntouched();
+        } else {
+          this.handleSaveValue(value);
+        }
       }
     }
-  }
-
-  handleSaveValue(value?: HTMLElement | string | number) {
-    if (this._maskRef) {
-      this.handleChange(this._maskRef.unmaskedValue());
-    } else {
-      this.handleChange(value);
-    }
-  }
-
-  debounceTimeInput: any = 0;
-  @Output() inputDebounce = new EventEmitter();
-  handleInputDebounce(value?: any) {
-    clearTimeout(this.debounceTimeInput);
-    this.debounceTimeInput = setTimeout(() => {
-      this.handleSearch(value);
-      this.inputDebounce.emit(value);
-    }, this.debounceTimeEventInput);
   }
 
   handleOpenMenu(event?: Event) {
@@ -207,34 +259,4 @@ export class NgAutocompleteComponent
   handleCloseMenu(event?: Event) {
     this._dropdownIsOpen = false;
   }
-
-  async handleSearch(value: any) {
-    this.loading = true;
-    this.options = await this.funcSearch(value);
-    this.loading = false;
-  }
-
-  handleSelect(index: number) {
-    this.rootRef.nativeElement.focus();
-    this._indexSelect = index;
-
-    this.handleCloseMenu();
-    this.handleSaveValue(this._options[index]._value);
-    this.rootRef.nativeElement.value = this._options[index]._label;
-  }
-
-  writeValue = (value: number | string) => {
-    if (this.rootRef) {
-      if (this._maskRef) {
-        this._maskRef.update(value);
-      } else {
-        this.rootRef.nativeElement.value = value.toString();
-      }
-      this.handleSaveValue(value);
-    } else {
-      setTimeout(() => {
-        this.writeValue(value);
-      }, 10);
-    }
-  };
 }

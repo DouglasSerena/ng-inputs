@@ -1,7 +1,7 @@
 import { InjectionToken, ModuleWithProviders, NgModule } from '@angular/core';
 import { NgConfigModule } from './config/ng-config.module';
 import { NgConfigService } from './config/ng-config.service';
-import { NgConfig } from './interfaces/ng-config.interface';
+import { NgConfig } from './interfaces/config/ng-config.interface';
 
 @NgModule({
   imports: [NgConfigModule],

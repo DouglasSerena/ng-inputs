@@ -1,17 +1,24 @@
 {
   "name": "@douglas-serena/ng-inputs-bootstrap",
+  "version": "0.0.6",
+  "author": "DouglasSerena <douglas222serena@rede.ulbra.br>",
   "description": "angular entry library",
-  "version": "0.0.5",
+  "repository": {
+    "url": "git+https://github.com/DouglasSerena/ng-inputs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/DouglasSerena/ng-inputs/issues"
+  },
+  "homepage": "https://github.com/DouglasSerena/ng-inputs#readme",
+  "main": "src/public-api.ts",
+  "license": "MIT",
   "peerDependencies": {
     "@angular/common": "^11.2.3",
     "@angular/core": "^11.2.3"
   },
   "dependencies": {
-    "tslib": "^2.0.0",
-    "imask": "^6.0.7",
-    "simple-mask-money": "^3.0.1",
-    "@douglas-serena/calc.js": "^1.0.3",
-    "currency-symbol-map": "^5.0.1",
+    "tslib": "^2.1.0",
+    "@douglas-serena/ng-masks": "^0.0.6",
     "dayjs": "^1.10.4"
   }
 }
