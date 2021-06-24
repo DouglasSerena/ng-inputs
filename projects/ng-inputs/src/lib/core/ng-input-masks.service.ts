@@ -6,6 +6,7 @@ import SimpleMaskMoney from 'simple-mask-money';
 import { NgInputConfigService } from './ng-input-config.service';
 
 import calcJs from '@douglas-serena/calc.js';
+import { MASKS } from './MASKS';
 
 @Injectable({
   providedIn: 'root',
@@ -16,29 +17,16 @@ export class NgInputMasksService {
     private datePipe: DatePipe
   ) {}
 
-  format(
-    value: string | number,
-    masksType?:
-      | 'tel'
-      | 'cpf'
-      | 'cnpj'
-      | 'cpf_cnpj'
-      | 'rg'
-      | 'rg_estadual'
-      | 'currency'
-      | 'percent'
-      | 'date'
-      | 'zipCode',
-    options?: IOptions
-  ) {
-    if (masksType === 'date') {
+  format(value: string | number, masksType?: string, options?: IOptions) {
+    masksType = masksType.toUpperCase();
+    if (masksType === 'DATE') {
       return this.datePipe.transform(
         value,
         options?.mask === undefined ? 'dd/MM/yyyy' : options.mask
       );
     }
-    if (masksType === 'currency' || masksType === 'percent') {
-      const config = this.configService[masksType];
+    if (masksType === 'CURRENCY' || masksType === 'PERCENT') {
+      const config = this.configService[masksType.toLowerCase()];
       if (options?.allowNegative !== undefined)
         config.allowNegative = options.allowNegative;
 
@@ -49,9 +37,24 @@ export class NgInputMasksService {
 
       return SimpleMaskMoney.formatToCurrency(value, config);
     }
+    if (masksType === 'AMOUNT') {
+      value = `${value}`;
+
+      if (/^0/g.test(value)) {
+        value = value.replace(/0+/, '');
+      }
+
+      let result = Number(value);
+
+      if (Number.isNaN(result)) {
+        result = 0;
+      }
+
+      return result.toFixed(3);
+    }
 
     let mask: any = null;
-    if (masksType) mask = this[masksType as any];
+    if (masksType) mask = MASKS[masksType as any];
     if (options?.mask) {
       mask = {
         mask: options?.mask.split('|').map((mask) => ({
@@ -63,22 +66,10 @@ export class NgInputMasksService {
     return IMask.pipe(value, mask);
   }
 
-  set(
-    element: HTMLInputElement,
-    masksType:
-      | 'tel'
-      | 'cpf'
-      | 'cnpj'
-      | 'cpf_cnpj'
-      | 'rg'
-      | 'rg_estadual'
-      | 'currency'
-      | 'zipCode'
-      | 'percent',
-    options?: IOptions
-  ) {
-    if (masksType === 'currency' || masksType === 'percent') {
-      const config = this.configService[masksType];
+  set(element: HTMLInputElement, masksType: string, options?: IOptions) {
+    masksType = masksType.toUpperCase();
+    if (masksType === 'CURRENCY' || masksType === 'PERCENT') {
+      const config = this.configService[masksType.toLowerCase()];
       if (options?.allowNegative !== undefined)
         config.allowNegative = options.allowNegative;
       return SimpleMaskMoney.setMask(element, config);
@@ -86,7 +77,7 @@ export class NgInputMasksService {
 
     let mask: any = null;
     if (masksType) {
-      mask = this[masksType as any];
+      mask = MASKS[masksType as any];
     }
     if (options?.mask) {
       mask = {

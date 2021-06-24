@@ -74,27 +74,24 @@ export class NgMaskPercentService implements INgMaskService {
         }
         return value;
       },
+      type: 'percent',
       unmaskedValue() {
-        return this._validRequired(this._instanceRef.formatToNumber() / 100);
+        return this._validRequired(this._instanceRef.formatToNumber());
       },
       update(value) {
-        setTimeout(() => {
-          this._inputRef.value = NgMaskPercentService.prototype.format(
-            value,
-            this._config
-          );
-        });
+        this._inputRef.value = NgMaskPercentService.prototype.format(
+          value,
+          this._config
+        );
       },
     } as IMaskServiceReturn;
   }
-  format(
-    value: string | number,
-    config?: INgMaskConfig | INgIMaskConfig
-  ): string {
+
+  format(value: string | number, config?: INgMaskConfig | INgIMaskConfig) {
     config = Object.assign({}, this._config, config) as INgMaskConfig;
     value = value?.toString();
     value = value?.replace(',', '.');
-    value = calcJs(value, { precision: 6 }).multiply(100).value.toString();
+    value = calcJs(value).value.toString();
     value = value.replace('.', config.decimalSeparator as string);
 
     return SimpleMaskMoney.formatToCurrency(value, {

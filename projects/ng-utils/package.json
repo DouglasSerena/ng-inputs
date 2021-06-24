@@ -1,0 +1,19 @@
+{
+  "name": "@douglas-serena/ng-utils",
+  "version": "0.0.1",
+  "author": "DouglasSerena <douglas222serena@rede.ulbra.br>",
+  "description": "angular entry library",
+  "repository": {
+    "url": "git+https://github.com/DouglasSerena/ng-inputs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/DouglasSerena/ng-inputs/issues"
+  },
+  "homepage": "https://github.com/DouglasSerena/ng-inputs#readme",
+  "main": "src/public-api.ts",
+  "license": "MIT",
+  "dependencies": {
+    "tslib": "^2.1.0",
+    "dayjs": "^1.10.4"
+  }
+}

@@ -3,7 +3,7 @@
     <pre><code [highlight]="form.getRawValue() | json"></code></pre>
   </div>
 
-  <div [columns]="{ md: 8 }" class="row">
+  <div [columns]="{ md: 8 }">
     <!-- DEFAULT -->
     <ng-input
       length="30"
@@ -35,16 +35,6 @@
       formControlName="readonly"
     ></ng-input>
 
-    <!-- CURRENCY -->
-    <ng-input
-      id="mat-currency"
-      type="currency"
-      [columns]="{ md: 4 }"
-      label="field currency"
-      placeholder="currency"
-      formControlName="currency"
-    ></ng-input>
-
     <!-- PERCENT -->
     <ng-input
       id="mat-percent"
@@ -53,6 +43,16 @@
       label="field percent"
       placeholder="percent"
       formControlName="percent"
+    ></ng-input>
+
+    <!-- CURRENCY -->
+    <ng-input
+      id="mat-currency"
+      type="currency"
+      [columns]="{ md: 4 }"
+      label="field currency"
+      placeholder="currency"
+      formControlName="currency"
     ></ng-input>
 
     <!-- AMOUNT -->
@@ -143,6 +143,7 @@
       label="field password"
       placeholder="password"
       formControlName="password"
+      [icon]="{ left: { icon: 'add' } }"
     ></ng-input>
 
     <!-- TEXTAREA -->

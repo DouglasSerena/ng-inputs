@@ -187,16 +187,15 @@ export class NgSelectComponent
   handleCompareWithBind = this.handleCompareWith.bind(this);
 
   handleClickIcon(
-    event: Event,
-    select: any,
-    icon: INgIconConfig | undefined,
-    position: 'left' | 'right'
+    prop: { event: Event; icon: INgIconConfig | undefined },
+    input: any,
+    position: 'left' | 'right' | 'loading'
   ) {
-    event.stopPropagation();
-    if (icon?.click) {
-      icon.click(event, select, icon, position);
+    prop.event.stopPropagation();
+    if (prop.icon?.click) {
+      prop.icon.click(prop.event, input, prop.icon, position);
     } else {
-      select.focus();
+      input.focus();
     }
   }
 

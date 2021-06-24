@@ -87,14 +87,11 @@ export class ControlBase implements ControlValueAccessor, NgControlBase {
       this.control.setValue(value);
     }
 
-    const iconType = this._ngConfig.types(typeField)?.[this.type.toLowerCase()];
+    const iconType =
+      this._ngConfig.types(typeField)?.[this.type.toLowerCase()]?.icon;
+    const iconGlobal = this._ngConfig[typeField]?.icon;
 
-    this.icon = Object.assign(
-      {},
-      this._ngConfig[typeField]?.icon,
-      iconType?.icon,
-      this.icon
-    );
+    this.icon = Object.assign({}, iconGlobal, iconType, this.icon);
   }
 
   superAfterViewInit() {
@@ -104,14 +101,13 @@ export class ControlBase implements ControlValueAccessor, NgControlBase {
   }
 
   handleClickIcon(
-    event: Event,
-    input: HTMLElement,
-    icon: INgIconConfig | undefined,
+    prop: { event: Event; icon: INgIconConfig | undefined },
+    input: any,
     position: 'left' | 'right' | 'loading'
   ) {
-    event.stopPropagation();
-    if (icon?.click) {
-      icon.click(event, input, icon, position);
+    prop.event.stopPropagation();
+    if (prop.icon?.click) {
+      prop.icon.click(prop.event, input, prop.icon, position);
     } else {
       input.focus();
     }

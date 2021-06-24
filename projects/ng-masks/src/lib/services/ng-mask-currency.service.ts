@@ -76,16 +76,15 @@ export class NgMaskCurrencyService implements INgMaskService {
         }
         return value;
       },
+      type: 'currency',
       unmaskedValue() {
         return this._validRequired(this._instanceRef.formatToNumber());
       },
       update(value) {
-        setTimeout(() => {
-          this._inputRef.value = NgMaskCurrencyService.prototype.format(
-            value,
-            this._config
-          );
-        });
+        this._inputRef.value = NgMaskCurrencyService.prototype.format(
+          value,
+          this._config
+        );
       },
     } as IMaskServiceReturn;
   }

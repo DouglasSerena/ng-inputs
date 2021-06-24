@@ -7,7 +7,9 @@
   <ng-icon
     [icon]="icon?.left"
     className="ng-bt-icon__left"
-    (iconClick)="handleClickIcon($event, rootRef, icon.left, 'left')"
+    [class.is-valid]="control.valid && control.touched"
+    [class.is-invalid]="control.invalid && control.touched"
+    (iconClick)="handleClickIcon($event, rootRef, 'left')"
   ></ng-icon>
 
   <input
@@ -35,7 +37,9 @@
   <ng-icon
     [icon]="icon?.right"
     className="ng-bt-icon__right"
-    (iconClick)="handleClickIcon($event, rootRef, icon.right, 'right')"
+    [class.is-valid]="control.valid && control.touched"
+    [class.is-invalid]="control.invalid && control.touched"
+    (iconClick)="handleClickIcon($event, rootRef, 'right')"
   ></ng-icon>
 </div>
 

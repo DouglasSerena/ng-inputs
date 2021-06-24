@@ -12,13 +12,9 @@
   "homepage": "https://github.com/DouglasSerena/ng-inputs#readme",
   "main": "src/public-api.ts",
   "license": "MIT",
-  "peerDependencies": {
-    "@angular/common": "^11.2.3",
-    "@angular/core": "^11.2.3"
-  },
   "dependencies": {
     "tslib": "^2.1.0",
-    "@douglas-serena/ng-masks": "^0.0.6",
+    "@douglas-serena/ng-masks": "^0.0.12",
     "dayjs": "^1.10.4"
   }
 }

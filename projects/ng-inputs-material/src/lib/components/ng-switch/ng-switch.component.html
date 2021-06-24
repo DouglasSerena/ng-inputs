@@ -3,6 +3,7 @@
   [color]="color"
   [formControl]="control"
   [labelPosition]="labelPosition"
+  [tabIndex]="control.disabled ? -1 : 1"
 >
   <ng-content></ng-content>
 </mat-slide-toggle>

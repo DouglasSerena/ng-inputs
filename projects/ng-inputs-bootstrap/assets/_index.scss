@@ -24,7 +24,7 @@ ng-checkbox {
 .form-control,
 .form-select {
   width: 100%;
-  border-radius: 0;
+  border-radius: 0.25rem !important;
   color: var(--ng-color-text) !important;
   background-color: var(--ng-color-background) !important;
   &.readonly {
@@ -35,9 +35,13 @@ ng-checkbox {
   }
   &.ng-bt-icon__left {
     border-left: none !important;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
   }
   &.ng-bt-icon__right {
     border-right: none !important;
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
   }
 }
 
@@ -57,9 +61,13 @@ ng-checkbox {
   height: 100%;
   &.ng-bt-icon__left {
     border-right: none !important;
+    border-top-left-radius: 0.25rem !important;
+    border-bottom-left-radius: 0.25rem !important;
   }
   &.ng-bt-icon__right {
     border-left: none !important;
+    border-top-right-radius: 0.25rem !important;
+    border-bottom-right-radius: 0.25rem !important;
   }
   &.ng-bt-icon__clickable {
     z-index: 4;
@@ -70,11 +78,17 @@ ng-checkbox {
       outline: none;
     }
   }
+}
+ng-icon {
   &.is-invalid {
-    border-color: var(--ng-color-danger);
+    .ng-bt-icon {
+      border-color: var(--ng-color-danger);
+    }
   }
   &.is-valid {
-    border-color: var(--ng-color-success);
+    .ng-bt-icon {
+      border-color: var(--ng-color-success);
+    }
   }
 }
 

@@ -81,11 +81,11 @@ export class SelectCustomControlValueAccessor
 
   @Input() errors: IObject = {};
 
-  get control() {
-    return (
-      this.formControl ||
-      this._controlContainer?.control?.get(this.formControlName)
-    );
+  get control(): FormControl {
+    return (this.formControl ||
+      this._controlContainer?.control?.get(
+        this.formControlName
+      )) as FormControl;
   }
 
   @HostBinding('class') get classCols() {

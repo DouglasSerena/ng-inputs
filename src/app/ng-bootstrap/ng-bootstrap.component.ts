@@ -34,7 +34,7 @@ export class NgBootstrapComponent implements OnInit {
       disabled: [{ value: 'field disabled', disabled: true }],
       readonly: ['filed readonly'],
       currency: [10.5],
-      percent: [2.5],
+      percent: [1112.5],
       amount: [2.5],
       mask: ['21.321.312/3123-12'],
       date: [''],

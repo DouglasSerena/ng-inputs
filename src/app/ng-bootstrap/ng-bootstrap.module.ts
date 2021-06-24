@@ -14,12 +14,14 @@ import {
 import { ReactiveFormsModule } from '@angular/forms';
 import { HighlightModule } from 'ngx-highlightjs';
 import { TestService } from '../test.service';
+import { NgStructureDirectivesModule } from 'projects/ng-utils/src/public-api';
 
 @NgModule({
   imports: [
     CommonModule,
     HighlightModule,
     ReactiveFormsModule,
+    NgStructureDirectivesModule,
     NgInputsBootstrap.forRoot({
       global: {
         select: {

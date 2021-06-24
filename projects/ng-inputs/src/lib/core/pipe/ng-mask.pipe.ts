@@ -7,40 +7,26 @@ import { NgInputMasksService } from '../ng-input-masks.service';
 export class NgMaskPipe implements PipeTransform {
   constructor(private maskService: NgInputMasksService) {}
 
-  typesMasks = [
-    'tel',
-    'cpf',
-    'cnpj',
-    'cpf_cnpj',
-    'rg',
-    'rg_estadual',
-    'currency',
-    'percent',
-    'date',
-  ];
-
   transform(
     value: any,
     type?:
-      | 'tel'
-      | 'cpf'
-      | 'cnpj'
-      | 'cpf_cnpj'
-      | 'rg'
-      | 'rg_estadual'
-      | 'currency'
-      | 'percent'
-      | 'date'
-      | string,
-    mask?: string
+      | 'TEL'
+      | 'CPF'
+      | 'CNPJ'
+      | 'CPF_CNPJ'
+      | 'RG'
+      | 'RG_ESTADUAL'
+      | 'CURRENCY'
+      | 'PERCENT'
+      | 'DATE'
+      | 'AMOUNT'
+      | string
   ): any {
     if (value) {
-      if (type === undefined) return value;
-      if (!this.typesMasks.includes(type)) {
-        mask = type;
-        type = undefined;
+      if (type === undefined) {
+        return value;
       }
-      return this.maskService.format(value, type as 'currency', { mask });
+      return this.maskService.format(value, type as 'currency');
     }
     return '-';
   }

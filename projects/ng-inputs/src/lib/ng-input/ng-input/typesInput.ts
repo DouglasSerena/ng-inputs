@@ -24,28 +24,29 @@ export const typeInputsProps = [
 ];
 
 export const typeInputsPropsCustom = [
-  'cpf',
-  'cnpj',
-  'cpf_cnpj',
-  'rg',
-  'rg_estadual',
-  'percent',
-  'cep',
-  'currency',
-  'tel',
-  'zipCode',
+  'CPF',
+  'CNPJ',
+  'CPF_CNPJ',
+  'RG',
+  'RG_ESTADUAL',
+  'PERCENT',
+  'CEP',
+  'CURRENCY',
+  'TEL',
+  'ZIPCODE',
 ];
 
 export type ITypeInputsPropsCustom =
-  | 'cpf'
-  | 'cnpj'
-  | 'cpf_cnpj'
-  | 'rg'
-  | 'rg_estadual'
-  | 'percent'
-  | 'cep'
-  | 'currency'
-  | 'amount';
+  | 'CPF'
+  | 'CNPJ'
+  | 'CPF_CNPJ'
+  | 'RG'
+  | 'RG_ESTADUAL'
+  | 'PERCENT'
+  | 'CEP'
+  | 'CURRENCY'
+  | 'amount'
+  | 'ZIPCODE';
 
 export type ITypeInputProps =
   | 'button'

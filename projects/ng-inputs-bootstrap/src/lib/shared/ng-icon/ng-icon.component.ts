@@ -6,13 +6,25 @@ import { INgIconConfig } from '../../interfaces/config/ng-icon-config.interface'
   templateUrl: './ng-icon.component.html',
 })
 export class NgIconComponent implements OnInit {
-  @Input() icon?: INgIconConfig;
+  @Input() set icon(icon: INgIconConfig) {
+    if (icon) {
+      this._icon = Object.assign({}, icon);
+    }
+  }
   @Input() className: string;
   @Input() type: 'button' | 'submit' = 'button';
+  _icon: INgIconConfig;
 
-  @Output() iconClick = new EventEmitter();
+  @Output() iconClick = new EventEmitter<{
+    event: Event;
+    icon: INgIconConfig;
+  }>();
 
   constructor() {}
 
   ngOnInit() {}
+
+  handleClick(event: Event) {
+    this.iconClick.emit({ event: event, icon: this._icon });
+  }
 }

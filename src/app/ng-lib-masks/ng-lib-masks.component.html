@@ -10,21 +10,25 @@
   <div [columns]="{ md: 3 }">
     <h3>Currency</h3>
     <strong>{{ controls.currency.value | ngMaskCurrency }}</strong>
+    <p>{{ { currency: controls.currency.value } | json }}</p>
     <pre><code [highlight]="exempleCurrencyPipe"></code></pre>
   </div>
   <div [columns]="{ md: 3 }">
     <h3>Percent</h3>
     <strong>{{ controls.percent.value | ngMaskPercent }}</strong>
+    <p>{{ { percent: controls.percent.value } | json }}</p>
     <pre><code [highlight]="exemplePercentPipe"></code></pre>
   </div>
   <div [columns]="{ md: 3 }">
     <h3>Amount</h3>
     <strong>{{ controls.amount.value | ngMaskAmount }}</strong>
+    <p>{{ { amount: controls.amount.value } | json }}</p>
     <pre><code [highlight]="exempleAmountPipe"></code></pre>
   </div>
   <div [columns]="{ md: 3 }">
     <h3>Mask</h3>
     <strong>{{ controls.mask.value | ngMask: "CPF_CNPJ" }}</strong>
+    <p>{{ { mask: controls.mask.value } | json }}</p>
     <pre><code [highlight]="exempleMaskPipe"></code></pre>
   </div>
 

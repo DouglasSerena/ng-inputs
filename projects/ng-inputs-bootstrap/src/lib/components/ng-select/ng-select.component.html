@@ -7,7 +7,9 @@
   <ng-icon
     [icon]="icon?.left"
     className="ng-bt-icon__left"
-    (iconClick)="handleClickIcon($event, selectRef, icon.left, 'left')"
+    [class.is-valid]="control.valid && control.touched"
+    [class.is-invalid]="control.invalid && control.touched"
+    (iconClick)="handleClickIcon($event, selectRef, 'left')"
   ></ng-icon>
 
   <select
@@ -30,10 +32,7 @@
     [class.is-invalid]="this.control.touched && this.control.invalid"
   >
     <ng-container *ngIf="position === 'start'">
-      <option
-        *ngFor="let option of _options"
-        [ngValue]="option._value"
-      >
+      <option *ngFor="let option of _options" [ngValue]="option._value">
         {{ option._label }}
       </option>
     </ng-container>
@@ -50,7 +49,9 @@
   <ng-icon
     [icon]="icon?.right"
     className="ng-bt-icon__right"
-    (click)="handleClickIcon($event, selectRef, icon.right, 'right')"
+    [class.is-valid]="control.valid && control.touched"
+    [class.is-invalid]="control.invalid && control.touched"
+    (iconClick)="handleClickIcon($event, selectRef, 'right')"
   ></ng-icon>
 </div>
 

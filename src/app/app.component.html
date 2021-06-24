@@ -2,7 +2,7 @@
   <h1>Libs angular</h1>
 
   <mat-accordion multi>
-    <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>
           <h2>Bootstrap - ng-inputs-bootstrap</h2>
@@ -11,7 +11,8 @@
 
       <ng-bootstrap></ng-bootstrap>
     </mat-expansion-panel>
-    <mat-expansion-panel>
+
+    <mat-expansion-panel [expanded]="true">
       <mat-expansion-panel-header>
         <mat-panel-title>
           <h2>Material - ng-inputs-material</h2>
@@ -21,12 +22,22 @@
       <ng-material></ng-material>
     </mat-expansion-panel>
 
-    <mat-expansion-panel class="mb-5">
+    <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title> <h2>Masks - ng-masks</h2> </mat-panel-title>
       </mat-expansion-panel-header>
 
       <ng-lib-masks></ng-lib-masks>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <h2>INPUTS - ng-inputs</h2>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <ng-inputs-legacy></ng-inputs-legacy>
     </mat-expansion-panel>
   </mat-accordion>
 </div>

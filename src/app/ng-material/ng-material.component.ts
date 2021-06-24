@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CommonValidation } from 'projects/ng-utils/src/public-api';
 import { TestService } from '../test.service';
 
 @Component({
@@ -28,21 +29,24 @@ export class NgMaterialComponent implements OnInit {
         },
       },
     };
-
     this.form = this.formBuilder.group({
-      default: ['', [Validators.required]],
+      file: [''],
+      default: ['', [CommonValidation.pattern.isEmail]],
       disabled: [{ value: 'field disabled', disabled: true }],
       readonly: ['filed readonly'],
-      currency: [10.5],
-      percent: [2.5],
+      currency: [
+        10.5,
+        [CommonValidation.number.isBetween({ start: 5, end: 10 })],
+      ],
+      percent: [250.55],
       amount: [2.5],
-      mask: ['21.321.312/3123-12'],
-      date: [''],
+      mask: ['54.546.018/0001-12', [CommonValidation.docs.isCpfOrCnpj]],
+      date: ['', [CommonValidation.date.isBirchDay()]],
       select: ['rafa'],
       autocomplete: ['', [Validators.required]],
       autocompleteId: [''],
       password: [''],
-      tel: ['(12) 3 1231-2312'],
+      tel: ['(12) 9 1231-2312', [CommonValidation.pattern.isPhoneBr]],
       zipCode: ['90000000'],
       textArea: [''],
       switch: [true],

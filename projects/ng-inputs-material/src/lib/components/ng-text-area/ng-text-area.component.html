@@ -2,7 +2,7 @@
   [color]="color"
   [appearance]="theme"
   [hideRequiredMarker]="!required"
-  [floatLabel]="labelFixed ?  'always' : 'auto'"
+  [floatLabel]="labelFixed ? 'always' : 'auto'"
 >
   <!-- LABEL -->
   <mat-label *ngIf="label">{{ label }}</mat-label>
@@ -10,7 +10,7 @@
   <ng-icon
     matPrefix
     [icon]="icon?.left"
-    (iconClick)="handleClickIcon($event, rootRef, icon.left, 'left')"
+    (iconClick)="handleClickIcon($event, rootRef, 'left')"
   ></ng-icon>
 
   <!-- PREFIX -->
@@ -53,6 +53,6 @@
   <ng-icon
     matSuffix
     [icon]="icon?.right"
-    (iconClick)="handleClickIcon($event, rootRef, icon.right, 'right')"
+    (iconClick)="handleClickIcon($event, rootRef, 'right')"
   ></ng-icon>
 </mat-form-field>

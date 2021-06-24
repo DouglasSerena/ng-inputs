@@ -27,7 +27,7 @@ import {
   NgMaskCurrencyService,
   NgMaskPercentService,
   NgMaskService,
-} from '@douglas-serena/ng-masks';
+} from '@douglas-serena/ng-masks'; //'./../../../../../ng-masks/src/public-api'; // '@douglas-serena/ng-masks'//
 
 const PROVIDER_VALUE_ACCESSOR: Provider = {
   provide: NG_VALUE_ACCESSOR,
@@ -99,7 +99,7 @@ export class NgInputComponent
         });
       }
       this.percent = Object.assign({}, typeConfig?.percent, this.percent);
-      this.ngMaskCurrencyService.config(this.ngConfig.input.percent);
+      this.ngMaskPercentService.config(this.ngConfig.input.percent);
       this._maskRef = this.ngMaskPercentService.createMask(
         this.rootRef.nativeElement,
         this.percent,
@@ -113,7 +113,7 @@ export class NgInputComponent
         });
       }
       this.amount = Object.assign({}, typeConfig?.amount, this.amount);
-      this.ngMaskCurrencyService.config(this.ngConfig.input.amount);
+      this.ngMaskAmountService.config(this.ngConfig.input.amount);
       this._maskRef = this.ngMaskAmountService.createMask(
         this.rootRef.nativeElement,
         this.amount,
@@ -122,6 +122,7 @@ export class NgInputComponent
       this.type = 'text';
     } else {
       const type = this.type.toUpperCase();
+
       if (MASKS.typesCustom.includes(type) && this.mask === undefined) {
         this.mask = MASKS[type];
       }
@@ -183,6 +184,7 @@ export class NgInputComponent
     }
   }
 
+  time;
   writeValue = (value: number | string) => {
     if (this.rootRef) {
       if (this._maskRef) {

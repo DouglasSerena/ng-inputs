@@ -5,6 +5,7 @@ import {
   TypeFields,
   INgConfigSelect,
 } from '../interfaces/config/ng-config.interface';
+import { NgIconPositionsConfig } from '../interfaces/config/ng-icon-config.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -70,10 +71,6 @@ export class NgConfigService {
     this._config.global = { ...this._config.global, ...value.global } as any;
   }
 
-  types(field: TypeFields): INgConfigSelect | INgConfigInput {
-    return this.global?.[field]?.types as INgConfigSelect | INgConfigInput;
-  }
-
   get typesSelect(): INgConfigSelect {
     return this.types('select') as INgConfigSelect;
   }
@@ -88,5 +85,9 @@ export class NgConfigService {
 
   get typesAutocomplete(): INgConfigInput {
     return this.types('autocomplete') as INgConfigInput;
+  }
+
+  types(field: TypeFields): INgConfigSelect | INgConfigInput {
+    return this.global?.[field]?.types as INgConfigSelect | INgConfigInput;
   }
 }

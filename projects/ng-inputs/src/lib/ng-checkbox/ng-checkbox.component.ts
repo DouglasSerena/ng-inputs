@@ -107,11 +107,9 @@ export class NgCheckboxComponent extends CheckboxControlValueAccessor {
   @Input() formControl: FormControl;
   @Input() formControlName: string;
 
-  get control() {
-    return (
-      this.formControl ||
-      this.controlContainer?.control?.get(this.formControlName)
-    );
+  get control(): FormControl {
+    return (this.formControl ||
+      this.controlContainer?.control?.get(this.formControlName)) as FormControl;
   }
 
   getKeys(errors: IObject) {
@@ -129,7 +127,7 @@ export class NgCheckboxComponent extends CheckboxControlValueAccessor {
     this.onChange = fn;
   }
   onTouched: () => {};
-  registerOnTouched(fn: () => {}): void {
+  registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
   setDisabledState(isDisabled: boolean): void {

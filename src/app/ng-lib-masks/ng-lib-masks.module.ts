@@ -9,6 +9,7 @@ import {
   NgMasksPipesModule,
 } from 'projects/ng-masks/src/public-api';
 import { HighlightModule } from 'ngx-highlightjs';
+import { NgStructureDirectivesModule } from 'projects/ng-utils/src/public-api';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { HighlightModule } from 'ngx-highlightjs';
     NgUtilsDirectiveModule,
     NgMasksPipesModule,
     NgMasksDirectivesModule,
+    NgStructureDirectivesModule
   ],
   declarations: [NgLibMasksComponent],
   exports: [NgLibMasksComponent],

@@ -32,9 +32,8 @@ export interface NgControlBase {
   errors: { [key: string]: string };
 
   handleClickIcon: (
-    event: Event,
+    prop: { event: Event; icon: INgIconConfig | undefined },
     input: HTMLElement,
-    icon: INgIconConfig | undefined,
     position: 'left' | 'right'
   ) => void;
 

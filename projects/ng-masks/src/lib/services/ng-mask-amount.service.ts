@@ -1,5 +1,10 @@
 import { Injectable, Renderer2 } from '@angular/core';
-import { IMaskServiceReturn, INgIMaskConfig, INgMaskConfig, INgMaskService } from '../interfaces';
+import {
+  IMaskServiceReturn,
+  INgIMaskConfig,
+  INgMaskConfig,
+  INgMaskService,
+} from '../interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +19,7 @@ export class NgMaskAmountService implements INgMaskService {
     focusSelectText: true,
   };
 
-  config(config: INgMaskConfig| INgIMaskConfig) {
+  config(config: INgMaskConfig | INgIMaskConfig) {
     Object.assign(this._config, config);
   }
 
@@ -69,6 +74,7 @@ export class NgMaskAmountService implements INgMaskService {
         }
         return value;
       },
+      type: 'amount',
       unmaskedValue() {
         return this._validRequired(
           NgMaskAmountService.prototype._formatAmount(
@@ -78,12 +84,10 @@ export class NgMaskAmountService implements INgMaskService {
         );
       },
       update(value) {
-        setTimeout(() => {
-          this._inputRef.value = NgMaskAmountService.prototype._formatAmount(
-            value,
-            this._config
-          ).valueFormat;
-        });
+        this._inputRef.value = NgMaskAmountService.prototype._formatAmount(
+          value,
+          this._config
+        ).valueFormat;
       },
     } as IMaskServiceReturn;
   }

@@ -7,6 +7,7 @@ export interface IMaskServiceReturn {
   _validator?: boolean;
   _renderer2?: Renderer2;
   _validRequired(value: string | number): null | string | number;
+  type: 'percent' | 'currency' | 'amount' | 'custom';
   update(value: string | number): void;
   unmaskedValue(): number;
 }

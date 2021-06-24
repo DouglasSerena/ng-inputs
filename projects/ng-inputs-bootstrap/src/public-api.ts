@@ -11,7 +11,6 @@ export * from './lib/services/utils/ng-format-date-by-type.service';
 
 // DIRECTIVES
 export * from './lib/directives/utils/ng-utils.module';
-export * from './lib/directives/utils/ng-columns.directive';
 export * from './lib/directives/utils/ng-messages-errors.directive';
 
 // COMPONENTES MODULE
@@ -29,3 +28,6 @@ export * from './lib/components/ng-select/ng-select.component';
 export * from './lib/components/ng-text-area/ng-text-area.component';
 export * from './lib/components/ng-checkbox/ng-checkbox.component';
 export * from './lib/components/ng-switch/ng-switch.component';
+
+// NG MASKS
+export * from '@douglas-serena/ng-masks';

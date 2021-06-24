@@ -1,6 +1,11 @@
 import { Injectable, Renderer2 } from '@angular/core';
 import IMask from 'imask';
-import { IMaskServiceReturn, INgIMaskConfig, INgMaskConfig, INgMaskService } from '../interfaces';
+import {
+  IMaskServiceReturn,
+  INgIMaskConfig,
+  INgMaskConfig,
+  INgMaskService,
+} from '../interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -35,16 +40,15 @@ export class NgMaskService implements INgMaskService {
         }
         return value;
       },
+      type: 'custom',
       unmaskedValue() {
         return this._validRequired(this._instanceRef.unmaskedValue);
       },
       update(value) {
-        setTimeout(() => {
-          this._inputRef.value = NgMaskService.prototype.format(
-            value,
-            this._config
-          );
-        });
+        this._inputRef.value = NgMaskService.prototype.format(
+          value,
+          this._config
+        );
       },
     } as IMaskServiceReturn;
   }

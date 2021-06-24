@@ -29,6 +29,10 @@
       "ng-masks": [
         "dist/ng-masks/ng-masks",
         "dist/ng-masks"
+      ],
+      "ng-utils": [
+        "dist/ng-utils/ng-utils",
+        "dist/ng-utils"
       ]
     },
     "experimentalDecorators": true,

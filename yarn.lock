@@ -1192,10 +1192,10 @@
   resolved "https://registry.yarnpkg.com/@douglas-serena/calc.js/-/calc.js-2.0.0.tgz#9d34b5fe54f0bc85110a86d8149129036970bcf9"
   integrity sha512-n3mG2ZXJRuDeXNW2xGFll40MhtxFuNIieas3akiBosnGKsTzDXYKRJs6T+7QTYcyDIGfJvdL6oqD9PQXYUTVgA==
 
-"@douglas-serena/ng-masks@0.0.5":
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/@douglas-serena/ng-masks/-/ng-masks-0.0.5.tgz#bf37ab0cd02cd6e6cacfeb14edcaf4b939f398a1"
-  integrity sha512-dIE6isuBPoXkw70/y//E2UqHrz/i6rY++rjcAHf9Mro5SUSM51qLjWtIY/L3gMFfYChJvOIyruPZmP8J6Eihsw==
+"@douglas-serena/ng-masks@^0.0.12":
+  version "0.0.12"
+  resolved "https://registry.yarnpkg.com/@douglas-serena/ng-masks/-/ng-masks-0.0.12.tgz#2b0ef3882cbb45af6a289dd4e4c5b7b969fb95c1"
+  integrity sha512-sohaYDkjUPiCwVhhJSE3vcFPq3NHwH+7MUL2TqhupJFEM40rFpZIkHzNS/6YKF5/lXz8GhAZubbcnDbf9TGjIA==
   dependencies:
     "@douglas-serena/calc.js" "^1.0.3"
     currency-symbol-map "^5.0.1"

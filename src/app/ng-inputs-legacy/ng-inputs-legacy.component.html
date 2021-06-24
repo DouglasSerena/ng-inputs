@@ -1,0 +1,58 @@
+<form [formGroup]="form" class="row">
+  <div [columns]="{ md: 4 }">
+    <pre><code [highlight]="form.getRawValue() | json"></code></pre>
+  </div>
+
+  <div [columns]="{ md: 8 }" class="row">
+    <!-- DEFAULT -->
+    <dss-input
+      length="30"
+      id="bt-default"
+      help="Text of helper"
+      [columns]="{ md: 4 }"
+      label="field default"
+      placeholder="default"
+      formControlName="default"
+      [errors]="{
+        required: 'field is required'
+      }"
+    ></dss-input>
+
+    <dss-search
+      uri="{url}/Produto/filtrado/{value}"
+      placeholder="Buscar pelo produto"
+      formControlName="autocomplete"
+      label="Descrição: "
+      responseData="data"
+      [cols]="{ md: 5 }"
+      pathLabel="nome"
+    >
+    </dss-search>
+
+    <!-- PASSWORD -->
+    <dss-input
+      type="password"
+      id="bt-password"
+      [columns]="{ md: 4 }"
+      label="field password"
+      placeholder="password"
+      formControlName="password"
+      [errors]="{
+        required: 'field is required'
+      }"
+    ></dss-input>
+
+    <!-- DEFAULT -->
+    <dss-input
+      type="tel"
+      id="bt-zipCode"
+      [columns]="{ md: 4 }"
+      label="field zipCode"
+      placeholder="zipCode"
+      formControlName="zipCode"
+      [errors]="{
+        required: 'field is required'
+      }"
+    ></dss-input>
+  </div>
+</form>

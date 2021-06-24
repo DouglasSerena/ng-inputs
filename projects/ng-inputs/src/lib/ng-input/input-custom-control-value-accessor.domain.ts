@@ -77,11 +77,11 @@ export class InputCustomControlValueAccessor
 
   @Input() errors: IObject = {};
 
-  get control() {
-    return (
-      this.formControl ||
-      this._controlContainer?.control?.get(this.formControlName)
-    );
+  get control(): FormControl {
+    return (this.formControl ||
+      this._controlContainer?.control?.get(
+        this.formControlName
+      )) as FormControl;
   }
 
   @HostBinding('class') get classCols() {
@@ -122,7 +122,12 @@ export class InputCustomControlValueAccessor
   protected ngOnInitSuper() {
     if (this.name === undefined) this.name = this.formControlName;
 
-    this.validRequired();
+    if (this.required === null) {
+      const value = this.control.value;
+      this.control.reset();
+      this.required = !!this.control.getError('required');
+      this.control.setValue(value);
+    }
   }
 
   getKeys(errors: IObject) {
@@ -130,17 +135,6 @@ export class InputCustomControlValueAccessor
   }
   getError(key: string) {
     return this.control?.errors?.[key] && this.control?.touched;
-  }
-
-  validRequired() {
-    const value = this.control.value;
-    this?.onWrite?.(null);
-    this._changeDetectorRef.detectChanges();
-    if (this.required === undefined) {
-      this.required = this.control.errors?.required;
-    }
-    this?.onWrite?.(value);
-    this._changeDetectorRef.detectChanges();
   }
 
   registerOnTouched(fn: any): void {

@@ -10,6 +10,10 @@ import { NgMaterialModule } from './ng-material/ng-material.module';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { NgLibMasksModule } from './ng-lib-masks/ng-lib-masks.module';
 import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
+import { NgInputsLegacyModule } from './ng-inputs-legacy/ng-inputs-legacy.module';
+import { HttpClientModule } from '@angular/common/http';
+import { NgUtilsModule } from 'projects/ng-utils/src/lib/ng-utils.module';
+import { NgStructureDirectivesModule } from 'projects/ng-utils/src/public-api';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,6 +25,10 @@ import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
     NgLibMasksModule,
     BrowserAnimationsModule,
     MatExpansionModule,
+    NgInputsLegacyModule,
+    HttpClientModule,
+    NgUtilsModule,
+    NgStructureDirectivesModule
   ],
   providers: [
     {

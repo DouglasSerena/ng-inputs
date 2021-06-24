@@ -17,7 +17,7 @@ export const CPF_CNPJ = {
 } as IMask.AnyMaskedOptions;
 
 export const RG = {
-  mask: '00.000.000-0',
+  mask: [{ mask: '00.000.000-0' }, { mask: '0000000000' }],
 } as IMask.AnyMaskedOptions;
 
 export const ESTADUAL = {

@@ -227,7 +227,7 @@ export class NgSearchComponent
     );
 
     if (typeof value === 'string') {
-      this.onChange(value);
+      this.onWrite(value);
     } else {
       const newValue = { ...value };
 
@@ -235,8 +235,8 @@ export class NgSearchComponent
       delete newValue.dssSelect;
 
       setTimeout(() => {
-        this.onChange(
-          this.return
+        this.onWrite(
+          !!this.return
             ? this.getMultiLabels(newValue, this.return.split('.'))
             : newValue
         );

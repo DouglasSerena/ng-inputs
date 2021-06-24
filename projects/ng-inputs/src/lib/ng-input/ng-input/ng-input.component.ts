@@ -127,7 +127,7 @@ export class NgInputComponent
       this.align = 'right';
     }
 
-    if (this.typesMask.includes(this.type) || this.mask) {
+    if (this.typesMask.includes(this.type.toUpperCase()) || this.mask) {
       this.instance = this.masksService.set(
         this.input.nativeElement,
         this.type as 'currency',
@@ -265,7 +265,7 @@ export class NgInputComponent
         }
 
         this.input.nativeElement.value = result.toFixed(3);
-      } else if (this.typesMask.includes(this.typeInit)) {
+      } else if (this.typesMask.includes(this.typeInit.toUpperCase())) {
         if (this.isFieldCurrency || this.isFieldPercent) {
           let result = this.masksService.format(
             obj,
