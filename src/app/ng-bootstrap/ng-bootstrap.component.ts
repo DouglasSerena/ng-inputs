@@ -15,6 +15,10 @@ export class NgBootstrapComponent implements OnInit {
     public testService: TestService
   ) {}
 
+  testIcon() {
+    console.log('oi');
+  }
+
   async ngOnInit() {
     const debounce = (time = 2000) =>
       new Promise((resolve) => setTimeout(resolve, time));

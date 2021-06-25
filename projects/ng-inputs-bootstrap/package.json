@@ -1,6 +1,6 @@
 {
   "name": "@douglas-serena/ng-inputs-bootstrap",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "author": "DouglasSerena <douglas222serena@rede.ulbra.br>",
   "description": "angular entry library",
   "repository": {
@@ -15,6 +15,7 @@
   "dependencies": {
     "tslib": "^2.1.0",
     "@douglas-serena/ng-masks": "^0.0.12",
+    "@douglas-serena/ng-utils": "^0.0.2",
     "dayjs": "^1.10.4"
   }
 }

@@ -1,0 +1,29 @@
+<ng-template
+  cdkConnectedOverlay="overlayRef"
+  (overlayKeydown)="handleKey($event)"
+  [cdkConnectedOverlayOpen]="_isOpen"
+  (overlayOutsideClick)="handleClose()"
+  [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayMinWidth]="_triggerRect?.width!"
+>
+  <ul class="dropdown-menu ng-bt-dropdown show" #listRef>
+    <button
+      (click)="handleSelect(0)"
+      *ngIf="_options.length === 0"
+      [class.active]="_indexSelect === 0"
+      class="ng-bt-dropdown-item dropdown-item"
+    >
+      <ng-content></ng-content>
+    </button>
+    <button
+      tabIndex="1"
+      (click)="handleSelect(index)"
+      (mouseenter)="_indexSelect = index"
+      [class.active]="_indexSelect === index"
+      class="ng-bt-dropdown-item dropdown-item"
+      *ngFor="let option of _options; let index = index"
+    >
+      {{ option._label }}
+    </button>
+  </ul>
+</ng-template>

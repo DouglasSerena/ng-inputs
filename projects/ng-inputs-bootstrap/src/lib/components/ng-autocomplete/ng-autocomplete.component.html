@@ -3,7 +3,7 @@
   <span class="ng-bt-required-symbol" *ngIf="required">*</span>
 </label>
 
-<div class="input-group">
+<div class="input-group" cdkOverlayOrigin #trigger="cdkOverlayOrigin">
   <ng-icon
     *ngIf="!loading"
     [icon]="icon?.left"
@@ -34,7 +34,6 @@
     [class.readonly]="readonly"
     (blur)="handleBlur($event)"
     (focus)="handleFocus($event)"
-    (click)="handleOpenMenu($event)"
     class="form-control shadow-focus"
     [tabIndex]="control.disabled ? -1 : 1"
     [class.form-control-sm]="size === 'sm'"
@@ -45,6 +44,15 @@
     [class.is-invalid]="this.control.touched && this.control.invalid"
   />
 
+  <ng-select-dropdown
+    [trigger]="trigger"
+    [options]="_options"
+    (select)="handleSelect($event)"
+    (selectEmpty)="handleEmpty($event)"
+  >
+    <ng-content *ngIf="_options.length === 0 && showIsEmpty"></ng-content>
+  </ng-select-dropdown>
+
   <ng-icon
     [icon]="icon?.right"
     className="ng-bt-icon__right"
@@ -52,25 +60,6 @@
     [class.is-invalid]="control.invalid && control.touched"
     (iconClick)="handleClickIcon($event, rootRef, 'right')"
   ></ng-icon>
-
-  <ul
-    class="dropdown-menu ng-bt-dropdown show"
-    *ngIf="_dropdownIsOpen && !loading"
-  >
-    <ng-content *ngIf="_options.length === 0"></ng-content>
-    <button
-      tabIndex="1"
-      (focus)="handleFocus($event)"
-      (click)="handleSelect(index)"
-      (blur)="handleBlur($event, index)"
-      (keyup.enter)="handleSelect(index)"
-      class="ng-bt-dropdown-item dropdown-item"
-      [class.active]="_indexSelect === index"
-      *ngFor="let option of _options; let index = index"
-    >
-      {{ option?._label }}
-    </button>
-  </ul>
 </div>
 
 <div class="ng-bt-helper">

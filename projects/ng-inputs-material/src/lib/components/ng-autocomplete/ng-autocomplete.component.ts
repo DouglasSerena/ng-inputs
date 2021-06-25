@@ -18,12 +18,15 @@ import {
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
 import { NgConfigService } from '../../config/ng-config.service';
-import { getProp } from '../../utils/get-prop';
 import { ControlBase } from '../../shared/base/control-base.template';
-import { handleTry } from '../../utils/handle-try';
-import { IMaskServiceReturn, INgIMaskConfig, MASKS, NgMaskService } from '@douglas-serena/ng-masks';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import {
+  IMaskServiceReturn,
+  INgIMaskConfig,
+  MASKS,
+  NgMaskService,
+} from '@douglas-serena/ng-masks';
 import { compareOptions } from '../../utils/compare-options';
+import { getNode, handleTry } from '@douglas-serena/ng-utils';
 
 const PROVIDER_VALUE_ACCESSOR: Provider = {
   provide: NG_VALUE_ACCESSOR,
@@ -54,9 +57,9 @@ export class NgAutocompleteComponent
 
   @Input() set options(value: any[]) {
     this._options = value.reduce((prev, current) => {
-      let result = { _label: getProp(current, this.keyLabel) } as any;
+      let result = { _label: getNode(current, this.keyLabel) } as any;
       if (this.keyValue) {
-        result._value = getProp(current, this.keyValue);
+        result._value = getNode(current, this.keyValue);
       } else {
         result._value = current;
       }
@@ -144,47 +147,47 @@ export class NgAutocompleteComponent
       this.loading = false;
     }
   }
-
-  writeValue = (value: number | string) => {
-    if (this.rootRef && this.keyLabel.length > 0) {
-      if (typeof value === 'string') {
-        this.handleSaveValue(value);
+  @Output() selected = new EventEmitter();
+  @Output() selectedEmpty = new EventEmitter();
+  handleSelect(option?: any) {
+    if (option.option) {
+      if (typeof option.option.value?._default === 'string') {
+        this.handleEmpty(option.option.value._default);
       } else {
-        this.rootRef.nativeElement.value = getProp(value, this.keyLabel);
-        this.handleSaveValue(value, false);
+        const optionRoot = compareOptions(
+          this._options,
+          this.keyValue,
+          option.option.value
+        )?._root;
+
+        this.rootRef.nativeElement.value = getNode(optionRoot, this.keyLabel);
+
+        if (this.secondaryControlName) {
+          const value = getNode(
+            optionRoot,
+            this.secondaryKeyValueControl.split('.')
+          );
+          this.control.root.get(this.secondaryControlName)?.setValue(value);
+        }
+        this.selected.emit(option.option.value);
       }
     } else {
-      setTimeout(() => {
-        this.writeValue(value);
-      }, 10);
-    }
-  };
-
-  // NOT SHARED
-  @Output() selected = new EventEmitter();
-  handleSelect(option?: MatAutocompleteSelectedEvent) {
-    if (typeof option.option.value?._default === 'string') {
-      this.rootRef.nativeElement.value = option.option.value._default;
-      this.handleSaveValue(null);
-      this.selected.emit('');
-    } else {
-      const optionRoot = compareOptions(
-        this._options,
-        this.keyValue,
-        option.option.value
-      )?._root;
-
-      this.rootRef.nativeElement.value = getProp(optionRoot, this.keyLabel);
+      this.rootRef.nativeElement.value = option._label;
+      this.handleSaveValue(option._value);
 
       if (this.secondaryControlName) {
-        const value = getProp(
-          optionRoot,
-          this.secondaryKeyValueControl.split('.')
-        );
-        this.control.root.get(this.secondaryControlName)?.setValue(value);
+        this.control.root
+          .get(this.secondaryControlName)
+          ?.setValue(getNode(option._root, this.secondaryKeyValueControl));
       }
-      this.selected.emit(option.option.value);
+      this.selected.emit(option._value);
     }
+  }
+
+  handleEmpty(valueElement: string = this.rootRef.nativeElement.value) {
+    this.rootRef.nativeElement.value = valueElement;
+    this.handleSaveValue(valueElement);
+    this.selectedEmpty.emit(valueElement);
   }
 
   handleBlur(event: FocusEvent, index?: number) {
@@ -200,12 +203,21 @@ export class NgAutocompleteComponent
     if (event?.key !== 'Enter' && !event.key?.match('Arrow')) {
       const value = (event.target as HTMLInputElement).value;
       this.handleInputDebounce(value);
-      if (this.required) {
-        this.handleSaveValue('');
-        this.control.markAsUntouched();
-      } else {
-        this.handleSaveValue(value);
-      }
     }
   }
+
+  writeValue = (value: number | string) => {
+    if (this.rootRef && this.keyLabel.length > 0) {
+      if (typeof value === 'string') {
+        this.handleSaveValue(value);
+      } else {
+        this.rootRef.nativeElement.value = getNode(value, this.keyLabel);
+        this.handleSaveValue(value, false);
+      }
+    } else {
+      setTimeout(() => {
+        this.writeValue(value);
+      }, 10);
+    }
+  };
 }

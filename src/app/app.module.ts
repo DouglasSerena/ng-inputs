@@ -13,7 +13,10 @@ import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { NgInputsLegacyModule } from './ng-inputs-legacy/ng-inputs-legacy.module';
 import { HttpClientModule } from '@angular/common/http';
 import { NgUtilsModule } from 'projects/ng-utils/src/lib/ng-utils.module';
-import { NgStructureDirectivesModule } from 'projects/ng-utils/src/public-api';
+import {
+  NgPrintDirectivesModule,
+  NgStructureDirectivesModule,
+} from 'projects/ng-utils/src/public-api';
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,7 +31,8 @@ import { NgStructureDirectivesModule } from 'projects/ng-utils/src/public-api';
     NgInputsLegacyModule,
     HttpClientModule,
     NgUtilsModule,
-    NgStructureDirectivesModule
+    NgStructureDirectivesModule,
+    NgPrintDirectivesModule,
   ],
   providers: [
     {

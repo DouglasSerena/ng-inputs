@@ -4,6 +4,7 @@
   "allowedNonPeerDependencies": [
     "dayjs",
     "@douglas-serena/ng-masks",
+    "@douglas-serena/ng-utils",
     "@angular/material"
   ],
   "assets": ["assets"],

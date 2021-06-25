@@ -109,11 +109,13 @@
       id="bt-autocomplete"
       [columns]="{ md: 6 }"
       [service]="testService"
-      methodService="searchByName"
       label="field autocomplete"
+      (selectedEmpty)="testIcon()"
+      methodService="searchByName"
+      secondaryKeyValueControl="id"
       formControlName="autocomplete"
       secondaryControlName="autocompleteId"
-      secondaryKeyValueControl="id"
+      [icon]="{ right: { icon: 'fa fa-plus', click: testIcon } }"
     >
       Is Empty
     </ng-autocomplete>

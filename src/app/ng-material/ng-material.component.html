@@ -106,11 +106,13 @@
       id="mat-autocomplete"
       [columns]="{ md: 6 }"
       [service]="testService"
-      methodService="searchByName"
       label="field autocomplete"
+      (selectedEmpty)="testIcon()"
+      methodService="searchByName"
       formControlName="autocomplete"
-      secondaryControlName="autocompleteId"
       secondaryKeyValueControl="id"
+      secondaryControlName="autocompleteId"
+      [icon]="{ right: { icon: 'add', click: testIcon } }"
     >
       Is Empty
     </ng-autocomplete>

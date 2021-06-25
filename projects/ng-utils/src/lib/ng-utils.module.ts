@@ -1,22 +1,8 @@
-import { APP_INITIALIZER, ModuleWithProviders, NgModule } from '@angular/core';
-import { NavigatorService } from './navigator.service';
+import { NgModule } from '@angular/core';
+import { NgServicesModule } from './services/ng-services.module';
 
 @NgModule({
-  imports: [],
-  providers: [
-    {
-      provide: APP_INITIALIZER,
-      useFactory: (eventRouter: NavigatorService) => () => eventRouter.load(),
-      deps: [NavigatorService],
-      multi: true,
-    },
-  ],
+  imports: [NgServicesModule],
+  providers: [],
 })
-export class NgUtilsModule {
-  static forRoot(): ModuleWithProviders<any> {
-    return {
-      ngModule: NgUtilsModule,
-      providers: [NavigatorService],
-    };
-  }
-}
+export class NgUtilsModule {}

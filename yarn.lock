@@ -1203,6 +1203,14 @@
     simple-mask-money "^3.0.1"
     tslib "^2.1.0"
 
+"@douglas-serena/ng-utils@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@douglas-serena/ng-utils/-/ng-utils-0.0.1.tgz#029ecb735f11a085c457c43ea122c311c746a47f"
+  integrity sha512-dwzghi2hl7ydh+L8EYS/IDyZlBdD0o/hh0ho4JR+YnBU4fe+8R6GAq1aYNowwqNcy4/iKv/kZrUhIiinMisLqQ==
+  dependencies:
+    dayjs "^1.10.4"
+    tslib "^2.1.0"
+
 "@istanbuljs/schema@^0.1.2":
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/@istanbuljs/schema/-/schema-0.1.3.tgz#e45e384e4b8ec16bce2fd903af78450f6bf7ec98"
@@ -3039,7 +3047,7 @@ date-format@^3.0.0:
   resolved "https://registry.yarnpkg.com/date-format/-/date-format-3.0.0.tgz#eb8780365c7d2b1511078fb491e6479780f3ad95"
   integrity sha512-eyTcpKOcamdhWJXj56DpQMo1ylSQpcGtGKXcU0Tb97+K56/CF5amAqqqNj0+KvA0iw2ynxtHWFsPDSClCxe48w==
 
-dayjs@^1.10.5:
+dayjs@^1.10.4, dayjs@^1.10.5:
   version "1.10.5"
   resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.10.5.tgz#5600df4548fc2453b3f163ebb2abbe965ccfb986"
   integrity sha512-BUFis41ikLz+65iH6LHQCDm4YPMj5r1YFLdupPIyM4SGcXMmtiLQ7U37i+hGS8urIuqe7I/ou3IS1jVc4nbN4g==

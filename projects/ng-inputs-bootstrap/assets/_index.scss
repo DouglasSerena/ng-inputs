@@ -1,4 +1,12 @@
+@import "~@angular/cdk/overlay-prebuilt.css";
 @import "./ng-variables";
+
+ng-input,
+ng-select,
+ng-text-area,
+ng-autocomplete {
+  padding: 5px 0;
+}
 
 ng-checkbox {
   &.inline {
@@ -32,6 +40,8 @@ ng-checkbox {
   }
   &.disabled {
     background-color: var(--ng-color-background-disabled) !important;
+    touch-action: none;
+    pointer-events: none;
   }
   &.ng-bt-icon__left {
     border-left: none !important;
@@ -119,6 +129,7 @@ ng-icon {
   background-color: var(--ng-color-background) !important;
   .ng-bt-dropdown-item {
     transition: 150ms;
+    padding: 0.8rem 1rem;
     color: var(--ng-color-text) !important;
     &.active {
       background-color: rgba(0, 0, 0, 0.05);

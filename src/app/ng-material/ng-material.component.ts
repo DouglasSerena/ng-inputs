@@ -15,6 +15,9 @@ export class NgMaterialComponent implements OnInit {
     private formBuilder: FormBuilder,
     public testService: TestService
   ) {}
+  testIcon() {
+    console.log('oi');
+  }
 
   async ngOnInit() {
     const debounce = (time = 2000) =>

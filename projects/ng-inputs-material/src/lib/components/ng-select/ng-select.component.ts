@@ -21,6 +21,7 @@ import {
   SelectControlValueAccessor,
 } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
+import { getNode } from '@douglas-serena/ng-utils';
 import { NgConfigService } from '../../config/ng-config.service';
 import {
   INgIconConfig,
@@ -29,7 +30,6 @@ import {
 import { INgOption } from '../../interfaces/ng-option.interface';
 import { NgControlBase } from '../../shared/base/control-base.interface';
 import { compareObject, compareOptions } from '../../utils/compare-options';
-import { getProp } from '../../utils/get-prop';
 
 const PROVIDER_VALUE_ACCESSOR: Provider = {
   provide: NG_VALUE_ACCESSOR,
@@ -92,11 +92,11 @@ export class NgSelectComponent
       let value: string = '';
 
       if (!option?._label) {
-        label = getProp(option, this.keyLabel);
+        label = getNode(option, this.keyLabel);
       }
       if (!(typeof option._value === 'string')) {
         if (this.keyValue) {
-          value = getProp(option, this.keyValue);
+          value = getNode(option, this.keyValue);
         } else {
           value = option._value || option;
         }
@@ -179,8 +179,8 @@ export class NgSelectComponent
 
     return itemOne && itemTwo
       ? compareObject(
-          getProp(itemOne, this.keyCompare),
-          getProp(itemTwo, this.keyCompare)
+          getNode(itemOne, this.keyCompare),
+          getNode(itemTwo, this.keyCompare)
         )
       : itemOne === itemTwo;
   }

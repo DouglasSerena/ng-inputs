@@ -31,3 +31,6 @@ export * from './lib/components/ng-switch/ng-switch.component';
 
 // NG MASKS
 export * from '@douglas-serena/ng-masks';
+
+// UTILS
+export * from '@douglas-serena/ng-utils';

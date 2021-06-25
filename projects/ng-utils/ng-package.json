@@ -2,6 +2,7 @@
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../dist/ng-utils",
   "allowedNonPeerDependencies": ["dayjs"],
+  "assets": ["assets"],
   "lib": {
     "entryFile": "src/public-api.ts"
   }

@@ -14,6 +14,7 @@ import { DateValidation } from './date.validation';
 import { DocsValidation } from './docs.validation';
 import { FileValidation } from './file.validation';
 import { NumberValidation } from './number.validation';
+import { ObjectValidation } from './object.validation';
 import { PatternValidation } from './pattern.validation';
 import { REGEX_CHAR_SPECIAL, REGEX_NUMBER, REGEX_UPPER_CASE } from './regex';
 import { StringValidation } from './string.validation';
@@ -25,10 +26,11 @@ export class CommonValidation {
   public static pattern = PatternValidation;
   public static docs = DocsValidation;
   public static files = FileValidation;
+  public static object = ObjectValidation;
 
   /***
    * @description EN: validates if the value passed in the control value exists.
-   * @description PT: valida se existe o valor passado no valor do control.
+   * @description PT: valida se existe o valor passado no valor do controle.
    * @returns Invalid: `{ contains: true }`
    * @returns Valid: `null`
    */
@@ -54,7 +56,7 @@ export class CommonValidation {
 
   /***
    * @description EN: validate if the value passed is equal to the control value.
-   * @description PT: validar se o valor passado é igual do valor do control.
+   * @description PT: validar se o valor passado é igual do valor do controle.
    * @returns Invalid: `{ isEqual: true }`
    * @returns Valid: `null`
    */
@@ -63,6 +65,19 @@ export class CommonValidation {
       !control.value || work?.toString() === control.value?.toString()
         ? null
         : { isEqual: true };
+  }
+
+  /**
+   * @description EN: Validates if the control data type is the same as the one entered
+   * @description PT: Valida se o tipo do dado do controle é igual o informado
+   * @returns Invalid: `{ isTypeof: true }`
+   * @returns Valid: `null`
+   */
+  public static isTypeof(type: string): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null =>
+      !control.value || typeof control.value === type
+        ? null
+        : { isTypeof: true };
   }
 
   /***

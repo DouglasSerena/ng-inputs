@@ -21,7 +21,7 @@ export class DateValidation {
 
   /***
    * @description EN: Validates if the date entered is after the control date.
-   * @description PT: Valida se a data informada é depois da data do control.
+   * @description PT: Valida se a data informada é depois da data do controle.
    * @returns Invalid: `{ isAfter: true }`
    * @returns Valid: `null`
    */
@@ -34,7 +34,7 @@ export class DateValidation {
 
   /***
    * @description EN: Validates if the date entered is before the control date.
-   * @description PT: Valida se a data informada é antes da data do control.
+   * @description PT: Valida se a data informada é antes da data do controle.
    * @returns Invalid: `{ isBefore: true }`
    * @returns Valid: `null`
    */
@@ -47,7 +47,7 @@ export class DateValidation {
 
   /***
    * @description EN: Validates if the date entered is the same as the control date.
-   * @description PT: Valida se a data informada é igual a data do control.
+   * @description PT: Valida se a data informada é igual a data do controle.
    * @returns Invalid: `{ isEqual: true }`
    * @returns Valid: `null`
    */
@@ -60,7 +60,7 @@ export class DateValidation {
 
   /***
    * @description EN: Validates if the control date is within the informed range.
-   * @description PT: Valida se a data do control esta dentro do range informado.
+   * @description PT: Valida se a data do controle esta dentro do range informado.
    * @returns Invalid: `{ isBetween: true }`
    * @returns Valid: `null`
    */
@@ -80,7 +80,7 @@ export class DateValidation {
 
   /***
    * @description EN: Valida se a data informada é deferente a data do control.
-   * @description PT: Validates if the date entered is different from the control date.
+   * @description PT: Validates if the date entered is different from the controle date.
    * @returns Invalid: `{ isBetween: true }`
    * @returns Valid: `null`
    */
@@ -93,7 +93,7 @@ export class DateValidation {
 
   /***
    * @description EN: Validates if the control's birth date is within the range of informed ages.
-   * @description PT: Valida se a data de nascimento do control esta dentro do range das idades informadas.
+   * @description PT: Valida se a data de nascimento do controle esta dentro do range das idades informadas.
    * @returns Invalid: `{ isBirchDay: true }`
    * @returns Valid: `null`
    */

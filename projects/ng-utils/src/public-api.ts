@@ -3,30 +3,23 @@
  */
 export * from './lib/ng-utils.module';
 
-// SERVICES
-export * from './lib/navigator.service';
+// DIRECTIVES
+// FILE
+export * from './lib/directives/file/ng-file-directives.module';
+export * from './lib/directives/file/file-control.directive';
 
-// VALIDATION
-export * from './lib/validations/common.validation';
-export * from './lib/validations/date.validation';
-export * from './lib/validations/docs.validation';
-export * from './lib/validations/file.validation';
-export * from './lib/validations/number.validation';
-export * from './lib/validations/pattern.validation';
-export * from './lib/validations/string.validation';
+// FOCUS
+export * from './lib/directives/focus/ng-focus.module';
+export * from './lib/directives/focus/ng-focus-back.directive';
+export * from './lib/directives/focus/ng-focus-trap.directive';
 
-// TYPE
-export * from './lib/validations/any.validation';
+// PRINT
+export * from './lib/directives/print/ng-print.module';
+export * from './lib/directives/print/ng-print.directive';
 
 // STRUCTURE
 export * from './lib/directives/structure/ng-structure-directives.module';
 export * from './lib/directives/structure/columns.directive';
-// FIELD
-export * from './lib/directives/field/ng-field-directives.module';
-export * from './lib/directives/field/file-control.directive';
-
-// REGEX
-export * from './lib/validations/regex';
 
 // FUNCTION
 export * from './lib/functions';
@@ -34,3 +27,29 @@ export * from './lib/functions/validations';
 
 // INTERFACES
 export * from './lib/interfaces/columns.interface';
+
+// PIPES
+export * from './lib/pipes/ng-pipes.module'
+export * from './lib/pipes/dom-sanitizer.pipe'
+
+// SERVICES
+export * from './lib/services/ng-services.module';
+export * from './lib/services/navigator.service';
+export * from './lib/services/body.service';
+
+// VALIDATIONS
+// REGEX
+export * from './lib/validations/regex';
+
+// VALIDATION
+export * from './lib/validations/common.validation';
+export * from './lib/validations/date.validation';
+export * from './lib/validations/docs.validation';
+export * from './lib/validations/file.validation';
+export * from './lib/validations/number.validation';
+export * from './lib/validations/object.validation'
+export * from './lib/validations/pattern.validation';
+export * from './lib/validations/string.validation';
+
+// TYPE
+export * from './lib/validations/any.validation';
