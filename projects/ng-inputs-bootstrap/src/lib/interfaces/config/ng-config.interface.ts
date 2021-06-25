@@ -38,6 +38,7 @@ export interface NgConfig {
     autocomplete?: {
       theme?: INgTheme;
       icon?: NgIconPositionsConfig;
+      mask?: INgIMaskConfig;
       types?: {
         [key: string]: INgConfigSelect;
       };

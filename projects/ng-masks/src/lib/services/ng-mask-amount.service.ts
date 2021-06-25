@@ -19,10 +19,6 @@ export class NgMaskAmountService implements INgMaskService {
     focusSelectText: true,
   };
 
-  config(config: INgMaskConfig | INgIMaskConfig) {
-    Object.assign(this._config, config);
-  }
-
   createMask(
     inputRef: HTMLInputElement,
     config?: INgMaskConfig | INgIMaskConfig,
@@ -41,21 +37,19 @@ export class NgMaskAmountService implements INgMaskService {
     };
 
     const focus = ({ target }) => {
-      const length = target.value.length;
-      target.setSelectionRange(0, length);
+      if ((config as INgMaskConfig).focusSelectText) {
+        const length = target.value.length;
+        target.setSelectionRange(0, length);
+      }
     };
 
     if (renderer2) {
+      renderer2.listen(inputRef, 'focus', focus);
       renderer2.listen(inputRef, 'input', input);
-      if (config.validator) {
-        renderer2.listen(inputRef, 'focus', focus);
-      }
       renderer2.setStyle(inputRef, 'text-align', config.align);
     } else {
       inputRef.addEventListener('input', input);
-      if (config.validator) {
-        inputRef.addEventListener('focus', focus);
-      }
+      inputRef.addEventListener('focus', focus);
       inputRef.style.textAlign = config.align as string;
     }
 

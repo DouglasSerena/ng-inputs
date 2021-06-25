@@ -29,35 +29,30 @@ export class NgMaskCurrencyService implements INgMaskService {
     focusSelectText: true,
   };
 
-  config(config: INgMaskConfig | INgIMaskConfig) {
-    Object.assign(this._config, config);
-  }
-
   createMask(
     inputRef: HTMLInputElement,
     config?: INgMaskConfig | INgIMaskConfig,
     renderer2?: Renderer2
   ) {
     config = Object.assign({}, this._config, config) as INgMaskConfig;
+
     const instanceSimpleMaskMoneyRef = SimpleMaskMoney.setMask(
       inputRef,
       config
     );
 
     const focus = ({ target }) => {
-      const length = target.value.length;
-      target.setSelectionRange(0, length);
+      if ((config as INgMaskConfig).focusSelectText) {
+        const length = target.value.length;
+        target.setSelectionRange(0, length);
+      }
     };
 
     if (renderer2) {
-      if (config.validator) {
-        renderer2.listen(inputRef, 'focus', focus);
-      }
+      renderer2.listen(inputRef, 'focus', focus);
       renderer2.setStyle(inputRef, 'text-align', config.align);
     } else {
-      if (config.validator) {
-        inputRef.addEventListener('focus', focus);
-      }
+      inputRef.addEventListener('focus', focus);
       inputRef.style.textAlign = config.align as string;
     }
 

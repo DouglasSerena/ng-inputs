@@ -18,17 +18,17 @@ export class NgMaskService implements INgMaskService {
     mask?: INgIMaskConfig | INgMaskConfig,
     renderer2?: Renderer2
   ) {
-    this._config = Object.assign(this._config, mask) as INgIMaskConfig;
+    mask = this.formatTypeMask(mask);
 
-    mask = this.formatTypeMask(mask, (this._config as any).validator);
+    this._config = Object.assign({}, this._config, mask) as INgIMaskConfig;
 
-    const instanceMoneyRef = IMask(inputRef, mask as any);
+    const instanceMoneyRef = IMask(inputRef, this._config as any);
 
     return {
       _instanceRef: instanceMoneyRef,
       _inputRef: inputRef,
       _validator: (this._config as any).validator,
-      _config: mask,
+      _config: this._config,
       _renderer2: renderer2,
       _validRequired(value): any {
         if (this._validator) {
@@ -58,19 +58,15 @@ export class NgMaskService implements INgMaskService {
     return IMask.pipe(value ? value.toString() : '', mask as any) as string;
   }
 
-  formatTypeMask(mask, validator = false) {
-    if (!(typeof mask === 'string')) {
-      mask = mask as any;
-      if ((mask as any)?.validator) {
-        validator = (mask as any)?.validator;
-      }
-    } else if (!!mask) {
-      mask = {
+  formatTypeMask(mask: INgIMaskConfig | INgMaskConfig) {
+    let newMask = mask;
+    if (typeof mask === 'string') {
+      newMask = {
         mask: mask.split('|').map((mask) => ({
           mask,
         })),
-      };
+      } as INgIMaskConfig;
     }
-    return mask;
+    return newMask;
   }
 }

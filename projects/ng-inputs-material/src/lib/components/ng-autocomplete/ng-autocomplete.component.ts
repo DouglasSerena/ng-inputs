@@ -91,15 +91,28 @@ export class NgAutocompleteComponent
     this.superAfterViewInit();
 
     const typeConfig = this.ngConfig.typesInput?.[this.type.toLowerCase()];
+    const configGlobal = this.ngConfig.global.autocomplete;
 
-    const keys = Object.keys(MASKS);
     const type = this.type.toUpperCase();
-    if (keys.includes(type) && this.mask === undefined) {
+
+    if (MASKS.typesCustom.includes(type) && this.mask === undefined) {
       this.mask = MASKS[type];
     }
 
-    if (typeConfig?.mask) {
-      this.mask = Object.assign({}, typeConfig?.mask, this.mask);
+    if (!(typeof this.mask === 'string') && this.mask !== undefined) {
+      if (configGlobal?.mask) {
+        this.mask = Object.assign({}, configGlobal?.mask, this.mask);
+      }
+
+      if (typeConfig?.mask) {
+        this.mask = Object.assign({}, typeConfig?.mask, this.mask);
+      }
+
+      if ((this.mask as any)?.validator === undefined) {
+        this.mask = Object.assign({}, this.mask, {
+          validator: this.required,
+        });
+      }
     }
 
     if (this.mask !== undefined) {

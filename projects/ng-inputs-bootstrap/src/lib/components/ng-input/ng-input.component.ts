@@ -77,15 +77,18 @@ export class NgInputComponent
     this.superAfterViewInit();
 
     const typeConfig = this.ngConfig.typesInput?.[this.type.toLowerCase()];
+    const configGlobal = this.ngConfig.global.input;
 
     if (this.type === 'currency') {
+      this.currency = Object.assign({}, configGlobal?.currency, this.currency);
+
       if (this.currency?.validator === undefined) {
         this.currency = Object.assign({}, this.currency, {
           validator: this.required,
         });
       }
       this.currency = Object.assign({}, typeConfig?.currency, this.currency);
-      this.ngMaskCurrencyService.config(this.ngConfig.input.currency);
+
       this._maskRef = this.ngMaskCurrencyService.createMask(
         this.rootRef.nativeElement,
         this.currency,
@@ -93,13 +96,15 @@ export class NgInputComponent
       );
       this.type = 'text';
     } else if (this.type === 'percent') {
+      this.percent = Object.assign({}, configGlobal?.percent, this.percent);
+
       if (this.percent?.validator === undefined) {
         this.percent = Object.assign({}, this.percent, {
           validator: this.required,
         });
       }
       this.percent = Object.assign({}, typeConfig?.percent, this.percent);
-      this.ngMaskCurrencyService.config(this.ngConfig.input.percent);
+
       this._maskRef = this.ngMaskPercentService.createMask(
         this.rootRef.nativeElement,
         this.percent,
@@ -107,13 +112,15 @@ export class NgInputComponent
       );
       this.type = 'text';
     } else if (this.type === 'amount') {
+      this.amount = Object.assign({}, configGlobal?.amount, this.amount);
+
       if (this.amount?.validator === undefined) {
         this.amount = Object.assign({}, this.amount, {
           validator: this.required,
         });
       }
       this.amount = Object.assign({}, typeConfig?.amount, this.amount);
-      this.ngMaskCurrencyService.config(this.ngConfig.input.amount);
+
       this._maskRef = this.ngMaskAmountService.createMask(
         this.rootRef.nativeElement,
         this.amount,
@@ -122,22 +129,28 @@ export class NgInputComponent
       this.type = 'text';
     } else {
       const type = this.type.toUpperCase();
+
       if (MASKS.typesCustom.includes(type) && this.mask === undefined) {
         this.mask = MASKS[type];
       }
 
-      if (typeConfig?.mask) {
-        this.mask = Object.assign({}, typeConfig?.mask, this.mask);
-      }
+      if (!(typeof this.mask === 'string') && this.mask !== undefined) {
+        if (configGlobal?.mask) {
+          this.mask = Object.assign({}, configGlobal?.mask, this.mask);
+        }
 
-      if (this.mask !== undefined) {
+        if (typeConfig?.mask) {
+          this.mask = Object.assign({}, typeConfig?.mask, this.mask);
+        }
+
         if ((this.mask as any)?.validator === undefined) {
           this.mask = Object.assign({}, this.mask, {
             validator: this.required,
           });
         }
+      }
 
-        this.ngMaskCurrencyService.config(this.ngConfig.input.mask);
+      if (this.mask !== undefined) {
         this._maskRef = this.ngMaskService.createMask(
           this.rootRef.nativeElement,
           this.mask,

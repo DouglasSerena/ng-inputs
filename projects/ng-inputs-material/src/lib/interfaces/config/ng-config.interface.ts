@@ -1,4 +1,3 @@
-
 import { INgIMaskConfig, INgMaskConfig } from '@douglas-serena/ng-masks';
 import { NgIconPositionsConfig } from '../config/ng-icon-config.interface';
 import { INgTheme } from '../ng-theme.interface';
@@ -39,6 +38,7 @@ export interface NgConfig {
     autocomplete?: {
       theme?: INgTheme;
       icon?: NgIconPositionsConfig;
+      mask?: INgIMaskConfig;
       types?: {
         [key: string]: INgConfigSelect;
       };
