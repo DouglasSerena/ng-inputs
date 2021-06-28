@@ -20,7 +20,6 @@ import {
   NG_VALUE_ACCESSOR,
   SelectControlValueAccessor,
 } from '@angular/forms';
-import { MatSelectChange } from '@angular/material/select';
 import { getNode } from '@douglas-serena/ng-utils';
 import { NgConfigService } from '../../config/ng-config.service';
 import {
@@ -70,6 +69,7 @@ export class NgSelectComponent
   @Input() multiple = false;
   disabled: boolean = false;
   @Input() labelFixed: boolean = false;
+  @Input() optionsFormat: 'CUSTOM' | 'NATIVE' = 'CUSTOM';
   @Input() theme: 'outline' | 'fill' | 'standard' | 'legacy' = 'outline';
 
   @Input() help: string;
@@ -86,19 +86,25 @@ export class NgSelectComponent
 
   @Input() size: 'lg' | 'md' | 'sm' = 'md';
   @Input() position: 'start' | 'end' = 'start';
-  @Input() set options(options: INgOption[]) {
+  @Input() set options(options: any[]) {
     this._options = options.map((option) => {
       let label: string = '';
       let value: string = '';
 
-      if (!option?._label) {
-        label = getNode(option, this.keyLabel);
-      }
-      if (!(typeof option._value === 'string')) {
-        if (this.keyValue) {
-          value = getNode(option, this.keyValue);
-        } else {
-          value = option._value || option;
+      if (option.value !== undefined && option.label !== undefined) {
+        label = option.label;
+        value = option.value;
+        this.optionsFormat = 'NATIVE';
+      } else {
+        if (!option?._label) {
+          label = getNode(option, this.keyLabel);
+        }
+        if (!(typeof option._value === 'string')) {
+          if (this.keyValue) {
+            value = getNode(option, this.keyValue);
+          } else {
+            value = option._value || option;
+          }
         }
       }
 
@@ -124,7 +130,14 @@ export class NgSelectComponent
   }
   _placeholder?: string | null;
 
-  @Input() errors: { [key: string]: string };
+  @Input() set errors(errors: { [key: string]: string } | null) {
+    if (errors) {
+      this._errors = errors;
+      this._errorsKeys = Object.keys(errors);
+    }
+  }
+  _errors: { [key: string]: string };
+  _errorsKeys: string[];
 
   get control(): FormControl {
     return (this.formControl ||
@@ -170,11 +183,15 @@ export class NgSelectComponent
   }
 
   handleCompareWith(itemOne, itemTwo) {
+    if (this.optionsFormat === 'NATIVE') {
+      return compareObject(itemOne, itemTwo);
+    }
+
     if (!!this.keyValue) {
-      itemOne = compareOptions(this._options, this.keyValue, itemOne)._root;
+      itemOne = compareOptions(this._options, this.keyValue, itemOne)?._root;
     }
     if (!!this.keyValue) {
-      itemTwo = compareOptions(this._options, this.keyValue, itemTwo)._root;
+      itemTwo = compareOptions(this._options, this.keyValue, itemTwo)?._root;
     }
 
     return itemOne && itemTwo
@@ -210,7 +227,7 @@ export class NgSelectComponent
   }
 
   @Output() selected = new EventEmitter();
-  handleSelect(option: MatSelectChange) {
+  handleSelect(option: any) {
     this.selected.emit(option.value);
   }
 

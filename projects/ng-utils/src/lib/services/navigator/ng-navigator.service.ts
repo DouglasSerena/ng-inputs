@@ -8,12 +8,12 @@ import {
   RouterEvent,
   RoutesRecognized,
 } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { CommonValidation } from '../validations/common.validation';
+import { CommonValidation } from '../../validations/common.validation';
 
 @Injectable({ providedIn: 'root' })
-export class NavigatorService {
+export class NgNavigatorService {
   navigationStart = new EventEmitter<NavigationStart>();
   routesRecognized = new EventEmitter<RoutesRecognized>();
   guardsCheckStart = new EventEmitter<GuardsCheckStart>();

@@ -7,9 +7,9 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./ng-lib-masks.component.scss'],
 })
 export class NgLibMasksComponent implements OnInit {
-  form: FormGroup;
+  form?: FormGroup;
   get controls() {
-    return this.form.controls;
+    return this.form?.controls;
   }
 
   constructor(private formBuilder: FormBuilder) {}

@@ -5,7 +5,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgIconModule } from '../../shared/ng-icon/ng-icon.module';
 import { BaseModule } from '../../shared/base/base.module';
 import { NgMaskService } from '@douglas-serena/ng-masks';
-import { NgUtilsDirectiveModule } from '../../directives/utils/ng-utils.module';
 import { NgSelectDropdownComponent } from './ng-select-dropdown/ng-select-dropdown.component';
 import { OverlayModule } from '@angular/cdk/overlay';
 
@@ -13,7 +12,6 @@ import { OverlayModule } from '@angular/cdk/overlay';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    NgUtilsDirectiveModule,
     BaseModule,
     NgIconModule,
     OverlayModule,

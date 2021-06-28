@@ -60,7 +60,14 @@ export class ControlBase implements ControlValueAccessor, NgControlBase {
   @Input() size: 'lg' | 'md' | 'sm' = 'md';
   @Input() theme: 'outline' | 'fill' | 'standard' | 'legacy' = 'outline';
 
-  @Input() errors: { [key: string]: string };
+  @Input() set errors(errors: { [key: string]: string } | null) {
+    if (errors) {
+      this._errors = errors;
+      this._errorsKeys = Object.keys(errors);
+    }
+  }
+  _errors: { [key: string]: string };
+  _errorsKeys: string[];
 
   get control(): FormControl {
     return (this.formControl ||

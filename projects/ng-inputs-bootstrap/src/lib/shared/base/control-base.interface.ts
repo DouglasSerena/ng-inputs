@@ -29,7 +29,8 @@ export interface NgControlBase {
   size: 'lg' | 'md' | 'sm';
   theme: 'outline' | 'fill' | 'standard' | 'legacy';
 
-  errors: { [key: string]: string };
+  _errors: { [key: string]: string };
+  _errorsKeys: string[];
 
   handleClickIcon: (
     prop: { event: Event; icon: INgIconConfig | undefined },

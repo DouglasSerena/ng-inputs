@@ -7,6 +7,7 @@
     <!-- DEFAULT -->
     <ng-input
       length="30"
+      theme="outline"
       id="bt-default"
       help="Text of helper"
       [columns]="{ md: 4 }"
@@ -101,6 +102,18 @@
       label="field select"
       formControlName="select"
     ></ng-select>
+    <ng-select
+      id="bt-selecdt"
+      firstOptionLabel="--- EMPTY ---"
+      [firstOptionValue]="null"
+      [columns]="{ md: 6 }"
+      [options]="[
+        { label: 'DOUGLAS', value: 'DOUGLAS_LABEL' },
+        { label: 'serena', value: 'rafa' }
+      ]"
+      label="field select"
+      formControlName="select"
+    ></ng-select>
 
     <!-- AUTOCOMPLETE -->
     <ng-autocomplete
@@ -115,6 +128,17 @@
       secondaryKeyValueControl="id"
       formControlName="autocomplete"
       secondaryControlName="autocompleteId"
+      [icon]="{ right: { icon: 'fa fa-plus', click: testIcon } }"
+    >
+      Is Empty
+    </ng-autocomplete>
+    <ng-autocomplete
+      id="bt-autocompletec"
+      [columns]="{ md: 6 }"
+      label="field autocomplete"
+      (selectedEmpty)="testIcon()"
+      formControlName="autocomplete"
+      [options]="['DOUGLAS', 'serena']"
       [icon]="{ right: { icon: 'fa fa-plus', click: testIcon } }"
     >
       Is Empty
@@ -168,6 +192,19 @@
       </ng-checkbox>
     </div>
     <ng-switch formControlName="switch">field switch</ng-switch>
+    <!-- FILE -->
+    <ng-upload
+      id="bt-fill"
+      [multiple]="true"
+      accept="image/png,image/jpeg"
+      formControlName="file"
+      [errors]="{
+        allowExtensions:
+          'A imagem ' +
+          form.controls.file.getError('allowExtensions')?.invalidFile.filename +
+          ' ver ser um png'
+      }"
+    ></ng-upload>
 
     <h2 class="mt-2">Themes</h2>
 

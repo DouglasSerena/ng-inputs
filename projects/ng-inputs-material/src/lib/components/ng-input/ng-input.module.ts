@@ -7,7 +7,6 @@ import { NgUtilsServiceModule } from '../../services/utils/ng-utils.module';
 import { NgIconModule } from '../../shared/ng-icon/ng-icon.module';
 import { BaseModule } from '../../shared/base/base.module';
 import { MatInputModule } from '@angular/material/input';
-import { NgUtilsDirectiveModule } from '../../directives/utils/ng-utils.module';
 import { NgMasksServicesModule } from '@douglas-serena/ng-masks';
 
 @NgModule({
@@ -20,7 +19,6 @@ import { NgMasksServicesModule } from '@douglas-serena/ng-masks';
     NgIconModule,
     BaseModule,
     MatInputModule,
-    NgUtilsDirectiveModule,
   ],
   declarations: [NgInputComponent],
   exports: [NgInputComponent],

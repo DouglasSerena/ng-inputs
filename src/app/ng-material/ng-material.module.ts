@@ -10,7 +10,6 @@ import {
   NgSelectModule,
   NgSwitchModule,
   NgTextAreaModule,
-  NgUtilsDirectiveModule,
 } from 'projects/ng-inputs-material/src/public-api';
 
 import { ReactiveFormsModule } from '@angular/forms';
@@ -46,7 +45,6 @@ import {
         },
       },
     }),
-    NgUtilsDirectiveModule,
     NgInputModule,
     NgSelectModule,
     NgTextAreaModule,

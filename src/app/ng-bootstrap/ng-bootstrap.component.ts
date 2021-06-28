@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CommonValidation } from '@douglas-serena/ng-utils';
 import { TestService } from '../test.service';
 
 @Component({
@@ -40,7 +41,7 @@ export class NgBootstrapComponent implements OnInit {
       currency: [10.5],
       percent: [1112.5],
       amount: [2.5],
-      mask: ['21.321.312/3123-12'],
+      mask: ['21321312312312'],
       date: [''],
       select: ['rafa'],
       autocomplete: ['', [Validators.required]],
@@ -49,6 +50,7 @@ export class NgBootstrapComponent implements OnInit {
       tel: ['(12) 3 1231-2312'],
       zipCode: ['90000000'],
       textArea: [''],
+      file: ['', [CommonValidation.files.isAllowExtensions(['png'])]],
       switch: [true],
       checkbox: [false],
       indeterminate: [true],

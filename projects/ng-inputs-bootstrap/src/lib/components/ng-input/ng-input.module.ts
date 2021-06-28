@@ -7,7 +7,6 @@ import { NgUtilsServiceModule } from '../../services/utils/ng-utils.module';
 import { NgIconModule } from '../../shared/ng-icon/ng-icon.module';
 import { BaseModule } from '../../shared/base/base.module';
 import { NgMasksServicesModule } from '@douglas-serena/ng-masks';
-import { NgUtilsDirectiveModule } from '../../directives/utils/ng-utils.module';
 
 @NgModule({
   imports: [
@@ -15,7 +14,6 @@ import { NgUtilsDirectiveModule } from '../../directives/utils/ng-utils.module';
     NgConfigModule,
     NgMasksServicesModule,
     ReactiveFormsModule,
-    NgUtilsDirectiveModule,
     NgUtilsServiceModule,
     NgIconModule,
     BaseModule,

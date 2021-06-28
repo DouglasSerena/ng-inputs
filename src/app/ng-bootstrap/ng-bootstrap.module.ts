@@ -9,7 +9,7 @@ import {
   NgSelectModule,
   NgSwitchModule,
   NgTextAreaModule,
-  NgUtilsDirectiveModule,
+  NgUploadModule,
 } from 'projects/ng-inputs-bootstrap/src/public-api';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HighlightModule } from 'ngx-highlightjs';
@@ -40,13 +40,13 @@ import { NgStructureDirectivesModule } from 'projects/ng-utils/src/public-api';
         },
       },
     }),
-    NgUtilsDirectiveModule,
     NgInputModule,
     NgSelectModule,
     NgTextAreaModule,
     NgAutocompleteModule,
     NgCheckboxModule,
     NgSwitchModule,
+    NgUploadModule,
   ],
   providers: [TestService],
   declarations: [NgBootstrapComponent],

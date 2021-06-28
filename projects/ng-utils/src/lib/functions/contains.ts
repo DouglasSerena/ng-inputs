@@ -5,5 +5,5 @@ export function contains(work: string, compare: string | RegExp) {
     compare = clearFormation(compare);
   }
 
-  return clearFormation(work).match(compare) !== null;
+  return clearFormation(work)?.match(compare) !== null;
 }

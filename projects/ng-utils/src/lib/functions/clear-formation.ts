@@ -39,5 +39,5 @@ export const clearFormation = (work: string) => {
     ç: 'c',
     Ç: 'C',
   };
-  return work.replace(/[\W\[\] ]/g, (char) => map[char] || char).toLowerCase();
+  return work?.replace(/[\W\[\] ]/g, (char) => map[char] || char).toLowerCase();
 };

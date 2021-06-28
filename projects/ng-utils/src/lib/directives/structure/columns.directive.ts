@@ -13,7 +13,7 @@ export class ColumnsDirective implements OnInit {
   };
 
   @Input() columnType: 'bootstrap' | 'materialize' = 'bootstrap';
-  @Input() set columns(columns: ColumnsConfig) {
+  @Input() set columns(columns: ColumnsConfig | string) {
     if (!(typeof columns === 'string')) {
       Object.assign(this._columns, columns);
       if (this._element) {

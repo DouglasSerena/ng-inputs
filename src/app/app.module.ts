@@ -12,17 +12,19 @@ import { NgLibMasksModule } from './ng-lib-masks/ng-lib-masks.module';
 import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { NgInputsLegacyModule } from './ng-inputs-legacy/ng-inputs-legacy.module';
 import { HttpClientModule } from '@angular/common/http';
-import { NgUtilsModule } from 'projects/ng-utils/src/lib/ng-utils.module';
 import {
   NgPrintDirectivesModule,
+  NgServicesModule,
   NgStructureDirectivesModule,
 } from 'projects/ng-utils/src/public-api';
+import { NgThemeModule } from 'projects/ng-utils/src/lib/services/theme/ng-theme.module';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    NgServicesModule,
     NgBootstrapModule,
     NgMaterialModule,
     NgLibMasksModule,
@@ -30,9 +32,9 @@ import {
     MatExpansionModule,
     NgInputsLegacyModule,
     HttpClientModule,
-    NgUtilsModule,
     NgStructureDirectivesModule,
     NgPrintDirectivesModule,
+    NgThemeModule.forRoot({}),
   ],
   providers: [
     {

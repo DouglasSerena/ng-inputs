@@ -5,6 +5,7 @@ export class BodyService {
   appRoot = document.body.querySelector<HTMLElement>('app-root');
   appRootDisplay: string;
   body = document.body;
+  head = document.head;
 
   constructor() {}
 
@@ -28,9 +29,11 @@ export class BodyService {
   insertNode(node: Node) {
     this.body.appendChild(node);
   }
+
   removeNode(node: Node) {
     this.body.removeChild(node);
   }
+
   insertNodeBefore(node: Node, nodeRef: Node) {
     this.body.insertBefore(node, nodeRef);
   }

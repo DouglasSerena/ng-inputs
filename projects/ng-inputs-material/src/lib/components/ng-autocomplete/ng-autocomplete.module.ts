@@ -7,7 +7,6 @@ import { BaseModule } from '../../shared/base/base.module';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { NgUtilsDirectiveModule } from '../../directives/utils/ng-utils.module';
 import { NgMaskService } from '@douglas-serena/ng-masks';
 
 @NgModule({
@@ -18,7 +17,6 @@ import { NgMaskService } from '@douglas-serena/ng-masks';
     MatAutocompleteModule,
     BaseModule,
     NgIconModule,
-    NgUtilsDirectiveModule,
   ],
   declarations: [NgAutocompleteComponent],
   providers: [NgMaskService],

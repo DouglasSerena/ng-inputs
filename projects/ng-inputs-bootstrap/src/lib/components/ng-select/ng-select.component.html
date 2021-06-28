@@ -1,9 +1,12 @@
-<label class="form-label" *ngIf="label" [for]="id">
+<label class="form-label" *ngIf="label && theme !== 'outline'" [for]="id">
   {{ label }}
   <span class="ng-bt-required-symbol" *ngIf="required">*</span>
 </label>
 
-<div class="input-group">
+<div
+  [class.input-group]="!label || (!!label && theme !== 'outline')"
+  [class.form-floating]="!!label && theme === 'outline'"
+>
   <ng-icon
     [icon]="icon?.left"
     className="ng-bt-icon__left"
@@ -28,8 +31,8 @@
     [compareWith]="handleCompareWith.bind(this)"
     [class.ng-bt-icon__left]="icon?.left && !icon?.left?.hidden"
     [class.ng-bt-icon__right]="icon?.right && !icon?.right?.hidden"
-    [class.is-valid]="this.control.touched && this.control.valid"
-    [class.is-invalid]="this.control.touched && this.control.invalid"
+    [class.is-valid]="control.touched && control.valid"
+    [class.is-invalid]="control.touched && control.invalid"
   >
     <ng-container *ngIf="position === 'start'">
       <option *ngFor="let option of _options" [ngValue]="option._value">
@@ -45,6 +48,11 @@
       </option>
     </ng-container>
   </select>
+
+  <label class="form-label" *ngIf="label && theme === 'outline'" [for]="id">
+    {{ label }}
+    <span class="ng-bt-required-symbol" *ngIf="required">*</span>
+  </label>
 
   <ng-icon
     [icon]="icon?.right"
@@ -63,10 +71,12 @@
     {{ help }}
   </span>
 
-  <span
-    class="ng-bt-helper__text ng-bt-helper__error"
-    *ngIf="control.invalid && control.touched"
-    [ng-messages-errors]="errors"
-    [control]="control"
-  ></span>
+  <ng-container *ngFor="let key of _errorsKeys">
+    <span
+      class="ng-bt-helper__text ng-bt-helper__error"
+      *ngIf="control.touched && control.hasError(key)"
+    >
+      {{ _errors[key] }}
+    </span>
+  </ng-container>
 </div>

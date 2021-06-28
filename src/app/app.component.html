@@ -3,7 +3,7 @@
 
   <mat-accordion multi>
     <button (click)="print()">print</button>
-    <mat-expansion-panel [expanded]="true" ngPrint>
+    <mat-expansion-panel [expanded]="true">
       <mat-expansion-panel-header>
         <mat-panel-title>
           <h2>Bootstrap - ng-inputs-bootstrap</h2>
@@ -13,7 +13,7 @@
       <ng-bootstrap></ng-bootstrap>
     </mat-expansion-panel>
 
-    <mat-expansion-panel>
+    <mat-expansion-panel ngPrint>
       <mat-expansion-panel-header>
         <mat-panel-title>
           <h2>Material - ng-inputs-material</h2>

@@ -1,0 +1,92 @@
+.form-upload {
+  width: 100%;
+  min-height: 250px;
+  padding: 20px;
+  display: flex;
+  position: relative;
+  border-radius: 4px;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  background-color: var(--color-background);
+  border: 2px dashed rgba(51, 51, 51, 0.7);
+  input {
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    &.disabled {
+      touch-action: none;
+      pointer-events: none;
+    }
+  }
+  &::before {
+    content: "";
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    transition: 250ms;
+    position: absolute;
+    touch-action: none;
+    pointer-events: none;
+    background-color: var(--color-background);
+  }
+  &.is-drag-over {
+    border-color: var(--color-primary);
+    &::before {
+      opacity: 0.1;
+      background-color: var(--color-primary);
+    }
+  }
+  &.is-invalid {
+    border-color: var(--color-danger);
+    &::before {
+      opacity: 0.1;
+      background-color: var(--color-danger);
+    }
+  }
+  &.is-valid {
+    border-color: var(--color-success);
+    &::before {
+      opacity: 0.1;
+      background-color: var(--color-success);
+    }
+  }
+  .form-upload__content {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+
+    i {
+      font-size: 75px;
+      margin-bottom: 20px;
+      opacity: 0.5;
+    }
+    button {
+      margin-bottom: 5px;
+    }
+    p {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 500;
+      opacity: 0.9;
+    }
+    .ng-bt-helper,
+    .ng-bt-helper .ng-bt-helper__text {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+
+.btn-upload {
+  width: 100%;
+  margin: 10px 0 20px;
+}

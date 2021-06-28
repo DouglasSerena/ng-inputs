@@ -9,7 +9,9 @@ export class TestService {
   searchByName(name: string) {
     return new Promise((resolve) => {
       setTimeout(() => {
-        const options = this.option.filter((item) => !!item.name.match(name));
+        const options = this.option.filter(
+          (item: any) => !!item.name.match(name)
+        );
         resolve(options);
       }, 1000);
     });
@@ -18,7 +20,7 @@ export class TestService {
     return new Promise((resolve) => {
       setTimeout(() => {
         const options = this.option.filter(
-          (item) => !!item.id.toString().match(id)
+          (item: any) => !!item.id.toString().match(id)
         );
         resolve(options);
       }, 1000);

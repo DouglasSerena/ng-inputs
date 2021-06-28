@@ -1203,10 +1203,10 @@
     simple-mask-money "^3.0.1"
     tslib "^2.1.0"
 
-"@douglas-serena/ng-utils@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@douglas-serena/ng-utils/-/ng-utils-0.0.1.tgz#029ecb735f11a085c457c43ea122c311c746a47f"
-  integrity sha512-dwzghi2hl7ydh+L8EYS/IDyZlBdD0o/hh0ho4JR+YnBU4fe+8R6GAq1aYNowwqNcy4/iKv/kZrUhIiinMisLqQ==
+"@douglas-serena/ng-utils@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@douglas-serena/ng-utils/-/ng-utils-0.0.4.tgz#c8dfcac215a4a55cd59e5649a0a18861bd066f2f"
+  integrity sha512-aYEHH5ZwXCJ7SiWaCIGFGIvKmVTU9y7P66EYtf0tejqNTG4o4wCpliQ6G7Yj/aTTUFGcA7A6r1naZqYhbQ3zlw==
   dependencies:
     dayjs "^1.10.4"
     tslib "^2.1.0"
@@ -2175,6 +2175,11 @@ boolbase@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
   integrity sha1-aN/1++YMUes3cl6p4+0xDcwed24=
+
+bootstrap@^5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-5.0.2.tgz#aff23d5e0e03c31255ad437530ee6556e78e728e"
+  integrity sha512-1Ge963tyEQWJJ+8qtXFU6wgmAVj9gweEjibUdbmcCEYsn38tVwRk8107rk2vzt6cfQcRr3SlZ8aQBqaD8aqf+Q==
 
 brace-expansion@^1.1.7:
   version "1.1.11"

@@ -9,7 +9,7 @@ import { TestService } from '../test.service';
   styleUrls: ['./ng-material.component.scss'],
 })
 export class NgMaterialComponent implements OnInit {
-  form: FormGroup;
+  form?: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -34,7 +34,7 @@ export class NgMaterialComponent implements OnInit {
     };
     this.form = this.formBuilder.group({
       file: [''],
-      default: ['', [CommonValidation.pattern.isEmail]],
+      default: ['', [CommonValidation.pattern.isEmail, Validators.required]],
       disabled: [{ value: 'field disabled', disabled: true }],
       readonly: ['filed readonly'],
       currency: [
@@ -45,7 +45,7 @@ export class NgMaterialComponent implements OnInit {
       amount: [2.5],
       mask: ['54.546.018/0001-12', [CommonValidation.docs.isCpfOrCnpj]],
       date: ['', [CommonValidation.date.isBirchDay()]],
-      select: ['rafa'],
+      select: ['RAFA_'],
       autocomplete: ['', [Validators.required]],
       autocompleteId: [''],
       password: [''],

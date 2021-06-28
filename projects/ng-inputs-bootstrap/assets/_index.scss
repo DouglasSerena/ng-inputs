@@ -14,6 +14,12 @@ ng-checkbox {
     width: auto;
   }
 }
+.form-floating {
+  display: flex;
+  .form-label {
+    z-index: 5;
+  }
+}
 .ng-bt-btn-check {
   overflow: hidden;
 }
@@ -21,25 +27,25 @@ ng-checkbox {
   width: auto;
   display: inline-block;
   &:checked {
-    background-color: var(--ng-color-primary) !important;
-    border-color: var(--ng-color-primary) !important;
+    background-color: var(--color-primary) !important;
+    border-color: var(--color-primary) !important;
   }
   &:indeterminate {
-    background-color: var(--ng-color-primary) !important;
-    border-color: var(--ng-color-primary) !important;
+    background-color: var(--color-primary) !important;
+    border-color: var(--color-primary) !important;
   }
 }
 .form-control,
 .form-select {
   width: 100%;
   border-radius: 0.25rem !important;
-  color: var(--ng-color-text) !important;
-  background-color: var(--ng-color-background) !important;
+  color: var(--color-text) !important;
+  background-color: var(--color-background) !important;
   &.readonly {
-    background-color: var(--ng-color-background-readonly) !important;
+    background-color: var(--color-background-readonly) !important;
   }
   &.disabled {
-    background-color: var(--ng-color-background-disabled) !important;
+    background-color: var(--color-background-disabled) !important;
     touch-action: none;
     pointer-events: none;
   }
@@ -47,6 +53,9 @@ ng-checkbox {
     border-left: none !important;
     border-top-left-radius: 0 !important;
     border-bottom-left-radius: 0 !important;
+    & + label {
+      left: 40px;
+    }
   }
   &.ng-bt-icon__right {
     border-right: none !important;
@@ -60,11 +69,11 @@ ng-checkbox {
 }
 
 .ng-bt-required-symbol {
-  color: var(--ng-color-danger);
+  color: var(--color-danger);
 }
 
 .ng-bt-icon {
-  background: var(--ng-color-background) !important;
+  background: var(--color-background) !important;
   border-radius: 0 !important;
   cursor: text !important;
   transition: 250ms;
@@ -92,12 +101,12 @@ ng-checkbox {
 ng-icon {
   &.is-invalid {
     .ng-bt-icon {
-      border-color: var(--ng-color-danger);
+      border-color: var(--color-danger);
     }
   }
   &.is-valid {
     .ng-bt-icon {
-      border-color: var(--ng-color-success);
+      border-color: var(--color-success);
     }
   }
 }
@@ -112,7 +121,7 @@ ng-icon {
     font-size: 0.875em;
   }
   .ng-bt-helper__error {
-    color: var(--ng-color-danger);
+    color: var(--color-danger);
   }
   .ng-bt-helper__counter {
     margin-top: 0.25rem;
@@ -126,11 +135,11 @@ ng-icon {
   width: 100%;
   overflow-y: auto;
   max-height: 300px;
-  background-color: var(--ng-color-background) !important;
+  background-color: var(--color-background) !important;
   .ng-bt-dropdown-item {
     transition: 150ms;
     padding: 0.8rem 1rem;
-    color: var(--ng-color-text) !important;
+    color: var(--color-text) !important;
     &.active {
       background-color: rgba(0, 0, 0, 0.05);
     }
@@ -152,15 +161,15 @@ ng-icon {
   &:focus,
   &:active {
     z-index: 4;
-    border-color: var(--ng-color-primary) !important;
-    box-shadow: 0 0 0 0.25rem var(--ng-color-shadow-primary) !important;
+    border-color: var(--color-primary) !important;
+    box-shadow: 0 0 0 0.25rem var(--color-shadow-primary) !important;
     &.is-invalid {
-      border-color: var(--ng-color-danger) !important;
-      box-shadow: 0 0 0 0.25rem var(--ng-color-shadow-danger) !important;
+      border-color: var(--color-danger) !important;
+      box-shadow: 0 0 0 0.25rem var(--color-shadow-danger) !important;
     }
     &.is-valid {
-      border-color: var(--ng-color-success) !important;
-      box-shadow: 0 0 0 0.25rem var(--ng-color-shadow-success) !important;
+      border-color: var(--color-success) !important;
+      box-shadow: 0 0 0 0.25rem var(--color-shadow-success) !important;
     }
   }
 }

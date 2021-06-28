@@ -50,7 +50,13 @@
   }}</mat-hint>
 
   <!-- MENSAGEM DE ERRO -->
-  <mat-error [ng-messages-errors]="errors" [control]="control"></mat-error>
+  <mat-error>
+    <ng-container *ngFor="let key of _errorsKeys">
+      <span *ngIf="control.touched && control.hasError(key)">
+        {{ _errors[key] }}
+      </span>
+    </ng-container>
+  </mat-error>
 
   <!-- ICON RIGHT -->
   <ng-icon

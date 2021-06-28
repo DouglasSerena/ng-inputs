@@ -1,7 +1,6 @@
 /*
  * Public API Surface of ng-utils
  */
-export * from './lib/ng-utils.module';
 
 // DIRECTIVES
 // FILE
@@ -29,13 +28,20 @@ export * from './lib/functions/validations';
 export * from './lib/interfaces/columns.interface';
 
 // PIPES
-export * from './lib/pipes/ng-pipes.module'
-export * from './lib/pipes/dom-sanitizer.pipe'
+export * from './lib/pipes/ng-pipes.module';
+export * from './lib/pipes/dom-sanitizer.pipe';
 
 // SERVICES
 export * from './lib/services/ng-services.module';
-export * from './lib/services/navigator.service';
 export * from './lib/services/body.service';
+
+// NAVIGATOR
+export * from './lib/services/navigator/ng-navigator.module';
+export * from './lib/services/navigator/ng-navigator.service';
+
+// THEME
+export * from './lib/services/theme/ng-theme.module';
+export * from './lib/services/theme/ng-theme.service';
 
 // VALIDATIONS
 // REGEX
@@ -47,7 +53,7 @@ export * from './lib/validations/date.validation';
 export * from './lib/validations/docs.validation';
 export * from './lib/validations/file.validation';
 export * from './lib/validations/number.validation';
-export * from './lib/validations/object.validation'
+export * from './lib/validations/object.validation';
 export * from './lib/validations/pattern.validation';
 export * from './lib/validations/string.validation';
 

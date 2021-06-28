@@ -77,7 +77,7 @@ export class NgInputComponent
     this.superAfterViewInit();
 
     const typeConfig = this.ngConfig.typesInput?.[this.type.toLowerCase()];
-    const configGlobal = this.ngConfig.global.input;
+    const configGlobal = this.ngConfig.global?.input;
 
     if (this.type === 'currency') {
       this.currency = Object.assign({}, configGlobal?.currency, this.currency);

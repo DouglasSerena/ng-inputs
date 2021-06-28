@@ -110,7 +110,7 @@ export class CommonValidation {
    */
   public static control(
     controlKey: string,
-    validation: (control: AnyValidation | FormControl) => ValidatorFn,
+    validation: (control: any) => ValidatorFn,
     listenerKey: string = ''
   ) {
     return (control: AbstractControl): ValidationErrors | null => {

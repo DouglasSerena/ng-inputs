@@ -26,7 +26,8 @@ import {
   NgMaskService,
 } from '@douglas-serena/ng-masks';
 import { compareOptions } from '../../utils/compare-options';
-import { getNode, handleTry } from '@douglas-serena/ng-utils';
+import { getNode, handleTry } from './../../../../../ng-utils/src/public-api'; ///'@douglas-serena/ng-utils';
+import { contains } from '@douglas-serena/ng-utils';
 
 const PROVIDER_VALUE_ACCESSOR: Provider = {
   provide: NG_VALUE_ACCESSOR,
@@ -46,6 +47,7 @@ export class NgAutocompleteComponent
   @Input() loading = false;
   @Input() keyLabel: string = '';
   @Input() keyValue: string = '';
+  @Input() filter: boolean = false;
   @Input() showIsEmpty: boolean = true;
   @Input() secondaryControlName: string = '';
   @Input() secondaryKeyValueControl: string = '';
@@ -56,6 +58,10 @@ export class NgAutocompleteComponent
   @Input() debounceTimeEventInput: number = 350;
 
   @Input() set options(value: any[]) {
+    if (value instanceof Array && typeof value[0] === 'string') {
+      this.filter = true;
+    }
+
     this._options = value.reduce((prev, current) => {
       let result = { _label: getNode(current, this.keyLabel) } as any;
       if (this.keyValue) {
@@ -66,8 +72,10 @@ export class NgAutocompleteComponent
       result._root = current;
       return prev.concat(result);
     }, []);
+    this._optionsRoot = this._options;
   }
   _options: { _label: string; _value: any; _root: any }[] = [];
+  _optionsRoot: { _label: string; _value: any; _root: any }[] = [];
 
   @Input() mask: INgIMaskConfig | string;
 
@@ -145,8 +153,13 @@ export class NgAutocompleteComponent
   handleInputDebounce(value?: any) {
     clearTimeout(this.debounceTimeInput);
     this.debounceTimeInput = setTimeout(() => {
-      this.handleSearch(value);
       this.inputDebounce.emit(value);
+      this.handleSearch(value);
+      if (this.filter) {
+        this._options = this._optionsRoot.filter((item) =>
+          contains(item._value, value)
+        );
+      }
     }, this.debounceTimeEventInput);
   }
 

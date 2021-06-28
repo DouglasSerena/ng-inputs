@@ -1,9 +1,12 @@
-<label class="form-label" *ngIf="label" [for]="id">
+<label class="form-label" *ngIf="label && theme !== 'outline'" [for]="id">
   {{ label }}
   <span class="ng-bt-required-symbol" *ngIf="required">*</span>
 </label>
 
-<div class="input-group">
+<div
+  [class.input-group]="!label || (!!label && theme !== 'outline')"
+  [class.form-floating]="!!label && theme === 'outline'"
+>
   <ng-icon
     [icon]="icon?.left"
     className="ng-icon__left"
@@ -19,6 +22,7 @@
     [cols]="cols"
     [required]="required"
     [readonly]="readonly"
+    [ngStyle]="{ height: 36.5 * +rows + 'px' }"
     [formControl]="control"
     [attr.maxlength]="length"
     [class.disabled]="disabled"
@@ -31,11 +35,16 @@
     [class.form-control-lg]="size === 'lg'"
     [class.ng-icon__left]="icon?.left && !icon?.left?.hidden"
     [class.ng-icon__right]="icon?.right && !icon?.right?.hidden"
-    [class.is-valid]="this.control.touched && this.control.valid"
-    [class.is-invalid]="this.control.touched && this.control.invalid"
+    [class.is-valid]="control.touched && control.valid"
+    [class.is-invalid]="control.touched && control.invalid"
   >
   <ng-content></ng-content>
   </textarea>
+
+  <label class="form-label" *ngIf="label && theme === 'outline'" [for]="id">
+    {{ label }}
+    <span class="ng-bt-required-symbol" *ngIf="required">*</span>
+  </label>
 
   <ng-icon
     [icon]="icon?.right"
@@ -54,12 +63,14 @@
     {{ help }}
   </span>
 
-  <span
-    class="ng-bt-helper__text ng-bt-helper__error"
-    *ngIf="control.invalid && control.touched"
-    [ng-messages-errors]="errors"
-    [control]="control"
-  ></span>
+  <ng-container *ngFor="let key of _errorsKeys">
+    <span
+      class="ng-bt-helper__text ng-bt-helper__error"
+      *ngIf="control.touched && control.hasError(key)"
+    >
+      {{ _errors[key] }}
+    </span>
+  </ng-container>
 
   <span class="ng-bt-helper__counter text-muted" *ngIf="length">
     {{ rootRef?.value?.length }}/{{ length }}

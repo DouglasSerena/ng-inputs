@@ -181,8 +181,10 @@ export class NgInputComponent
     );
   }
 
-  @HostListener('input', ['$event.target.value'])
-  handleInput(value?: HTMLElement | string | number, delay = false) {
+  @HostListener('input', ['$event.target.value']) handleInput(
+    value?: HTMLElement | string | number,
+    delay = false
+  ) {
     if (this._maskRef) {
       if (delay) {
         setTimeout(() => {

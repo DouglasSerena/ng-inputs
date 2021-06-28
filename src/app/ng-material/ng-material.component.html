@@ -1,6 +1,6 @@
 <form [formGroup]="form" class="row">
   <div [columns]="{ md: 4 }">
-    <pre><code [highlight]="form.getRawValue() | json"></code></pre>
+    <pre><code [highlight]="form?.getRawValue() | json"></code></pre>
   </div>
 
   <div [columns]="{ md: 8 }">
@@ -13,7 +13,10 @@
       label="field default"
       placeholder="default"
       formControlName="default"
-      [errors]="{ required: 'field is required' }"
+      [errors]="{
+        required: ('2021-06-23' | date: 'yyyy/MM/dd'),
+        isEmail: 'Fill with email valid'
+      }"
     ></ng-input>
 
     <!-- DISABLED -->
@@ -99,6 +102,21 @@
       label="field select"
       formControlName="select"
     ></ng-select>
+    <ng-select
+      id="mat-selectd"
+      firstOptionLabel="--- EMPTY ---"
+      [firstOptionValue]="null"
+      keyLabel="name"
+      keyValue="name"
+      keyCompare="name"
+      [options]="[
+        { value: '', label: 'RAFA' },
+        { value: 'RAFA_', label: 'DOUGLAS' }
+      ]"
+      [columns]="{ md: 6 }"
+      label="field select"
+      formControlName="select"
+    ></ng-select>
 
     <!-- AUTOCOMPLETE -->
     <ng-autocomplete
@@ -112,6 +130,17 @@
       formControlName="autocomplete"
       secondaryKeyValueControl="id"
       secondaryControlName="autocompleteId"
+      [icon]="{ right: { icon: 'add', click: testIcon } }"
+    >
+      Is Empty
+    </ng-autocomplete>
+    <ng-autocomplete
+      id="mat-autocompleted"
+      [columns]="{ md: 6 }"
+      label="field autocomplete"
+      (selectedEmpty)="testIcon()"
+      formControlName="autocomplete"
+      [options]="['DOUGLAS', 'serena']"
       [icon]="{ right: { icon: 'add', click: testIcon } }"
     >
       Is Empty
@@ -150,6 +179,7 @@
 
     <!-- TEXTAREA -->
     <ng-text-area
+      [rows]="1"
       length="1000"
       id="mat-text-area"
       label="field text area"
