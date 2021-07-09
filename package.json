@@ -2,11 +2,9 @@
   "name": "ng-inputs",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
     "material": "gulp publishMaterial",
     "mask": "gulp publishMask",
     "utils": "gulp publishUtils",

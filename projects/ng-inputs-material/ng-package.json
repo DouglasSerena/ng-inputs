@@ -3,9 +3,11 @@
   "dest": "../../dist/ng-inputs-material",
   "allowedNonPeerDependencies": [
     "dayjs",
+    "mapbox-gl",
     "mat-timepicker",
     "@douglas-serena/ng-masks",
-    "@douglas-serena/ng-utils"
+    "@douglas-serena/ng-utils",
+    "@mapbox/mapbox-gl-geocoder"
   ],
   "assets": ["assets"],
   "lib": {

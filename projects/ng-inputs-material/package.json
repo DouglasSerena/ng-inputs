@@ -1,6 +1,6 @@
 {
   "name": "@douglas-serena/ng-inputs-material",
-  "version": "0.0.30",
+  "version": "0.0.31",
   "author": "DouglasSerena <douglas222serena@rede.ulbra.br>",
   "description": "angular entry library",
   "repository": {
@@ -10,12 +10,14 @@
     "url": "https://github.com/DouglasSerena/ng-inputs/issues"
   },
   "homepage": "https://github.com/DouglasSerena/ng-inputs#readme",
-  "main": "src/public-api.ts",
+  "main": "./src/public-api.ts",
   "dependencies": {
     "tslib": "^2.1.0",
     "@douglas-serena/ng-masks": "^0.0.16",
     "@douglas-serena/ng-utils": "^0.1.4",
+    "@mapbox/mapbox-gl-geocoder": "^4.7.1",
     "mat-timepicker": "^5.1.4",
+    "mapbox-gl": "^2.3.1",
     "dayjs": "^1.10.4"
   }
 }
