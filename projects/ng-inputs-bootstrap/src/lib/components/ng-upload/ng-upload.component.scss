@@ -4,20 +4,21 @@
   padding: 20px;
   display: flex;
   position: relative;
+  margin-bottom: 10px;
   border-radius: 4px;
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  background-color: var(--color-background);
+  background-color: var(--color-input-background);
   border: 2px dashed rgba(51, 51, 51, 0.7);
-  input {
+  .form-upload__control {
     top: 0;
     left: 0;
     opacity: 0;
     width: 100%;
     height: 100%;
     position: absolute;
-    &.disabled {
+    &.form-upload__control___disabled {
       touch-action: none;
       pointer-events: none;
     }
@@ -34,23 +35,23 @@
     position: absolute;
     touch-action: none;
     pointer-events: none;
-    background-color: var(--color-background);
+    background-color: var(--color-input-background);
   }
-  &.is-drag-over {
+  &.form-upload__is-drag-over {
     border-color: var(--color-primary);
     &::before {
       opacity: 0.1;
       background-color: var(--color-primary);
     }
   }
-  &.is-invalid {
+  &.form-upload__is-invalid {
     border-color: var(--color-danger);
     &::before {
       opacity: 0.1;
       background-color: var(--color-danger);
     }
   }
-  &.is-valid {
+  &.form-upload__is-valid {
     border-color: var(--color-success);
     &::before {
       opacity: 0.1;
@@ -63,30 +64,27 @@
     flex-direction: column;
     justify-content: center;
 
-    i {
+    .form-upload__content___icon {
       font-size: 75px;
       margin-bottom: 20px;
       opacity: 0.5;
     }
-    button {
+    .form-upload__content___button {
       margin-bottom: 5px;
+      color: var(--color-text-secondary);
+      background-color: var(--color-primary) !important;
     }
-    p {
+    .form-upload__content___description {
       margin: 0;
       font-size: 16px;
       font-weight: 500;
       opacity: 0.9;
     }
-    .ng-bt-helper,
-    .ng-bt-helper .ng-bt-helper__text {
+    .form-upload__content___helper,
+    .form-upload__content___helper .ng-bt-helper__text {
       display: flex;
       align-items: center;
       justify-content: center;
     }
   }
-}
-
-.btn-upload {
-  width: 100%;
-  margin: 10px 0 20px;
 }

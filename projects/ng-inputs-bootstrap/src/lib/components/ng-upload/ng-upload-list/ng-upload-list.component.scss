@@ -1,0 +1,52 @@
+.list-files {
+  padding: 0;
+  list-style: none;
+  .list-files-item {
+    height: 70px;
+    display: flex;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background-color: var(--color-input-background);
+    .list-file-item__image___container {
+      height: 4.375rem;
+      width: 100%;
+      max-width: 105px;
+      overflow: hidden;
+      border-right: 1px solid rgba(0, 0, 0, 0.12);
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+      .list-files-item__image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+      }
+      @media (max-width: 960px) {
+        display: none;
+      }
+    }
+
+    .list-files-item__info {
+      width: 100%;
+      margin-left: 15px;
+      overflow: hidden;
+      .list-files-item__info___name {
+        margin: 0;
+        font-size: 18px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      .list-files-item__info___description {
+        margin: 0;
+        opacity: 0.7;
+        font-size: 14px;
+      }
+    }
+    .list-files-item__button {
+      margin-right: 10px;
+    }
+  }
+}

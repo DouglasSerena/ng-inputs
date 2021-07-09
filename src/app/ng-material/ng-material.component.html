@@ -12,7 +12,6 @@
       [columns]="{ md: 4 }"
       label="field default"
       placeholder="default"
-      formControlName="default"
       [errors]="{
         required: ('2021-06-23' | date: 'yyyy/MM/dd'),
         isEmail: 'Fill with email valid'
@@ -68,11 +67,20 @@
       formControlName="amount"
     ></ng-input>
 
+    <!-- TIME -->
+    <ng-time
+      label="field mask"
+      [columns]="{ md: 4 }"
+      formControlName="time"
+      maxTime="12:00:00"
+      minTime="5:00:00"
+    ></ng-time>
+
     <!-- MASK -->
     <ng-input
       id="mat-CPF_CNPJ"
       type="CPF_CNPJ"
-      [columns]="{ md: 6 }"
+      [columns]="{ md: 4 }"
       label="field mask"
       placeholder="cpf cnpj"
       formControlName="mask"
@@ -82,7 +90,7 @@
     <ng-input
       id="mat-date"
       type="date"
-      [columns]="{ md: 6 }"
+      [columns]="{ md: 4 }"
       [autoFillDate]="true"
       label="field date auto fill"
       placeholder="date"
@@ -94,6 +102,7 @@
       id="mat-select"
       firstOptionLabel="--- EMPTY ---"
       [firstOptionValue]="null"
+      [readonly]="true"
       keyLabel="name"
       keyValue="name"
       keyCompare="name"
@@ -102,6 +111,7 @@
       label="field select"
       formControlName="select"
     ></ng-select>
+
     <ng-select
       id="mat-selectd"
       firstOptionLabel="--- EMPTY ---"
@@ -110,13 +120,16 @@
       keyValue="name"
       keyCompare="name"
       [options]="[
-        { value: '', label: 'RAFA' },
+        { value: '', label: 'RAFA', disabled: true },
         { value: 'RAFA_', label: 'DOUGLAS' }
       ]"
       [columns]="{ md: 6 }"
       label="field select"
       formControlName="select"
     ></ng-select>
+    <!-- formControlName="select" -->
+
+    <ng-maps formControlName="default" [columns]="{ md: 12 }"></ng-maps>
 
     <!-- AUTOCOMPLETE -->
     <ng-autocomplete
@@ -178,6 +191,7 @@
     ></ng-input>
 
     <!-- TEXTAREA -->
+
     <ng-text-area
       [rows]="1"
       length="1000"
@@ -186,6 +200,19 @@
       formControlName="textArea"
       [columns]="{ default: 12 }"
     ></ng-text-area>
+
+    <!-- FILE -->
+    <ng-upload
+      id="bt-fill"
+      formControlName="file"
+      [errors]="{
+        allowExtensions:
+          'A imagem ' +
+          form.controls?.file.getError('allowExtensions')?.invalidFile
+            .filename +
+          ' ver ser um png'
+      }"
+    ></ng-upload>
 
     <div>
       <ng-checkbox class="mr-2" formControlName="checkbox">

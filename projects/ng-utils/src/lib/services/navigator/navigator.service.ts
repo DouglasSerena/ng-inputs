@@ -13,7 +13,7 @@ import { filter } from 'rxjs/operators';
 import { CommonValidation } from '../../validations/common.validation';
 
 @Injectable({ providedIn: 'root' })
-export class NgNavigatorService {
+export class NavigatorService {
   navigationStart = new EventEmitter<NavigationStart>();
   routesRecognized = new EventEmitter<RoutesRecognized>();
   guardsCheckStart = new EventEmitter<GuardsCheckStart>();

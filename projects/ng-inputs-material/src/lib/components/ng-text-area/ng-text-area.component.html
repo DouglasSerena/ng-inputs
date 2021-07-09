@@ -30,16 +30,15 @@
     (blur)="handleBlur($event)"
     (focus)="handleFocus($event)"
     [attr.placeholder]="_placeholder"
-    [tabIndex]="control.disabled ? -1 : 1"
+    [tabIndex]="control?.disabled ? -1 : 0"
   >
-    <ng-content></ng-content>
   </textarea>
 
   <!-- SUFFIX -->
   <span matSuffix *ngIf="!!suffix">{{ suffix }}</span>
 
   <!-- DICA -->
-  <mat-hint *ngIf="help && !(control.touched && control.invalid)">{{
+  <mat-hint *ngIf="help && !(control?.touched && control?.invalid)">{{
     help
   }}</mat-hint>
 
@@ -51,7 +50,7 @@
   <!-- MENSAGEM DE ERRO -->
   <mat-error>
     <ng-container *ngFor="let key of _errorsKeys">
-      <span *ngIf="control.touched && control.hasError(key)">
+      <span *ngIf="control?.touched && control?.hasError(key)">
         {{ _errors[key] }}
       </span>
     </ng-container>

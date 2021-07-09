@@ -74,10 +74,12 @@ export class NgMaskPercentService implements INgMaskService {
         return this._validRequired(this._instanceRef.formatToNumber());
       },
       update(value) {
-        this._inputRef.value = NgMaskPercentService.prototype.format(
-          value,
-          this._config
-        );
+        setTimeout(() => {
+          this._inputRef.value = NgMaskPercentService.prototype.format(
+            value,
+            this._config
+          );
+        });
       },
     } as IMaskServiceReturn;
   }

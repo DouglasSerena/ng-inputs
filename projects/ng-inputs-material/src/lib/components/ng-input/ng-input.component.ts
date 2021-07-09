@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   Component,
+  EventEmitter,
   forwardRef,
   HostListener,
   Input,
@@ -27,7 +28,9 @@ import {
   NgMaskCurrencyService,
   NgMaskPercentService,
   NgMaskService,
-} from '@douglas-serena/ng-masks';
+  INPUT_TYPE,
+} from '@douglas-serena/ng-masks'; ///'./../../../../../ng-masks/src/public-api';
+import { Output } from '@angular/core';
 
 const PROVIDER_VALUE_ACCESSOR: Provider = {
   provide: NG_VALUE_ACCESSOR,
@@ -44,6 +47,16 @@ export class NgInputComponent
   extends ControlBase
   implements OnInit, AfterViewInit, ControlValueAccessor
 {
+  @Input() set value(value: any) {
+    if (!!value) {
+      this._valueWrite = value;
+    }
+  }
+  @Output() valueChange = new EventEmitter();
+
+  @Input() inputmode = 'text';
+  @Input() autocomplete = 'on';
+  @Input() autocapitalize = 'on';
   @Input() amount: INgMaskConfig;
   @Input() percent: INgMaskConfig;
   @Input() currency: INgMaskConfig;
@@ -53,6 +66,7 @@ export class NgInputComponent
   @Input() date: Date | string = new Date();
   @Input() autoFillDate: boolean = false;
 
+  _valueWrite: any;
   _maskRef: IMaskServiceReturn;
 
   constructor(
@@ -80,6 +94,7 @@ export class NgInputComponent
     const configGlobal = this.ngConfig.global?.input;
 
     if (this.type === 'currency') {
+      this.inputmode = 'numeric';
       this.currency = Object.assign({}, configGlobal?.currency, this.currency);
 
       if (this.currency?.validator === undefined) {
@@ -94,8 +109,8 @@ export class NgInputComponent
         this.currency,
         this.renderer2
       );
-      this.type = 'text';
     } else if (this.type === 'percent') {
+      this.inputmode = 'numeric';
       this.percent = Object.assign({}, configGlobal?.percent, this.percent);
 
       if (this.percent?.validator === undefined) {
@@ -110,8 +125,8 @@ export class NgInputComponent
         this.percent,
         this.renderer2
       );
-      this.type = 'text';
     } else if (this.type === 'amount') {
+      this.inputmode = 'numeric';
       this.amount = Object.assign({}, configGlobal?.amount, this.amount);
 
       if (this.amount?.validator === undefined) {
@@ -126,7 +141,6 @@ export class NgInputComponent
         this.amount,
         this.renderer2
       );
-      this.type = 'text';
     } else {
       const type = this.type.toUpperCase();
 
@@ -156,11 +170,11 @@ export class NgInputComponent
           this.mask,
           this.renderer2
         );
-
-        if (MASKS.typesCustom.includes(type)) {
-          this.type = 'text';
-        }
       }
+    }
+
+    if (!INPUT_TYPE.includes(this.type)) {
+      this.type = 'text';
     }
 
     if (
@@ -169,8 +183,11 @@ export class NgInputComponent
     ) {
       this.rootRef.nativeElement.value = this.formatDate(this.date);
     }
+
+    this.writeValue(this._valueWrite);
+
     this.rootRef.nativeElement.blur();
-    this.control.markAsUntouched();
+    this.control?.markAsUntouched();
     this.changeDetectorRef.detectChanges();
   }
 
@@ -187,12 +204,15 @@ export class NgInputComponent
       if (delay) {
         setTimeout(() => {
           this.handleChange(this._maskRef.unmaskedValue());
+          this.valueChange.emit(this._maskRef.unmaskedValue());
         });
       } else {
         this.handleChange(this._maskRef.unmaskedValue());
+        this.valueChange.emit(this._maskRef.unmaskedValue());
       }
     } else {
       this.handleChange(value);
+      this.valueChange.emit(value);
     }
   }
 
@@ -211,9 +231,7 @@ export class NgInputComponent
       }
       this.handleInput(value, true);
     } else {
-      setTimeout(() => {
-        this.writeValue(value);
-      }, 10);
+      this._valueWrite = value;
     }
   };
 }

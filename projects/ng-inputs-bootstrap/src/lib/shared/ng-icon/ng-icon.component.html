@@ -3,7 +3,7 @@
   [disabled]="_icon?.disabled"
   *ngIf="_icon && !_icon?.hidden"
   (click)="handleClick($event)"
-  [tabIndex]="_icon?.disabled || !_icon?.click ? -1 : 1"
+  [tabIndex]="_icon?.disabled || !_icon?.click ? -1 : 0"
   [class.shadow-focus]="!_icon?.disabled && _icon?.click"
   [class.ng-bt-icon__clickable]="!_icon?.disabled && _icon?.click"
   [class]="'ng-bt-icon input-group-text ' + _icon?.className + ' ' + className"

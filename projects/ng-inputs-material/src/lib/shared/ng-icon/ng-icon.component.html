@@ -4,7 +4,7 @@
   [disabled]="_icon.disabled"
   *ngIf="_icon && !_icon?.hidden"
   (click)="handleClick($event)"
-  [tabIndex]="_icon.disabled || !_icon.click ? -1 : 1"
+  [tabIndex]="_icon.disabled || !_icon.click ? -1 : 0"
   [class]="'ng-mat-icon ' + _icon.className + ' ' + className"
   [class.ng-icon__clickable]="!_icon.disabled && _icon.click"
 >

@@ -1,9 +1,12 @@
 import {
   ChangeDetectorRef,
   Component,
+  EventEmitter,
   forwardRef,
+  HostListener,
   Input,
   OnInit,
+  Output,
   Provider,
   Renderer2,
   SkipSelf,
@@ -31,6 +34,13 @@ export class NgTextAreaComponent
   extends ControlBase
   implements OnInit, ControlValueAccessor
 {
+  @Input() set value(value: any) {
+    if (!!value) {
+      this.writeValue(value);
+    }
+  }
+  @Output() valueChange = new EventEmitter();
+
   @Input() rows: number | string = 3;
   @Input() cols: number | string = 3;
   @Input() length: string | number;
@@ -54,4 +64,21 @@ export class NgTextAreaComponent
     this.control?.markAsUntouched();
     this.changeDetectorRef.detectChanges();
   }
+
+  @HostListener('input', ['$event.target.value'])
+  handleInput(value?: HTMLElement | string | number, delay = false) {
+    this.handleChange(value);
+    this.valueChange.emit(value);
+  }
+
+  writeValue = (value: number | string) => {
+    if (this.rootRef) {
+      this.rootRef.nativeElement.value = `${value?.toString()}`;
+      this.handleInput(value);
+    } else {
+      setTimeout(() => {
+        this.writeValue(value);
+      }, 10);
+    }
+  };
 }

@@ -1,0 +1,18 @@
+<ul class="list-files">
+  <li class="list-files-item" *ngFor="let file of files">
+    <div class="list-file-item__image___container">
+      <img class="list-files-item__image" [src]="file.src" [alt]="file.name" />
+    </div>
+    <div class="list-files-item__info">
+      <h4 class="list-files-item__info___name" [title]="file.name">
+        {{ file.name }}
+      </h4>
+      <p class="list-files-item__info___description">
+        {{ file.type }} - {{ file.size / 1024 }} KB
+      </p>
+    </div>
+    <button class="btn list-files-item__button">
+      <i class="fas fa-times"></i>
+    </button>
+  </li>
+</ul>

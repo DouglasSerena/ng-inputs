@@ -6,7 +6,7 @@ import { INgIconConfig } from '../../interfaces/config/ng-icon-config.interface'
   templateUrl: './ng-icon.component.html',
 })
 export class NgIconComponent implements OnInit {
-  @Input() set icon(icon: INgIconConfig) {
+  @Input() set icon(icon: INgIconConfig | undefined) {
     if (icon) {
       this._icon = Object.assign({}, icon);
     }

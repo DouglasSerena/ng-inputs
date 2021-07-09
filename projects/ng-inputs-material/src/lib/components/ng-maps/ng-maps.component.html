@@ -1,0 +1,21 @@
+<span #markerRef>
+  <mat-icon
+    [color]="marker?.color || 'primary'"
+    [ngStyle]="{ transform: 'scale(1.5)' }"
+  >
+    {{ marker?.icon || "fmd_good" }}
+  </mat-icon>
+</span>
+
+<div class="map-container">
+  <div id="map" class="map"></div>
+  <button
+    color=""
+    mat-mini-fab
+    type="button"
+    class="map-current-location"
+    (click)="handleMoveByCurrentLocation()"
+  >
+    <mat-icon>my_location</mat-icon>
+  </button>
+</div>

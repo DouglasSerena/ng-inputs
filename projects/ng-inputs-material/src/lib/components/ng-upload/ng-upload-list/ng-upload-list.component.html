@@ -1,0 +1,18 @@
+<ul class="list-files">
+  <li class="list-files__item" *ngFor="let file of files.$files">
+    <div class="item__image___container" *ngIf="!!file.type.match('image')">
+      <img class="item__image" [src]="file.src" [alt]="file.name" />
+    </div>
+    <div class="item__info">
+      <h4 class="item__info___name" [title]="file.name">
+        {{ file.name }}
+      </h4>
+      <p class="item__info___description">
+        {{ file.extension }} - {{ file.size }} KB
+      </p>
+    </div>
+    <button mat-icon-button class="item__button">
+      <mat-icon>close</mat-icon>
+    </button>
+  </li>
+</ul>

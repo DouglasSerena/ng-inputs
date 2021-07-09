@@ -21,6 +21,10 @@ export type TypeFields = 'select' | 'input' | 'textArea' | 'autocomplete';
 export interface NgConfig {
   global?: {
     theme?: INgTheme;
+    upload?: {
+      icon?: string;
+      label?: string
+    };
     select?: {
       theme?: INgTheme;
       icon?: NgIconPositionsConfig;

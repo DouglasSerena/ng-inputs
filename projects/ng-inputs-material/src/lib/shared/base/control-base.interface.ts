@@ -1,36 +1,37 @@
 import { ElementRef, EventEmitter } from '@angular/core';
 import { FormControl, FormControlDirective } from '@angular/forms';
+import { MatSelect } from '@angular/material/select';
 import {
   INgIconConfig,
   NgIconPositionsConfig,
 } from '../../interfaces/config/ng-icon-config.interface';
 
 export interface NgControlBase {
-  formControlDirective: FormControlDirective;
-  rootRef: ElementRef<HTMLInputElement>;
+  formControlDirective?: FormControlDirective;
+  rootRef?: ElementRef<HTMLInputElement> | MatSelect;
 
-  formControl: FormControl;
-  formControlName: string;
+  formControl?: FormControl;
+  formControlName?: string;
 
-  id: string;
+  id?: string;
   label: string;
   type: string;
-  prefix: string;
-  suffix: string;
+  prefix?: string;
+  suffix?: string;
   readonly: boolean;
   disabled: boolean;
   labelFixed: boolean;
   required: boolean | null;
   _placeholder?: string | null;
 
-  help: string;
+  help?: string;
   color: string;
-  icon: NgIconPositionsConfig;
+  icon?: NgIconPositionsConfig;
   size: 'lg' | 'md' | 'sm';
   theme: 'outline' | 'fill' | 'standard' | 'legacy';
 
-  _errors: { [key: string]: string };
-  _errorsKeys: string[];
+  _errors?: { [key: string]: string };
+  _errorsKeys?: string[];
 
   handleClickIcon: (
     prop: { event: Event; icon: INgIconConfig | undefined },

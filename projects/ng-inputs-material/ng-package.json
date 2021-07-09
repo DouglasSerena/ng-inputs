@@ -3,6 +3,7 @@
   "dest": "../../dist/ng-inputs-material",
   "allowedNonPeerDependencies": [
     "dayjs",
+    "mat-timepicker",
     "@douglas-serena/ng-masks",
     "@douglas-serena/ng-utils"
   ],

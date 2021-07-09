@@ -11,8 +11,7 @@ export class NgMaskPipe implements PipeTransform {
 
   transform(value: any, mask?: INgIMaskConfig | string): any {
     if (typeof mask === 'string') {
-      mask = mask.toUpperCase();
-      if (MASKS.typesCustom.includes(mask)) {
+      if (MASKS.typesCustom.includes(mask.toUpperCase())) {
         mask = MASKS[mask];
       }
     }

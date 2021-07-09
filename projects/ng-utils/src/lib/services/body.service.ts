@@ -2,7 +2,13 @@ import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class BodyService {
-  appRoot = document.body.querySelector<HTMLElement>('app-root');
+  private _appRoot = document.querySelector<HTMLElement>('app-root');
+  get appRoot() {
+    if (!this._appRoot) {
+      document.querySelector<HTMLElement>('app-root');
+    }
+    return this._appRoot;
+  }
   appRootDisplay: string;
   body = document.body;
   head = document.head;

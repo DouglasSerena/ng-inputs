@@ -5,7 +5,6 @@ import {
   TypeFields,
   INgConfigSelect,
 } from '../interfaces/config/ng-config.interface';
-import { NgIconPositionsConfig } from '../interfaces/config/ng-icon-config.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +12,18 @@ import { NgIconPositionsConfig } from '../interfaces/config/ng-icon-config.inter
 export class NgConfigService {
   private _config: NgConfig = {
     global: {
+      upload: {
+        icon: 'file_upload',
+        label: 'ou arraste um arquivo até aqui',
+      },
+      time: {
+        icon: {
+          right: {
+            icon: 'access_time',
+            click: () => {},
+          },
+        },
+      },
       select: {},
       textArea: {},
       autocomplete: {
@@ -52,11 +63,17 @@ export class NgConfigService {
   get global() {
     return this.config.global;
   }
+  get upload() {
+    return this.global?.upload;
+  }
   get input() {
     return this.global?.input;
   }
   get select() {
     return this.global?.select;
+  }
+  get time() {
+    return this.global?.time;
   }
   get textarea() {
     return this.global?.textArea;
@@ -75,6 +92,10 @@ export class NgConfigService {
     return this.types('select') as INgConfigSelect;
   }
 
+  get typesTime(): INgConfigSelect {
+    return this.types('time') as INgConfigSelect;
+  }
+
   get typesInput(): INgConfigInput {
     return this.types('input') as INgConfigInput;
   }
@@ -87,7 +108,11 @@ export class NgConfigService {
     return this.types('autocomplete') as INgConfigInput;
   }
 
-  types(field: TypeFields): INgConfigSelect | INgConfigInput {
-    return this.global?.[field]?.types as INgConfigSelect | INgConfigInput;
+  types(field: TypeFields): {
+    [key: string]: INgConfigSelect | INgConfigInput;
+  } {
+    return this.global?.[field]?.types as {
+      [key: string]: INgConfigSelect | INgConfigInput;
+    };
   }
 }

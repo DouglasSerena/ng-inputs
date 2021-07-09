@@ -45,10 +45,12 @@ export class NgMaskService implements INgMaskService {
         return this._validRequired(this._instanceRef.unmaskedValue);
       },
       update(value) {
-        this._inputRef.value = NgMaskService.prototype.format(
-          value,
-          this._config
-        );
+        setTimeout(() => {
+          this._inputRef.value = NgMaskService.prototype.format(
+            value,
+            this._config
+          );
+        });
       },
     } as IMaskServiceReturn;
   }

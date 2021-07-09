@@ -20,6 +20,7 @@ import {
   NG_VALUE_ACCESSOR,
   SelectControlValueAccessor,
 } from '@angular/forms';
+import { MatSelect } from '@angular/material/select';
 import { getNode } from '@douglas-serena/ng-utils';
 import { NgConfigService } from '../../config/ng-config.service';
 import {
@@ -55,10 +56,21 @@ export class NgSelectComponent
 {
   @ViewChild(FormControlDirective, { static: true })
   formControlDirective: FormControlDirective;
-  @ViewChild('rootRef') rootRef: ElementRef<HTMLInputElement>;
+  @ViewChild('rootRef') rootRef: MatSelect;
 
   @Input() formControl: FormControl;
   @Input() formControlName: string;
+
+  @Output() selectChange = new EventEmitter();
+  @Input() set select(value: any) {
+    if (!!value && this.rootRef) {
+      this.rootRef.writeValue(value);
+    } else {
+      setTimeout(() => {
+        this.select = value;
+      }, 10);
+    }
+  }
 
   @Input() id: string;
   @Input() label = '';
@@ -90,6 +102,11 @@ export class NgSelectComponent
     this._options = options.map((option) => {
       let label: string = '';
       let value: string = '';
+      let disabled: boolean = false;
+
+      if (option.disabled !== undefined) {
+        disabled = option.disabled;
+      }
 
       if (option.value !== undefined && option.label !== undefined) {
         label = option.label;
@@ -112,6 +129,7 @@ export class NgSelectComponent
         _label: label,
         _value: value,
         _root: option,
+        _disabled: disabled,
       };
       return option;
     });
@@ -120,9 +138,9 @@ export class NgSelectComponent
 
   @Input() set placeholder(text: string | null) {
     this._placeholder = text;
-    if (!!text && this.rootRef?.nativeElement) {
+    if (!!text && this.rootRef?._elementRef?.nativeElement) {
       this.renderer2.setAttribute(
-        this.rootRef.nativeElement,
+        this.rootRef._elementRef.nativeElement,
         'placeholder',
         text
       );
@@ -139,9 +157,16 @@ export class NgSelectComponent
   _errors: { [key: string]: string };
   _errorsKeys: string[];
 
-  get control(): FormControl {
-    return (this.formControl ||
-      this.controlContainer?.control?.get(this.formControlName)) as FormControl;
+  get control(): FormControl | null {
+    if (this.formControlName) {
+      return this.controlContainer?.control?.get(
+        this.formControlName
+      ) as FormControl;
+    }
+    if (!this.formControl) {
+      this.formControl = new FormControl();
+    }
+    return this.formControl;
   }
 
   constructor(
@@ -159,7 +184,7 @@ export class NgSelectComponent
       this.id = this.formControlName;
     }
 
-    if (this.required === null) {
+    if (this.required === null && this.control) {
       const value = this.control.value;
       this.control.reset();
       this.required = !!this.control.getError('required');
@@ -226,9 +251,8 @@ export class NgSelectComponent
     this.focus.emit(event);
   }
 
-  @Output() selected = new EventEmitter();
   handleSelect(option: any) {
-    this.selected.emit(option.value);
+    this.selectChange.emit(option.value);
   }
 
   handleInput(value?: HTMLElement | string | number) {

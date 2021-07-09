@@ -5,10 +5,10 @@ import { BodyService } from './body.service';
   imports: [],
   providers: [BodyService],
 })
-export class NgServicesModule {
+export class ServicesModule {
   static forRoot(): ModuleWithProviders<any> {
     return {
-      ngModule: NgServicesModule,
+      ngModule: ServicesModule,
       providers: [BodyService],
     };
   }

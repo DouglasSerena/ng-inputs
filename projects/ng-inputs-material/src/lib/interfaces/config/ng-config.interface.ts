@@ -16,11 +16,30 @@ export interface INgConfigSelect {
   icon?: NgIconPositionsConfig;
 }
 
-export type TypeFields = 'select' | 'input' | 'textArea' | 'autocomplete';
+export type TypeFields =
+  | 'select'
+  | 'input'
+  | 'textArea'
+  | 'autocomplete'
+  | 'time';
 
 export interface NgConfig {
   global?: {
     theme?: INgTheme;
+    maps?: {
+      token: string;
+    };
+    upload?: {
+      icon?: string;
+      label?: string;
+    };
+    time?: {
+      theme?: INgTheme;
+      icon?: NgIconPositionsConfig;
+      types?: {
+        [key: string]: INgConfigSelect;
+      };
+    };
     select?: {
       theme?: INgTheme;
       icon?: NgIconPositionsConfig;

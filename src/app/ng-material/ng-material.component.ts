@@ -9,6 +9,7 @@ import { TestService } from '../test.service';
   styleUrls: ['./ng-material.component.scss'],
 })
 export class NgMaterialComponent implements OnInit {
+  default: string = 'RAFA_';
   form?: FormGroup;
 
   constructor(
@@ -33,34 +34,45 @@ export class NgMaterialComponent implements OnInit {
       },
     };
     this.form = this.formBuilder.group({
-      file: [''],
-      default: ['', [CommonValidation.pattern.isEmail, Validators.required]],
+      file: ['', [CommonValidation.files.isAllowExtensions(['png'])]],
+      default: [
+        {
+          longitude: 0,
+          latitude: 45,
+        },
+        [CommonValidation.pattern.isEmail, Validators.required],
+      ],
       disabled: [{ value: 'field disabled', disabled: true }],
       readonly: ['filed readonly'],
-      currency: [
-        10.5,
-        [CommonValidation.number.isBetween({ start: 5, end: 10 })],
-      ],
+      currency: ['', []],
       percent: [250.55],
       amount: [2.5],
       mask: ['54.546.018/0001-12', [CommonValidation.docs.isCpfOrCnpj]],
       date: ['', [CommonValidation.date.isBirchDay()]],
-      select: ['RAFA_'],
+      select: [{ value: 'RAFA_' }],
       autocomplete: ['', [Validators.required]],
       autocompleteId: [''],
       password: [''],
-      tel: ['(12) 9 1231-2312', [CommonValidation.pattern.isPhoneBr]],
+      time: ['2021-06-25'],
+      tel: [
+        '',
+        [CommonValidation.control('default', CommonValidation.isEqual)],
+      ],
       zipCode: ['90000000'],
-      textArea: [''],
+      textArea: ['daw'],
       switch: [true],
       checkbox: [false],
       indeterminate: [true],
-      fill: [''],
-      outline: [''],
-      standard: [''],
-      legacy: [''],
+      fill: ['', [Validators.required]],
+      outline: ['', [Validators.required]],
+      standard: ['', [Validators.required]],
+      legacy: ['', [Validators.required]],
     });
-    await debounce(5000);
+
+    await debounce(1000);
+    this.form.controls.currency.setValue('213123');
+    this.form.controls.amount.setValue('213123');
+    this.form.controls.percent.setValue('213123');
   }
 
   option: any = [

@@ -2,7 +2,7 @@ var exec = require("child_process").exec;
 
 exports.publishInputs = function (cb) {
   exec(
-    "yarn build ng-inputs --prod && cd dist/ng-inputs && npm publish --access public",
+    "yarn build ng-inputs && cd dist/ng-inputs && npm publish --access public",
     function (err, stdout, stderr) {
       console.log(stdout);
       console.log(stderr);
@@ -12,7 +12,7 @@ exports.publishInputs = function (cb) {
 };
 exports.publishMasks = function (cb) {
   exec(
-    "yarn build ng-masks --prod && cd dist/ng-masks && npm publish --access public",
+    "yarn build ng-masks && cd dist/ng-masks && npm publish --access public",
     function (err, stdout, stderr) {
       console.log(stdout);
       console.log(stderr);
@@ -22,7 +22,7 @@ exports.publishMasks = function (cb) {
 };
 exports.publishMaterial = function (cb) {
   exec(
-    "yarn build ng-inputs-material --prod && cd dist/ng-inputs-material && npm publish --access public",
+    "yarn build ng-inputs-material && cd dist/ng-inputs-material && npm publish --access public",
     function (err, stdout, stderr) {
       console.log(stdout);
       console.log(stderr);
@@ -32,7 +32,7 @@ exports.publishMaterial = function (cb) {
 };
 exports.publishBootstrap = function (cb) {
   exec(
-    "yarn build ng-inputs-bootstrap --prod && cd dist/ng-inputs-bootstrap && npm publish --access public",
+    "yarn build ng-inputs-bootstrap && cd dist/ng-inputs-bootstrap && npm publish --access public",
     function (err, stdout, stderr) {
       console.log(stdout);
       console.log(stderr);
@@ -42,7 +42,7 @@ exports.publishBootstrap = function (cb) {
 };
 exports.publishUtils = function (cb) {
   exec(
-    "yarn build ng-utils --prod && cd dist/ng-utils && npm publish --access public",
+    "yarn build ng-utils && cd dist/ng-utils && npm publish --access public",
     function (err, stdout, stderr) {
       console.log(stdout);
       console.log(stderr);

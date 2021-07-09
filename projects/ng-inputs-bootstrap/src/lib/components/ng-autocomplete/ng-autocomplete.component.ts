@@ -22,6 +22,7 @@ import { ControlBase } from '../../shared/base/control-base.template';
 import {
   IMaskServiceReturn,
   INgIMaskConfig,
+  INPUT_TYPE,
   MASKS,
   NgMaskService,
 } from '@douglas-serena/ng-masks';
@@ -128,10 +129,10 @@ export class NgAutocompleteComponent
         this.mask,
         this.renderer2
       );
+    }
 
-      if (MASKS.typesCustom.includes(type)) {
-        this.type = 'text';
-      }
+    if (!INPUT_TYPE.includes(this.type)) {
+      this.type = 'text';
     }
 
     this.rootRef.nativeElement.blur();

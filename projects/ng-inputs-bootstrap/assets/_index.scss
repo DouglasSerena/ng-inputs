@@ -40,12 +40,12 @@ ng-checkbox {
   width: 100%;
   border-radius: 0.25rem !important;
   color: var(--color-text) !important;
-  background-color: var(--color-background) !important;
+  background-color: var(--color-input-background) !important;
   &.readonly {
-    background-color: var(--color-background-readonly) !important;
+    background-color: var(--color-input-background-readonly) !important;
   }
   &.disabled {
-    background-color: var(--color-background-disabled) !important;
+    background-color: var(--color-input-background-disabled) !important;
     touch-action: none;
     pointer-events: none;
   }
@@ -73,7 +73,7 @@ ng-checkbox {
 }
 
 .ng-bt-icon {
-  background: var(--color-background) !important;
+  background: var(--color-input-background) !important;
   border-radius: 0 !important;
   cursor: text !important;
   transition: 250ms;
@@ -135,7 +135,7 @@ ng-icon {
   width: 100%;
   overflow-y: auto;
   max-height: 300px;
-  background-color: var(--color-background) !important;
+  background-color: var(--color-input-background) !important;
   .ng-bt-dropdown-item {
     transition: 150ms;
     padding: 0.8rem 1rem;

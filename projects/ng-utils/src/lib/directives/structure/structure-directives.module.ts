@@ -7,4 +7,4 @@ import { ColumnsDirective } from './columns.directive';
   declarations: [ColumnsDirective],
   exports: [ColumnsDirective],
 })
-export class NgStructureDirectivesModule {}
+export class StructureDirectivesModule {}

@@ -78,10 +78,12 @@ export class NgMaskAmountService implements INgMaskService {
         );
       },
       update(value) {
-        this._inputRef.value = NgMaskAmountService.prototype._formatAmount(
-          value,
-          this._config
-        ).valueFormat;
+        setTimeout(() => {
+          this._inputRef.value = NgMaskAmountService.prototype._formatAmount(
+            value,
+            this._config
+          ).valueFormat;
+        });
       },
     } as IMaskServiceReturn;
   }

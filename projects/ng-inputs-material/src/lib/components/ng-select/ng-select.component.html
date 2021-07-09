@@ -2,6 +2,7 @@
   [color]="color"
   [appearance]="theme"
   [hideRequiredMarker]="!required"
+  [class.mat-form-field-readonly]="readonly"
   [floatLabel]="labelFixed ? 'always' : 'auto'"
 >
   <!-- LABEL -->
@@ -19,11 +20,11 @@
   <mat-select
     #rootRef
     [id]="id"
-    [required]="!!required"
     [multiple]="multiple"
+    [required]="!!required"
     [formControl]="control"
     (opened)="handleFocus($event)"
-    [tabIndex]="control.disabled ? -1 : 1"
+    [tabIndex]="control?.disabled || readonly ? -1 : 0"
     [compareWith]="handleCompareWithBind"
     (selectionChange)="handleSelect($event)"
   >
@@ -32,7 +33,11 @@
     }}</mat-option>
 
     <ng-container *ngIf="position === 'start'">
-      <mat-option *ngFor="let option of _options" [value]="option._value">
+      <mat-option
+        [value]="option._value"
+        [disabled]="option._disabled"
+        *ngFor="let option of _options"
+      >
         {{ option._label }}
       </mat-option>
     </ng-container>
@@ -40,7 +45,11 @@
     <ng-content></ng-content>
 
     <ng-container *ngIf="position === 'end'">
-      <mat-option *ngFor="let option of _options" [value]="option._value">
+      <mat-option
+        [value]="option._value"
+        [disabled]="option._disabled"
+        *ngFor="let option of _options"
+      >
         {{ option._label }}
       </mat-option>
     </ng-container>
@@ -50,14 +59,14 @@
   <span matSuffix *ngIf="!!suffix">{{ suffix }}</span>
 
   <!-- DICA -->
-  <mat-hint *ngIf="help && !(control.touched && control.invalid)">{{
+  <mat-hint *ngIf="help && !(control?.touched && control?.invalid)">{{
     help
   }}</mat-hint>
 
   <!-- MENSAGEM DE ERRO -->
   <mat-error>
     <ng-container *ngFor="let key of _errorsKeys">
-      <span *ngIf="control.touched && control.hasError(key)">
+      <span *ngIf="control?.touched && control?.hasError(key)">
         {{ _errors[key] }}
       </span>
     </ng-container>

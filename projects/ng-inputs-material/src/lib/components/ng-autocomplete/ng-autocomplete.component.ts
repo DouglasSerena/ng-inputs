@@ -22,12 +22,12 @@ import { ControlBase } from '../../shared/base/control-base.template';
 import {
   IMaskServiceReturn,
   INgIMaskConfig,
+  INPUT_TYPE,
   MASKS,
   NgMaskService,
 } from '@douglas-serena/ng-masks';
 import { compareOptions } from '../../utils/compare-options';
-import { getNode, handleTry } from './../../../../../ng-utils/src/public-api'; ///'@douglas-serena/ng-utils';
-import { contains } from '@douglas-serena/ng-utils';
+import { contains, getNode, handleTry } from '@douglas-serena/ng-utils';
 
 const PROVIDER_VALUE_ACCESSOR: Provider = {
   provide: NG_VALUE_ACCESSOR,
@@ -74,8 +74,14 @@ export class NgAutocompleteComponent
     }, []);
     this._optionsRoot = this._options;
   }
-  _options: { _label: string; _value: any; _root: any }[] = [];
-  _optionsRoot: { _label: string; _value: any; _root: any }[] = [];
+  _options: { _label: string; _value: any; _root: any; _disabled: boolean }[] =
+    [];
+  _optionsRoot: {
+    _label: string;
+    _value: any;
+    _root: any;
+    _disabled: boolean;
+  }[] = [];
 
   @Input() mask: INgIMaskConfig | string;
 
@@ -129,10 +135,10 @@ export class NgAutocompleteComponent
         this.mask,
         this.renderer2
       );
+    }
 
-      if (MASKS.typesCustom.includes(type)) {
-        this.type = 'text';
-      }
+    if (!INPUT_TYPE.includes(this.type)) {
+      this.type = 'text';
     }
 
     this.rootRef.nativeElement.blur();

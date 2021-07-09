@@ -33,16 +33,8 @@ export const ZIP_CODE = {
 } as IMask.AnyMaskedOptions;
 
 export const typesCustom = [
-  ...[
-    'ZIP_CODE',
-    'TEL',
-    'RG',
-    'RG_ESTADUAL',
-    'CPF_CNPJ',
-    'CNPJ',
-    'CPF',
-    'ESTADUAL',
-  ],
+  ...['TEL', 'RG', 'RG_ESTADUAL', 'CPF_CNPJ', 'CNPJ', 'CPF', 'ESTADUAL'],
+  ...['ZIP_CODE'],
 ];
 export const MASKS = {
   ZIP_CODE,

@@ -31,13 +31,12 @@ export class NgPrintDirective {
 
   handleBeforePrint() {
     this.clone = this.frame.cloneNode(true);
-
-    this.bodyService.appRoot.classList.add('print-remove');
+    this.bodyService.appRoot?.classList.add('print-remove');
     this.bodyService.insertNode(this.clone);
   }
 
   handleAfterprint() {
-    this.bodyService.appRoot.classList.remove('print-remove');
+    this.bodyService.appRoot?.classList.remove('print-remove');
     this.bodyService.removeNode(this.clone);
   }
 }

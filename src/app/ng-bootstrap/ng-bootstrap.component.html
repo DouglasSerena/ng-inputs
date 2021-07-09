@@ -177,6 +177,7 @@
     <!-- TEXTAREA -->
     <ng-text-area
       length="1000"
+      rows="4"
       id="bt-text-area"
       label="field text area"
       formControlName="textArea"
@@ -195,6 +196,7 @@
     <!-- FILE -->
     <ng-upload
       id="bt-fill"
+      #ngUploadRef
       [multiple]="true"
       accept="image/png,image/jpeg"
       formControlName="file"
@@ -205,6 +207,7 @@
           ' ver ser um png'
       }"
     ></ng-upload>
+    <ng-upload-list [ngUploadRef]="ngUploadRef"></ng-upload-list>
 
     <h2 class="mt-2">Themes</h2>
 

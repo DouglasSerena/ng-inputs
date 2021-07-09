@@ -1,25 +1,25 @@
 import { InjectionToken, ModuleWithProviders, NgModule } from '@angular/core';
 import { Palettes } from '../../interfaces/colors.interface';
-import { NgColorsService } from './ng-colors.service';
-import { NgThemeService } from './ng-theme.service';
+import { ColorsService } from './colors.service';
+import { ThemeService } from './theme.service';
 
 @NgModule({
   imports: [],
-  providers: [NgThemeService, NgColorsService],
+  providers: [ThemeService, ColorsService],
 })
-export class NgThemeModule {
+export class ThemeModule {
   static forRoot(palettes?: Palettes): ModuleWithProviders<any> {
     return {
-      ngModule: NgThemeModule,
+      ngModule: ThemeModule,
       providers: [
-        NgThemeService,
-        NgColorsService,
+        ThemeService,
+        ColorsService,
         {
           provide: FOR_ROOT_OPTIONS_TOKEN,
           useValue: palettes,
         },
         {
-          provide: NgColorsService,
+          provide: ColorsService,
           useFactory: provideMyServiceOptions,
           deps: [FOR_ROOT_OPTIONS_TOKEN],
         },
@@ -28,12 +28,12 @@ export class NgThemeModule {
   }
 }
 
-export var FOR_ROOT_OPTIONS_TOKEN = new InjectionToken<NgColorsService>(
-  'forRoot() NgColorsService() configuration.'
+export var FOR_ROOT_OPTIONS_TOKEN = new InjectionToken<ColorsService>(
+  'forRoot() ColorsService() configuration.'
 );
 
-export function provideMyServiceOptions(palettes?: Palettes): NgColorsService {
-  const service = new NgColorsService();
+export function provideMyServiceOptions(palettes?: Palettes): ColorsService {
+  const service = new ColorsService();
 
   if (palettes) {
     service.palettes = palettes;

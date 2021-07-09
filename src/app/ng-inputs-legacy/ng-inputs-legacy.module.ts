@@ -8,17 +8,17 @@ import {
 } from 'projects/ng-inputs/src/public-api';
 import { HighlightModule } from 'ngx-highlightjs';
 import { environment } from 'src/environments/environment';
-import { NgStructureDirectivesModule } from 'projects/ng-utils/src/public-api';
+import { StructureDirectivesModule } from 'projects/ng-utils/src/public-api';
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    NgStructureDirectivesModule,
+    StructureDirectivesModule,
     NgInputsModule.forRoot({
       environments: {
-        url: environment.urlApi
-      }
+        url: environment.urlApi,
+      },
     }),
     NgSelectModule,
     HighlightModule,

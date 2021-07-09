@@ -26,3 +26,4 @@ export * from './lib/components/ng-text-area/ng-text-area.component';
 export * from './lib/components/ng-checkbox/ng-checkbox.component';
 export * from './lib/components/ng-switch/ng-switch.component';
 export * from './lib/components/ng-upload/ng-upload.component';
+export * from './lib/components/ng-upload/ng-upload-list/ng-upload-list.component';

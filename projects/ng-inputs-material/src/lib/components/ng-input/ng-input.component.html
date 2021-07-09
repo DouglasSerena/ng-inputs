@@ -26,15 +26,18 @@
     [formControl]="control"
     [attr.maxlength]="length"
     (blur)="handleBlur($event)"
+    [attr.inputmode]="inputmode"
     (focus)="handleFocus($event)"
+    [autocomplete]="autocomplete"
+    [autocapitalize]="autocapitalize"
     [attr.placeholder]="_placeholder"
-    [tabIndex]="control.disabled ? -1 : 1"
+    [tabIndex]="control?.disabled ? -1 : 0"
   />
   <!-- SUFFIX -->
   <span matSuffix *ngIf="!!suffix">{{ suffix }}</span>
 
   <!-- DICA -->
-  <mat-hint *ngIf="help && !(control.touched && control.invalid)">{{
+  <mat-hint *ngIf="help && !(control?.touched && control?.invalid)">{{
     help
   }}</mat-hint>
 
@@ -46,7 +49,7 @@
   <!-- MENSAGEM DE ERRO -->
   <mat-error>
     <ng-container *ngFor="let key of _errorsKeys">
-      <span *ngIf="control.touched && control.hasError(key)">
+      <span *ngIf="control?.touched && control?.hasError(key)">
         {{ _errors[key] }}
       </span>
     </ng-container>

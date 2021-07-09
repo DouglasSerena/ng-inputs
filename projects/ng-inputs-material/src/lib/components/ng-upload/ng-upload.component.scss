@@ -1,0 +1,108 @@
+.form-upload {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  min-height: 250px;
+  position: relative;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  .form-upload__control {
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    &.form-upload__control___disabled {
+      touch-action: none;
+      pointer-events: none;
+    }
+  }
+  &::after {
+    content: "";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    transition: border-color 250ms;
+    position: absolute;
+    border-radius: 5px;
+    touch-action: none;
+    pointer-events: none;
+  }
+  &::before {
+    content: "";
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    transition: 250ms;
+    position: absolute;
+    touch-action: none;
+    pointer-events: none;
+  }
+  &:hover {
+    &::after {
+      border-width: 2px;
+    }
+  }
+  &.form-upload__is-drag-over {
+    &::after {
+      border-width: 2px;
+    }
+    &::before {
+      opacity: 0.1;
+    }
+  }
+  &.form-upload__is-invalid {
+    &::after {
+      border-width: 2px;
+    }
+    &::before {
+      opacity: 0.1;
+    }
+  }
+  .form-upload__content {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+
+    mat-icon,
+    .form-upload__content___icon {
+      width: 75px;
+      height: 75px;
+      opacity: 0.5;
+      font-size: 75px;
+      touch-action: none;
+      pointer-events: none;
+    }
+    .form-upload__content___button {
+      margin-bottom: 5px;
+      &.disabled {
+        touch-action: none;
+        pointer-events: none;
+      }
+    }
+    .form-upload__content___description {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 500;
+      opacity: 0.9;
+      touch-action: none;
+      pointer-events: none;
+    }
+    .form-upload__content___ng-bt-helper,
+    .form-upload__content___ng-bt-helper ng-bt-helper__text {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}

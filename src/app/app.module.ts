@@ -13,18 +13,22 @@ import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { NgInputsLegacyModule } from './ng-inputs-legacy/ng-inputs-legacy.module';
 import { HttpClientModule } from '@angular/common/http';
 import {
+  BreakpointsModule,
+  DragDirectivesModule,
   NgPrintDirectivesModule,
-  NgServicesModule,
-  NgStructureDirectivesModule,
+  ServicesModule,
+  StructureDirectivesModule,
 } from 'projects/ng-utils/src/public-api';
-import { NgThemeModule } from 'projects/ng-utils/src/lib/services/theme/ng-theme.module';
+import { ThemeModule } from 'projects/ng-utils/src/lib/services/theme/theme.module';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgServicesModule,
+    ServicesModule,
+    DragDirectivesModule,
+    BreakpointsModule,
     NgBootstrapModule,
     NgMaterialModule,
     NgLibMasksModule,
@@ -32,9 +36,18 @@ import { NgThemeModule } from 'projects/ng-utils/src/lib/services/theme/ng-theme
     MatExpansionModule,
     NgInputsLegacyModule,
     HttpClientModule,
-    NgStructureDirectivesModule,
+    StructureDirectivesModule,
     NgPrintDirectivesModule,
-    NgThemeModule.forRoot({}),
+    ThemeModule.forRoot({
+      dark: {
+        background: '#333',
+        success: '#435',
+        primary: {
+          default: '#155',
+          test: '#432',
+        },
+      },
+    }),
   ],
   providers: [
     {

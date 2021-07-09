@@ -15,6 +15,7 @@ import {
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
 import { startWith } from 'rxjs/operators';
+import { NgConfigService } from '../../config/ng-config.service';
 
 const PROVIDER_VALUE_ACCESSOR: Provider = {
   provide: NG_VALUE_ACCESSOR,
@@ -38,6 +39,8 @@ export class NgUploadComponent implements OnInit {
   @Input() accept: string = '';
   @Input() formControl: FormControl;
   @Input() formControlName: string;
+  @Input() label: string;
+
   disabled: boolean = false;
 
   @Input() set errors(errors: { [key: string]: string } | null) {
@@ -58,14 +61,24 @@ export class NgUploadComponent implements OnInit {
       )) as FormControl;
   }
 
-  constructor(private _controlContainer: ControlContainer) {}
+  constructor(
+    private _controlContainer: ControlContainer,
+    private ngConfigService: NgConfigService
+  ) {}
 
   //Dragover listener
   @HostListener('dragover', ['$event']) handleDragOver(event: DragEvent) {
     this.stateDragDrop = 'DRAGOVER';
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (!this.label) {
+      this.label = this.ngConfigService.upload?.label;
+    }
+    if (!this.icon) {
+      this.icon = this.ngConfigService.upload?.icon;
+    }
+  }
 
   handleDrop() {
     this.stateDragDrop = 'DROP';

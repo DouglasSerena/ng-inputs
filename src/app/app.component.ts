@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
-import { NgThemeService } from 'projects/ng-utils/src/lib/services/theme/ng-theme.service';
-import { NgNavigatorService } from 'projects/ng-utils/src/public-api';
+import { ThemeService } from 'projects/ng-utils/src/lib/services/theme/theme.service';
+import {
+  BreakpointsService,
+  NavigatorService,
+} from 'projects/ng-utils/src/public-api';
 
 @Component({
   selector: 'app-root',
@@ -11,13 +14,14 @@ export class AppComponent {
   title = 'ng-inputs';
 
   constructor(
-    ngNavigatorService: NgNavigatorService,
-    ngThemeService: NgThemeService
+    NavigatorService: NavigatorService,
+    ThemeService: ThemeService,
+    breakPointService: BreakpointsService
   ) {
-    ngThemeService.load();
+    ThemeService.load();
 
     setTimeout(() => {
-      ngThemeService.change('light');
+      ThemeService.change('light');
     }, 5000);
   }
 

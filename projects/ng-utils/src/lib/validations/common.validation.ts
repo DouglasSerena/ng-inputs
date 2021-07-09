@@ -1,8 +1,6 @@
 import {
   AbstractControl,
   FormArray,
-  FormBuilder,
-  FormControl,
   FormGroup,
   ValidationErrors,
   ValidatorFn,
@@ -62,9 +60,7 @@ export class CommonValidation {
    */
   public static isEqual(work: AnyValidation): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null =>
-      !control.value || work?.toString() === control.value?.toString()
-        ? null
-        : { isEqual: true };
+      work?.toString() === control.value?.toString() ? null : { isEqual: true };
   }
 
   /**
@@ -132,7 +128,9 @@ export class CommonValidation {
         control.updateValueAndValidity();
       });
 
-      return validation(sibling.value)(control);
+      const fn = validation(sibling.value);
+
+      return fn(control);
     };
   }
 

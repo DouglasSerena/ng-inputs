@@ -12,6 +12,7 @@ import {
   ControlValueAccessor,
   FormControl,
   FormControlDirective,
+  NgModel,
 } from '@angular/forms';
 import { NgConfigService } from '../../config/ng-config.service';
 import { TypeFields } from '../../interfaces/config/ng-config.interface';
@@ -26,20 +27,20 @@ import { NgControlBase } from './control-base.interface';
 })
 export class ControlBase implements ControlValueAccessor, NgControlBase {
   @ViewChild(FormControlDirective, { static: true })
-  formControlDirective: FormControlDirective;
-  @ViewChild('rootRef') rootRef: ElementRef<HTMLInputElement>;
+  formControlDirective?: FormControlDirective;
+  @ViewChild('rootRef') rootRef?: ElementRef<HTMLInputElement>;
 
-  @Input() formControl: FormControl;
-  @Input() formControlName: string;
+  @Input() formControl?: FormControl;
+  @Input() formControlName?: string;
 
-  @Input() id: string;
+  @Input() id?: string;
   @Input() label = '';
   @Input() type = 'text';
-  @Input() prefix: string;
-  @Input() suffix: string;
+  @Input() suffix?: string;
+  @Input() prefix?: string;
   @Input() readonly = false;
   disabled: boolean = false;
-  @Input() required: boolean | null = null;
+  @Input() required: boolean = null;
   @Input() labelFixed: boolean = false;
   @Input() set placeholder(text: string | null) {
     this._placeholder = text;
@@ -54,9 +55,9 @@ export class ControlBase implements ControlValueAccessor, NgControlBase {
 
   _placeholder?: string | null;
 
-  @Input() help: string;
+  @Input() help?: string;
   @Input() color: string = 'primary';
-  @Input() icon: NgIconPositionsConfig;
+  @Input() icon?: NgIconPositionsConfig;
   @Input() size: 'lg' | 'md' | 'sm' = 'md';
   @Input() theme: 'outline' | 'fill' | 'standard' | 'legacy' = 'outline';
 
@@ -66,14 +67,19 @@ export class ControlBase implements ControlValueAccessor, NgControlBase {
       this._errorsKeys = Object.keys(errors);
     }
   }
-  _errors: { [key: string]: string };
-  _errorsKeys: string[];
+  _errors?: { [key: string]: string };
+  _errorsKeys?: string[];
 
-  get control(): FormControl {
-    return (this.formControl ||
-      this._controlContainer?.control?.get(
+  get control(): FormControl | null {
+    if (this.formControlName) {
+      return this._controlContainer?.control?.get(
         this.formControlName
-      )) as FormControl;
+      ) as FormControl;
+    }
+    if (!this.formControl) {
+      this.formControl = new FormControl();
+    }
+    return this.formControl;
   }
 
   constructor(
@@ -88,15 +94,15 @@ export class ControlBase implements ControlValueAccessor, NgControlBase {
     }
 
     if (this.required === null) {
-      const value = this.control.value;
-      this.control.reset();
-      this.required = !!this.control.getError('required');
-      this.control.setValue(value);
+      const value = this.control?.value;
+      this.control?.reset();
+      this.required = !!this.control?.getError('required');
+      this.control?.setValue(value);
     }
 
     const iconType =
       this._ngConfig.types(typeField)?.[this.type.toLowerCase()]?.icon;
-    const iconGlobal = this._ngConfig[typeField]?.icon;
+    const iconGlobal = this._ngConfig[typeField as 'select']?.icon;
 
     this.icon = Object.assign({}, iconGlobal, iconType, this.icon);
   }

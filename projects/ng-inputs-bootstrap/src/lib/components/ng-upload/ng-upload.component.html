@@ -1,29 +1,35 @@
 <div
   class="form-upload"
-  [class.is-valid]="control.touched && control.valid"
-  [class.is-invalid]="control.touched && control.invalid"
-  [class.is-drag-over]="stateDragDrop === 'DRAGOVER'"
+  [class.form-upload__is-valid]="control.touched && control.valid"
+  [class.form-upload__is-invalid]="control.touched && control.invalid"
+  [class.form-upload__is-drag-over]="stateDragDrop === 'DRAGOVER'"
 >
   <input
     #rootRef
     type="file"
+    [tabIndex]="-1"
     [accept]="accept"
     [multiple]="multiple"
     (drop)="handleDrop()"
     [formControl]="control"
     (change)="handleTouched()"
+    class="form-upload__control"
     (dragleave)="stateDragDrop = 'DRAGLEAVE'"
     [class.disabled]="stateDragDrop !== 'DRAGOVER'"
   />
 
   <div class="form-upload__content">
-    <i class="fas fa-upload"></i>
-    <button class="btn btn-primary" (click)="handleOpenUpload()">
+    <i [class]="icon + ' form-upload__content___icon'"></i>
+    <button
+      tabindex="0"
+      class="form-upload__content___button btn shadow-focus"
+      (click)="handleOpenUpload()"
+    >
       browser
     </button>
-    <p>ou arraste um arquivo até aqui</p>
+    <p class="form-upload__content___description">{{ label }}</p>
 
-    <div class="ng-bt-helper">
+    <div class="form-upload__content___helper ng-bt-helper">
       <ng-container *ngFor="let key of _errorsKeys">
         <span
           class="ng-bt-helper__text ng-bt-helper__error"
@@ -35,7 +41,3 @@
     </div>
   </div>
 </div>
-
-<button class="btn btn-primary btn-upload" (click)="handleOpenUpload()">
-  UPLOAD
-</button>

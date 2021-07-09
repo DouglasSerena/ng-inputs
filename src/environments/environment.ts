@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  urlApi: "http://api-sandbox2.construtoramontebello.net.br/api/compras",
+  urlApi: 'http://api-sandbox2.construtoramontebello.net.br/api/compras',
+  MAP_BOX_TOKEN:
+    'pk.eyJ1IjoiZG91Z2xhc3NlcmVuYSIsImEiOiJja2VrMmR6bXMxc3czMnltejIzbXh5eHIwIn0.uUxqAx39JExJ__-KxxhEyQ',
 };
 
 /*

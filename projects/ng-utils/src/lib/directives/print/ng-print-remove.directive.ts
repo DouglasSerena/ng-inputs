@@ -13,6 +13,5 @@ export class NgPrintRemoveDirective implements OnInit {
 
   ngOnInit() {
     this.element.classList.add('print-remove');
-    console.log(this.element);
   }
 }

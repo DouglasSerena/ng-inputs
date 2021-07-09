@@ -4,7 +4,7 @@ import { Palettes } from '../../interfaces/colors.interface';
 @Injectable({
   providedIn: 'root',
 })
-export class NgColorsService {
+export class ColorsService {
   private _palettes: Palettes = {};
   get palettes() {
     return this._palettes;

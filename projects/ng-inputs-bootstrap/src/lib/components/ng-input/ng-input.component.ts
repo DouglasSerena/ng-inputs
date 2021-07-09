@@ -27,6 +27,7 @@ import {
   NgMaskCurrencyService,
   NgMaskPercentService,
   NgMaskService,
+  INPUT_TYPE,
 } from '@douglas-serena/ng-masks';
 
 const PROVIDER_VALUE_ACCESSOR: Provider = {
@@ -77,7 +78,7 @@ export class NgInputComponent
     this.superAfterViewInit();
 
     const typeConfig = this.ngConfig.typesInput?.[this.type.toLowerCase()];
-    const configGlobal = this.ngConfig.global.input;
+    const configGlobal = this.ngConfig.global?.input;
 
     if (this.type === 'currency') {
       this.currency = Object.assign({}, configGlobal?.currency, this.currency);
@@ -94,7 +95,6 @@ export class NgInputComponent
         this.currency,
         this.renderer2
       );
-      this.type = 'text';
     } else if (this.type === 'percent') {
       this.percent = Object.assign({}, configGlobal?.percent, this.percent);
 
@@ -110,7 +110,6 @@ export class NgInputComponent
         this.percent,
         this.renderer2
       );
-      this.type = 'text';
     } else if (this.type === 'amount') {
       this.amount = Object.assign({}, configGlobal?.amount, this.amount);
 
@@ -126,7 +125,6 @@ export class NgInputComponent
         this.amount,
         this.renderer2
       );
-      this.type = 'text';
     } else {
       const type = this.type.toUpperCase();
 
@@ -156,11 +154,11 @@ export class NgInputComponent
           this.mask,
           this.renderer2
         );
-
-        if (MASKS.typesCustom.includes(type)) {
-          this.type = 'text';
-        }
       }
+    }
+
+    if (!INPUT_TYPE.includes(this.type)) {
+      this.type = 'text';
     }
 
     if (
@@ -181,10 +179,8 @@ export class NgInputComponent
     );
   }
 
-  @HostListener('input', ['$event.target.value']) handleInput(
-    value?: HTMLElement | string | number,
-    delay = false
-  ) {
+  @HostListener('input', ['$event.target.value'])
+  handleInput(value?: HTMLElement | string | number, delay = false) {
     if (this._maskRef) {
       if (delay) {
         setTimeout(() => {

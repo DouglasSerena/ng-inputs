@@ -6,9 +6,9 @@ import {
 } from '@angular/core';
 
 @Directive({
-  selector: '[ngFocusTrap]',
+  selector: '[focusTrap]',
 })
-export class NgFocusTrapDirective implements AfterViewInit {
+export class FocusTrapDirective implements AfterViewInit {
   private firstFocusableElement: HTMLElement = null;
   private lastFocusableElement: HTMLElement = null;
 

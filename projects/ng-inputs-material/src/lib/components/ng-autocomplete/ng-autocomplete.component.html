@@ -39,7 +39,7 @@
     (focus)="handleFocus($event)"
     [matAutocompletePosition]="positionMenu"
     [attr.placeholder]="'dawdawdawdawdawd'"
-    [tabIndex]="control.disabled ? -1 : 1"
+    [tabIndex]="control.disabled ? -1 : 0"
   />
   <!-- SUFFIX -->
   <span matSuffix *ngIf="!!suffix">{{ suffix }}</span>

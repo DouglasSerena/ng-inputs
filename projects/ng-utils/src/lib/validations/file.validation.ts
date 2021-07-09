@@ -47,16 +47,21 @@ export class FileValidation {
   /***
    * @description EN: Validates if any file was passed
    * @description PT: Válida se foi passado algum arquivo
-   * @returns Invalid: `{ allowExtensions: { allowedExtensions: [''], invalidFile: { filename: "", mimeType: "", extension: "" } } }`
+   * @returns Invalid: `{ allowExtensions: { allowedExtensions: [''], filesInvalid: { filename: "", mimeType: "", extension: "" }[] } }`
    * @returns Invalid: `{ isNotFile: true }`
    * @returns Valid: `null`
    */
   public static isAllowExtensions(extensions: string[]): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const files: File[] = control.value || [];
+      let filesInvalid: {
+        filename: string;
+        mimeType: string;
+        extension: string;
+      }[] = [];
       let isValid = false;
 
-      for (let file of files) {
+      for (let file of Array.from(files)) {
         isValid = false;
         let type = [];
 
@@ -77,17 +82,20 @@ export class FileValidation {
           }
         }
 
-        if (!isValid)
-          return {
-            allowExtensions: {
-              allowedExtensions: extensions.join(', '),
-              invalidFile: {
-                filename: file.name,
-                mimeType: file.type,
-                extension: type[type.length - 1],
-              },
-            },
-          };
+        if (!isValid) {
+          filesInvalid.push({
+            filename: file.name,
+            mimeType: file.type,
+            extension: type[type.length - 1],
+          });
+        }
+      }
+
+      if (filesInvalid.length > 0) {
+        return {
+          allowedExtensions: extensions,
+          filesInvalid,
+        };
       }
 
       return null;
@@ -97,7 +105,7 @@ export class FileValidation {
   /***
    * @description EN: Check if the file size is within the stated limit
    * @description PT: Verifica se o tamanho do arquivo está no limite informado
-   * @returns Invalid: `{ minSize: {  filename: "", minAllow: 0, fileSizeInBytes: 0, typeDefined: 'b' } }`
+   * @returns Invalid: `{ minSize: {minSize: number, typeDefined: string, filesInvalid: { filename: string; type: string; fileSizeInBytes: string | number; }[] }`
    * @returns Invalid: `{ isNotFile: true }`
    * @returns Valid: `null`
    */
@@ -105,22 +113,32 @@ export class FileValidation {
     return (control: AbstractControl): ValidationErrors | null => {
       const files: File[] = control.value || [];
       let size = this.sizes[type] || this.sizes.B;
+      let filesInvalid: {
+        filename: string;
+        type: string;
+        fileSizeInBytes: string | number;
+      }[] = [];
       size = size * min;
 
-      for (let file of files) {
+      for (let file of Array.from(files)) {
         if (!(file instanceof File)) {
           return { isNotFile: true };
         }
 
         if (file.size < size)
-          return {
-            minSize: {
-              filename: file.name,
-              minAllow: size,
-              fileSizeInBytes: file.size,
-              typeDefined: type,
-            },
-          };
+          filesInvalid.push({
+            filename: file.name,
+            fileSizeInBytes: file.size,
+            type: file.type,
+          });
+      }
+
+      if (filesInvalid.length) {
+        return {
+          minSize: size,
+          typeDefined: type,
+          filesInvalid,
+        };
       }
 
       return null;
@@ -130,7 +148,7 @@ export class FileValidation {
   /***
    * @description EN: Check if the file size is within the stated limit
    * @description PT: Verifica se o tamanho do arquivo está no limite informado
-   * @returns Invalid: `{ maxSize: {  filename: "", maxAllow: 0, fileSizeInBytes: 0, typeDefined: 'b' } }`
+   * @returns Invalid: `{ maxSize: {maxSize: number, typeDefined: string, filesInvalid: { filename: string; type: string; fileSizeInBytes: string | number; }[] }`
    * @returns Invalid: `{ isNotFile: true }`
    * @returns Valid: `null`
    */
@@ -138,22 +156,32 @@ export class FileValidation {
     return (control: AbstractControl): ValidationErrors | null => {
       const files: File[] = control.value || [];
       let size = this.sizes[type] || this.sizes.B;
+      let filesInvalid: {
+        filename: string;
+        type: string;
+        fileSizeInBytes: string | number;
+      }[] = [];
       size = size * max;
 
-      for (let file of files) {
+      for (let file of Array.from(files)) {
         if (!(file instanceof File)) {
           return { isNotFile: true };
         }
 
         if (file.size > size)
-          return {
-            maxSize: {
-              filename: file.name,
-              maxAllow: size,
-              fileSizeInBytes: file.size,
-              typeDefined: type,
-            },
-          };
+          filesInvalid.push({
+            filename: file.name,
+            fileSizeInBytes: file.size,
+            type: file.type,
+          });
+      }
+
+      if (filesInvalid.length) {
+        return {
+          maxSize: size,
+          typeDefined: type,
+          filesInvalid,
+        };
       }
 
       return null;
@@ -269,7 +297,7 @@ export class FileValidation {
 
       let counterFileVerify = 0;
 
-      for (let file of files) {
+      for (let file of Array.from(files)) {
         if (!(file instanceof File)) {
           return { isNotFile: true };
         }

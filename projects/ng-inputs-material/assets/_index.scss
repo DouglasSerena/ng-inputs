@@ -1,16 +1,126 @@
-mat-form-field {
-  width: 100%;
+@import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
+@import "./ng-variables";
+
+@mixin createColorInputs(
+  $mat-name,
+  $color,
+  $color-light,
+  $color-error,
+  $color-text,
+  $color-text-secondary,
+  $color-background
+) {
+  .mat-#{$mat-name} {
+    // SELECT
+    &.mat-form-field.mat-focused .mat-select-arrow,
+    .mat-option.mat-selected:not(.mat-option-disabled) {
+      color: $color !important;
+    }
+
+    // INPUT
+
+    .ng-mat-button-primary {
+      color: $color-text !important;
+      background-color: $color !important;
+    }
+    .ng-mat-button-danger {
+      color: $color-text !important;
+      background-color: $color-error !important;
+    }
+    &.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline,
+    &.mat-form-field.mat-focused .mat-form-field-label {
+      color: $color !important;
+    }
+    &.mat-form-field-appearance-outline.mat-focused.mat-form-field-invalid
+      .mat-form-field-outline,
+    &.mat-form-field.mat-focused.mat-form-field-invalid .mat-form-field-label {
+      color: $color-error !important;
+    }
+    &.mat-form-field-appearance-outline .mat-form-field-outline {
+      background-color: $color-background !important;
+      border-radius: 5px;
+    }
+
+    &.mat-checkbox-indeterminate.mat-primary .mat-checkbox-background,
+    &.mat-checkbox-checked.mat-primary .mat-checkbox-background,
+    &.mat-slide-toggle.mat-primary.mat-checked .mat-slide-toggle-thumb,
+    &.mat-form-field.mat-focused:not(.mat-form-field-invalid)
+      .mat-form-field-ripple {
+      background-color: $color !important;
+    }
+    &.mat-slide-toggle.mat-primary.mat-checked .mat-slide-toggle-bar {
+      background-color: $color-light !important;
+    }
+
+    &.form-upload {
+      background-color: $color-background;
+      &::after {
+        opacity: 0.12;
+        border: 1px solid $color-text;
+      }
+      &::before {
+        background-color: $color-background;
+      }
+      &.form-upload__is-drag-over {
+        &::after {
+          border-color: $color;
+        }
+        &::before {
+          background-color: $color;
+        }
+      }
+      &.form-upload__is-invalid {
+        &::after {
+          border-color: $color-error;
+        }
+        &::before {
+          background-color: $color-error;
+        }
+      }
+      &:hover {
+        &::after {
+          opacity: 0.87;
+          border-color: $color-text;
+        }
+      }
+    }
+  }
+  // TIMER PICKER
+  mat-timepicker-dialog {
+    mat-toolbar[ng-reflect-color="#{$mat-name}"] {
+      background-color: $color !important;
+    }
+    mat-clock[ng-reflect-color="#{$mat-name}"] {
+      .root {
+        .circle {
+          background-color: transparent !important;
+          .number {
+            color: $color-text !important;
+            &.selected {
+              color: $color-text-secondary !important;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
+// FILEDS
+mat-form-field {
+  width: 100%;
+  &.mat-form-field-readonly {
+    touch-action: none !important;
+    pointer-events: none !important;
+  }
+}
+
+// OUTROS
 .ng-mat-icon {
   &:not(.ng-icon__clickable) {
     touch-action: none;
     pointer-events: none;
   }
-}
-.mat-form-field-appearance-outline .mat-form-field-prefix,
-.mat-form-field-appearance-outline .mat-form-field-suffix {
-  top: 0 !important;
 }
 
 .ng-mat-loading {

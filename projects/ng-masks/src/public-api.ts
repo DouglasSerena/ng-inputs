@@ -24,3 +24,4 @@ export * from './lib/interfaces';
 
 // UTILS
 export * from './lib/utils/MASKS';
+export * from './lib/utils/input-types';

@@ -12,6 +12,10 @@ import {
 export class NgConfigService {
   private _config: NgConfig = {
     global: {
+      upload: {
+        icon: 'fas fa-upload',
+        label: 'ou arraste um arquivo até aqui',
+      },
       select: {},
       textArea: {},
       autocomplete: {
@@ -49,6 +53,9 @@ export class NgConfigService {
 
   get global() {
     return this.config.global;
+  }
+  get upload() {
+    return this.global?.upload;
   }
   get input() {
     return this.global?.input;
