@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { handleTry } from '../../functions';
+import { Subject } from 'rxjs';
+import { mergeObject } from '../../functions';
+import { handleTry } from '../../functions/handle-try';
 import {
   Colors,
   colorScheme,
@@ -26,13 +28,16 @@ export class ThemeService {
       className: string;
       colorScheme: colorScheme;
       style: string;
+      colors: Colors;
     };
   } = {};
+
+  changeTheme = new Subject();
 
   constructor(
     private bodyService: BodyService,
     private httpClient: HttpClient,
-    private ColorService: ColorsService
+    private colorService: ColorsService
   ) {
     this.styleElement = document.createElement('style');
     this.bodyService.head.appendChild(this.styleElement);
@@ -49,16 +54,18 @@ export class ThemeService {
   isDark() {
     return this.active === 'dark';
   }
+
   isLight() {
     return this.active === 'light';
   }
+
   isActive(theme: string) {
     return this.active === theme;
   }
 
   load() {
-    if (this.ColorService.palettes) {
-      this.create(this.ColorService.palettes);
+    if (this.colorService.palettes) {
+      this.create(this.colorService.palettes);
     }
 
     if (
@@ -78,8 +85,24 @@ export class ThemeService {
     }
   }
 
+  getColors(): Colors {
+    const theme = this.active;
+    return this.colorService.palettes[theme];
+  }
+
+  update(theme: string, colors: Colors, colorScheme?: colorScheme) {
+    if (this.themes[theme]) {
+      if (!colorScheme) {
+        colorScheme = this.themes[theme].colorScheme;
+      }
+      mergeObject(this.themes[theme].colors, colors);
+      this.createOne(theme, colorScheme, this.themes[theme].colors);
+      this.change(theme);
+    }
+  }
+
   create(palettes: Palettes) {
-    this.ColorService.palettes = palettes;
+    this.colorService.palettes = palettes;
 
     Object.keys(palettes).forEach((key) => {
       let colorScheme = palettes[key].colorScheme;
@@ -102,7 +125,7 @@ export class ThemeService {
   }
 
   createOne(theme: string, colorScheme: colorScheme, colors: Colors) {
-    this.ColorService.palettes[theme] = colors;
+    this.colorService.palettes[theme] = colors;
     this.createStyles(theme, colorScheme, colors);
     if (!this.active) {
       this.active = theme;
@@ -119,6 +142,7 @@ export class ThemeService {
 
       this.styleElement.innerHTML = this.themes[theme].style;
       this.active = theme;
+      this.changeTheme.next(theme);
     }
   }
 
@@ -155,6 +179,7 @@ export class ThemeService {
       style: `:root {${style}}`,
       colorScheme,
       className: `theme-${theme}`,
+      colors,
     };
   }
 }

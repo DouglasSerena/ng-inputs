@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { contains } from '@douglas-serena/ng-utils';
 import { CommonValidation } from 'projects/ng-utils/src/public-api';
+import { Observable, of } from 'rxjs';
 import { TestService } from '../test.service';
 
 @Component({
@@ -16,6 +18,7 @@ export class NgMaterialComponent implements OnInit {
     private formBuilder: FormBuilder,
     public testService: TestService
   ) {}
+
   testIcon() {
     console.log('oi');
   }
@@ -36,11 +39,15 @@ export class NgMaterialComponent implements OnInit {
     this.form = this.formBuilder.group({
       file: ['', [CommonValidation.files.isAllowExtensions(['png'])]],
       default: [
-        {
-          longitude: 0,
-          latitude: 45,
-        },
-        [CommonValidation.pattern.isEmail, Validators.required],
+        '',
+        [Validators.required],
+        [
+          CommonValidation.async(
+            () => new Promise((resolve) => resolve('Douglas')),
+            (result, valueControl) =>
+              result === valueControl ? null : { error: true }
+          ),
+        ],
       ],
       disabled: [{ value: 'field disabled', disabled: true }],
       readonly: ['filed readonly'],

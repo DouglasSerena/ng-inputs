@@ -8,6 +8,7 @@ import { BaseModule } from '../../shared/base/base.module';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { NgMaskService } from '@douglas-serena/ng-masks';
+import { NgConfigModule } from '../../config/ng-config.module';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { NgMaskService } from '@douglas-serena/ng-masks';
     MatAutocompleteModule,
     BaseModule,
     NgIconModule,
+    NgConfigModule
   ],
   declarations: [NgAutocompleteComponent],
   providers: [NgMaskService],

@@ -7,11 +7,11 @@ import { NgConfigService } from '../../config/ng-config.service';
 })
 export class MapboxService {
   url = 'https://api.mapbox.com';
-  token = this.ngConfig.global.maps.token;
+  token = this.ngConfigService.maps.token;
 
   constructor(
     private httpClient: HttpClient,
-    private ngConfig: NgConfigService
+    private ngConfigService: NgConfigService
   ) {}
 
   searchLngLat(

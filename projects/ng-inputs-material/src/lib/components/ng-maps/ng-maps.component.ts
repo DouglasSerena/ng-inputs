@@ -5,37 +5,26 @@ import {
   forwardRef,
   Input,
   OnInit,
+  Output,
   Provider,
   Renderer2,
   ViewChild,
 } from '@angular/core';
-import * as Mapboxgl from 'mapbox-gl';
-import * as MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import { MapboxService } from './mapbox.service';
 import { handleTry } from '@douglas-serena/ng-utils';
 import { ControlContainer, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ControlBase } from '../../shared/base/control-base.template';
-import { SkipSelf } from '@angular/core';
+import { SkipSelf, AfterViewInit } from '@angular/core';
 import { NgConfigService } from '../../config/ng-config.service';
-import { AfterViewInit } from '@angular/core';
+import * as Mapboxgl from 'mapbox-gl';
+import * as MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
+import { ControlBase } from '../../shared/base/control-base.template';
+import { EventEmitter } from '@angular/core';
 
 const PROVIDER_VALUE_ACCESSOR: Provider = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => NgMapsComponent),
   multi: true,
 };
-
-export interface NgMapsReturn {
-  longitude: number;
-  latitude: number;
-  address?: string;
-  addressFull?: string;
-  region?: string;
-  country?: string;
-  city?: string;
-  locality?: string;
-  postcode?: string;
-}
 
 @Component({
   selector: 'ng-maps',
@@ -48,25 +37,28 @@ export class NgMapsComponent
   implements OnInit, AfterViewInit
 {
   @ViewChild('markerRef') markerRef: ElementRef<HTMLSpanElement>;
-  token = this.ngConfig.global.maps.token;
+  token = this.ngConfigService.maps.token;
   linkScript: HTMLScriptElement;
   linkStyle: HTMLLinkElement;
   geocoder: MapboxGeocoder;
   _marker: Mapboxgl.Marker;
   map: Mapboxgl.Map;
+  loading = true;
 
   @Input() location: [number, number];
   @Input() style = 'mapbox://styles/mapbox/streets-v11';
   @Input() marker: { icon: string; color: string };
 
+  @Output() address = new EventEmitter();
+
   constructor(
     renderer2: Renderer2,
-    private ngConfig: NgConfigService,
+    private ngConfigService: NgConfigService,
     controlContainer: ControlContainer,
     @SkipSelf() private changeDetectorRef: ChangeDetectorRef,
     private mapboxService: MapboxService
   ) {
-    super(controlContainer, renderer2, ngConfig);
+    super(controlContainer, renderer2, ngConfigService);
 
     this.linkScript = document.createElement('script');
     this.linkScript.src =
@@ -79,12 +71,20 @@ export class NgMapsComponent
   }
 
   ngOnInit() {
+    this.superOnInit('maps');
     this.verifyExistLinks();
   }
 
   async ngAfterViewInit() {
+    this.superAfterViewInit();
+
     if (!this.location) {
-      this.location = await this.getLocationNavigator();
+      const [data] = await handleTry(this.getLocationNavigator());
+      if (data) {
+        this.location = data;
+      } else {
+        this.location = [-47.9499962, -15.749997];
+      }
     }
 
     this.map = new Mapboxgl.Map({
@@ -113,7 +113,12 @@ export class NgMapsComponent
 
     // EVENTS
     window.onresize = () => this.map.resize();
-    this.map.on('load', () => this.map.resize());
+    this.map.on('load', () => {
+      this.loading = false;
+      setTimeout(() => {
+        this.map.resize();
+      });
+    });
     this.map.on('click', (event) => this.handleClickMap(event));
     this._marker.on('dragend', () => this.handleDragMarker());
     this.geocoder.on('result', (res) => this.handleResult(res));
@@ -140,7 +145,12 @@ export class NgMapsComponent
       ...address,
     };
 
-    this.handleChange(data);
+    this.address.emit(data);
+    this.handleChange({
+      longitude: info?.center?.[0],
+      latitude: info?.center?.[1],
+    });
+    this.changeDetectorRef.detectChanges();
   }
 
   writeValue = (value: any) => {
@@ -185,11 +195,17 @@ export class NgMapsComponent
 
   private getLocationNavigator() {
     return new Promise<[number, number]>((resolve, reject) => {
-      navigator.geolocation.getCurrentPosition(
-        (position) =>
-          resolve([position.coords.longitude, position.coords.latitude]),
-        reject
-      );
+      try {
+        navigator.geolocation?.getCurrentPosition?.(
+          (position) =>
+            resolve([position.coords.longitude, position.coords.latitude]),
+          (error) => reject(error)
+        );
+      } catch (error) {
+        reject(
+          "I'm sorry, but geolocation services are not supported by your browser."
+        );
+      }
     });
   }
 

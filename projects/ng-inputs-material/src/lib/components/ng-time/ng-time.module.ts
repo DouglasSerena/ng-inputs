@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTimepickerModule } from 'mat-timepicker';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgIconModule } from '../../shared/ng-icon/ng-icon.module';
+import { NgConfigModule } from '../../config/ng-config.module';
 
 @NgModule({
   imports: [
@@ -13,6 +14,7 @@ import { NgIconModule } from '../../shared/ng-icon/ng-icon.module';
     NgIconModule,
     MatIconModule,
     MatInputModule,
+    NgConfigModule,
     MatTimepickerModule,
     ReactiveFormsModule,
   ],

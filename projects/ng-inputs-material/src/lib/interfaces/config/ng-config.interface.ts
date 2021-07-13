@@ -21,13 +21,17 @@ export type TypeFields =
   | 'input'
   | 'textArea'
   | 'autocomplete'
-  | 'time';
+  | 'time'
+  | 'maps';
 
 export interface NgConfig {
   global?: {
     theme?: INgTheme;
     maps?: {
       token: string;
+      types?: {
+        [key: string]: INgConfigSelect;
+      };
     };
     upload?: {
       icon?: string;

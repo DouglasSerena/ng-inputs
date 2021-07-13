@@ -87,22 +87,82 @@
   }
   // TIMER PICKER
   mat-timepicker-dialog {
-    mat-toolbar[ng-reflect-color="#{$mat-name}"] {
-      background-color: $color !important;
-    }
-    mat-clock[ng-reflect-color="#{$mat-name}"] {
+    mat-dialog-content {
       .root {
-        .circle {
-          background-color: transparent !important;
-          .number {
-            color: $color-text !important;
-            &.selected {
-              color: $color-text-secondary !important;
+        mat-toolbar[ng-reflect-color="#{$mat-name}"] {
+          background-color: $color !important;
+        }
+        mat-clock[ng-reflect-color="#{$mat-name}"] {
+          .root {
+            .circle {
+              background-color: transparent !important;
+              .number {
+                color: $color-text !important;
+                &.selected {
+                  color: $color-text-secondary !important;
+                }
+              }
             }
           }
         }
       }
     }
+  }
+}
+
+@mixin createColorSearchMaps(
+  $color-background,
+  $color-background-light,
+  $color-text
+) {
+  .mapboxgl-ctrl-geocoder {
+    background-color: $color-background !important;
+    svg {
+      path {
+        fill: $color-text !important;
+      }
+    }
+    input {
+      color: $color-text !important;
+    }
+    .suggestions-wrapper {
+      .suggestions {
+        background-color: $color-background;
+        li {
+          .mapbox-gl-geocoder--error.mapbox-gl-geocoder--no-results {
+            padding: 5px 10px;
+            color: $color-text;
+          }
+          &.active {
+            a {
+              background-color: $color-background-light;
+            }
+          }
+          a {
+            transition: 250ms;
+            color: $color-text;
+            &:hover {
+              background-color: $color-background-light !important;
+            }
+          }
+        }
+      }
+    }
+    .mapboxgl-ctrl-geocoder--pin-right {
+      .mapboxgl-ctrl-geocoder--button {
+        background-color: $color-background !important;
+      }
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .mapboxgl-ctrl-top-right {
+    left: 0;
+  }
+  .mapboxgl-ctrl-geocoder {
+    width: calc(100% - 20px);
+    margin: 10px 10px 0 !important;
   }
 }
 

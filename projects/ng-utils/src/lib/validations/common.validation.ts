@@ -1,11 +1,13 @@
 import {
   AbstractControl,
+  AsyncValidatorFn,
   FormArray,
   FormGroup,
   ValidationErrors,
   ValidatorFn,
 } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
+import { from, Observable, of, Subscription } from 'rxjs';
+import { debounceTime, delay, map } from 'rxjs/operators';
 import { contains } from '../functions';
 import { AnyValidation } from './any.validation';
 import { DateValidation } from './date.validation';
@@ -82,21 +84,51 @@ export class CommonValidation {
    * @returns Invalid: `{ isPassword: true }`
    * @returns Valid: `null`
    */
-  public static isPassword(disabled?: {
-    charUpperCase?: boolean;
-    charSpecial?: boolean;
-    number?: boolean;
-  }): ValidatorFn {
+  public static isPassword(
+    disabled?: {
+      charUpperCase?: boolean;
+      charSpecial?: boolean;
+      number?: boolean;
+    },
+    minLength: number = 9
+  ): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      const upperCase =
-        disabled?.charUpperCase || contains(control.value, REGEX_UPPER_CASE);
-      const charSpecial =
-        disabled?.charSpecial || contains(control.value, REGEX_CHAR_SPECIAL);
-      const number = disabled?.number || contains(control.value, REGEX_NUMBER);
+      const resultUpperCase =
+        disabled?.charUpperCase ||
+        contains(control.value, REGEX_UPPER_CASE, false);
 
-      return !control.value || (upperCase && charSpecial && number)
+      const resultMinLength = control.value?.length >= minLength;
+
+      const resultCharSpecial =
+        disabled?.charSpecial || contains(control.value, REGEX_CHAR_SPECIAL);
+
+      const resultNumber =
+        disabled?.number || contains(control.value, REGEX_NUMBER);
+
+      return !control.value ||
+        (resultUpperCase &&
+          resultMinLength &&
+          resultCharSpecial &&
+          resultNumber)
         ? null
         : { isPassword: true };
+    };
+  }
+
+  public static async(
+    validator: (valueControl?: any) => Observable<any> | Promise<any>,
+    _map: (result?: any, valueControl?: any) => ValidationErrors | null,
+    time = 500
+  ): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      let result = validator(control.value);
+      if (result instanceof Promise) {
+        result = of(from(result));
+      }
+      return result
+        .pipe(delay(time))
+        .pipe(debounceTime(time))
+        .pipe(map((result) => _map(result, control.value)));
     };
   }
 

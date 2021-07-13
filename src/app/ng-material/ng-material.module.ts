@@ -38,20 +38,6 @@ import { environment } from 'src/environments/environment';
         maps: {
           token: environment.MAP_BOX_TOKEN,
         },
-        select: {
-          types: {
-            'select-2': {
-              icon: {
-                left: {
-                  icon: 'add',
-                  click: () => {
-                    console.log('opio');
-                  },
-                },
-              },
-            },
-          },
-        },
       },
     }),
     NgInputModule,

@@ -17,7 +17,7 @@ export interface Colors {
   [key: string]: Color | string;
 }
 export interface Color {
-  default: string;
+  default?: string;
   dark?: string;
   light?: string;
   [key: string]: Color | string;

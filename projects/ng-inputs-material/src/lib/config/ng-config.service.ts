@@ -75,6 +75,9 @@ export class NgConfigService {
   get time() {
     return this.global?.time;
   }
+  get maps() {
+    return this.global?.maps;
+  }
   get textarea() {
     return this.global?.textArea;
   }
@@ -94,6 +97,10 @@ export class NgConfigService {
 
   get typesTime(): INgConfigSelect {
     return this.types('time') as INgConfigSelect;
+  }
+
+  get typesMaps(): INgConfigSelect {
+    return this.types('maps') as INgConfigSelect;
   }
 
   get typesInput(): INgConfigInput {

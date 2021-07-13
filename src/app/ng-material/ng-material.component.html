@@ -12,11 +12,13 @@
       [columns]="{ md: 4 }"
       label="field default"
       placeholder="default"
+      formControlName="default"
       [errors]="{
         required: ('2021-06-23' | date: 'yyyy/MM/dd'),
         isEmail: 'Fill with email valid'
       }"
     ></ng-input>
+    {{ form.controls.default.errors | json }}
 
     <!-- DISABLED -->
     <ng-input
@@ -129,7 +131,8 @@
     ></ng-select>
     <!-- formControlName="select" -->
 
-    <ng-maps formControlName="default" [columns]="{ md: 12 }"></ng-maps>
+    <!--  -->
+    <ng-maps [columns]="{ md: 12 }"></ng-maps>
 
     <!-- AUTOCOMPLETE -->
     <ng-autocomplete

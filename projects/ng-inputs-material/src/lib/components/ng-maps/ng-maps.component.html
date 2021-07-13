@@ -7,7 +7,11 @@
   </mat-icon>
 </span>
 
-<div class="map-container">
+<div *ngIf="loading" class="map__loading">
+  <mat-spinner color="primary"></mat-spinner>
+</div>
+
+<div class="map-container" [ngStyle]="{ display: loading ? 'none' : 'flex' }">
   <div id="map" class="map"></div>
   <button
     color=""

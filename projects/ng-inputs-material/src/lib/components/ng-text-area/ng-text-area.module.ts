@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgIconModule } from '../../shared/ng-icon/ng-icon.module';
 import { BaseModule } from '../../shared/base/base.module';
 import { MatInputModule } from '@angular/material/input';
+import { NgConfigModule } from '../../config/ng-config.module';
 
 @NgModule({
   imports: [
@@ -13,6 +14,7 @@ import { MatInputModule } from '@angular/material/input';
     ReactiveFormsModule,
     NgIconModule,
     MatInputModule,
+    NgConfigModule,
   ],
   declarations: [NgTextAreaComponent],
   exports: [NgTextAreaComponent],

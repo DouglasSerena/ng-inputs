@@ -5,3 +5,4 @@ export * from './handle-try';
 export * from './is-empty';
 export * from './sort-asc';
 export * from './sort-desc';
+export * from './merge-object';
